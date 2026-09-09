@@ -1249,7 +1249,6 @@ async function resetStopwatch() {
         const confirmed =
             await showConfirm(
                 "リセットしますか？",
-                "ストップウォッチとラップ記録をすべて削除します。",
                 "リセット"
             );
         if (!confirmed) {
@@ -1674,7 +1673,6 @@ async function deleteLap() {
     const confirmed =
         await showConfirm(
             "ラップを削除しますか？",
-            "このラップの記録を削除します。",
             "削除"
         );
     if (!confirmed) {
