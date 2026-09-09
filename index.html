@@ -2,33 +2,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta
-    name="viewport"
-    content="width=device-width,
-             initial-scale=1,
-             maximum-scale=1,
-             user-scalable=no,
-             viewport-fit=cover">
-<meta
-    name="apple-mobile-web-app-capable"
-    content="yes">
-<meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent">
 <title>Study Timer</title>
-
 <style>
 * {
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
-
 html,
 body {
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 100%;
+    height: 100%;
+    overflow: hidden;
     background: #080808;
     color: #f5f5f7;
     font-family:
@@ -37,30 +23,35 @@ body {
         "SF Pro Display",
         "Helvetica Neue",
         sans-serif;
-    overflow-x: hidden;
     touch-action: manipulation;
     overscroll-behavior: none;
 }
-
+body {
+    height: 100dvh;
+}
 button,
 input,
 select {
     font-family: inherit;
 }
-
 button {
     border: none;
     outline: none;
     cursor: pointer;
 }
-
+/* =========================================================
+   APP
+========================================================= */
 .app {
     width: 100%;
-    min-height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
     padding:
         32px
         24px
-        max(40px, env(safe-area-inset-bottom));
+        max(20px, env(safe-area-inset-bottom));
     background:
         radial-gradient(
             circle at 50% -10%,
@@ -68,30 +59,27 @@ button {
             #111 38%,
             #080808 75%
         );
+    overflow: hidden;
 }
-
 /* =========================================================
    HEADER
 ========================================================= */
-
 header {
     width: 100%;
     max-width: 760px;
+    flex-shrink: 0;
     margin:
-        0 auto
-        50px;
+        0 auto 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .title {
     color: #f5f5f7;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 2px;
 }
-
 .status {
     display: flex;
     align-items: center;
@@ -100,43 +88,41 @@ header {
     font-size: 11px;
     letter-spacing: 1.5px;
 }
-
 .status-dot {
     width: 6px;
     height: 6px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #444;
 }
-
 .status.running {
     color: #888;
 }
-
 .status.running .status-dot {
     background: #30d158;
     box-shadow:
         0 0 8px rgba(48,209,88,.7);
 }
-
 /* =========================================================
    MAIN
 ========================================================= */
-
 main {
     width: 100%;
     max-width: 760px;
+    flex: 1;
+    min-height: 0;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
-
 /* =========================================================
    TIMER
 ========================================================= */
-
 .timer-area {
+    flex-shrink: 0;
     text-align: center;
     margin-bottom: 50px;
 }
-
 .timer {
     color: #f5f5f7;
     font-size:
@@ -148,31 +134,30 @@ main {
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum";
 }
-
 .timer.long {
     font-size:
         clamp(48px, 15vw, 150px);
     letter-spacing: -3px;
 }
-
 /* =========================================================
    CONTROLS
 ========================================================= */
-
 .controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
     width: min(310px, 100%);
-    margin: 0 auto 50px;
+    margin:
+        0 auto 50px;
 }
-
 .circle-button {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 78px;
     height: 78px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #252527;
     color: #eeeeee;
@@ -186,11 +171,9 @@ main {
         background .2s ease,
         opacity .2s ease;
 }
-
 .circle-button:active {
     transform: scale(.93);
 }
-
 .circle-button.primary {
     width: 82px;
     height: 82px;
@@ -198,43 +181,52 @@ main {
     color: #111;
     font-size: 14px;
 }
-
 .circle-button.primary.running {
     background: #ff453a;
     color: #fff;
 }
-
+/* =========================================================
+   LAPS SECTION
+========================================================= */
+.laps-section {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
 /* =========================================================
    LAP HEADER
 ========================================================= */
-
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    flex-shrink: 0;
     padding: 0 5px;
     margin-bottom: 12px;
 }
-
 .section-title {
     color: #777;
     font-size: 12px;
     letter-spacing: 2px;
 }
-
 .lap-count {
     color: #555;
     font-size: 12px;
 }
-
 /* =========================================================
    LAP LIST
 ========================================================= */
-
 .laps {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
     border-top: 1px solid #242424;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    scrollbar-width: thin;
 }
-
 .lap {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -246,11 +238,9 @@ main {
     transition:
         background .15s ease;
 }
-
 .lap:active {
     background: #181818;
 }
-
 .lap-day {
     display: flex;
     align-items: center;
@@ -258,32 +248,27 @@ main {
     font-size: 15px;
     font-variant-numeric: tabular-nums;
 }
-
 .lap-number {
     width: 48px;
     color: #555;
     font-size: 10px;
     flex-shrink: 0;
 }
-
 .lap-time {
     color: #eee;
     font-size: 16px;
     text-align: right;
     font-variant-numeric: tabular-nums;
 }
-
 .empty {
     padding: 42px 0;
     color: #555;
     font-size: 13px;
     text-align: center;
 }
-
 /* =========================================================
    MODAL
 ========================================================= */
-
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -295,11 +280,9 @@ main {
     -webkit-backdrop-filter: blur(10px);
     z-index: 100;
 }
-
 .modal-overlay.show {
     display: flex;
 }
-
 .modal {
     width: min(520px, 100%);
     padding:
@@ -312,7 +295,6 @@ main {
         0 -15px 50px rgba(0,0,0,.5);
     animation: slideUp .2s ease;
 }
-
 @keyframes slideUp {
     from {
         transform: translateY(100%);
@@ -321,7 +303,6 @@ main {
         transform: translateY(0);
     }
 }
-
 .modal-title {
     margin-bottom: 25px;
     color: #fff;
@@ -329,11 +310,9 @@ main {
     font-weight: 600;
     text-align: center;
 }
-
 .field {
     margin-bottom: 17px;
 }
-
 .field label {
     display: block;
     margin-bottom: 7px;
@@ -341,7 +320,6 @@ main {
     font-size: 11px;
     letter-spacing: .7px;
 }
-
 input {
     width: 100%;
     padding: 13px 14px;
@@ -352,14 +330,12 @@ input {
     color: #fff;
     font-size: 16px;
 }
-
 .time-picker {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 7px;
 }
-
 .time-picker select {
     width: 82px;
     padding: 13px 8px;
@@ -371,26 +347,22 @@ input {
     font-size: 20px;
     text-align: center;
 }
-
 .time-picker span {
     color: #aaa;
     font-size: 14px;
 }
-
 .info {
     margin-top: 5px;
     color: #666;
     font-size: 11px;
     line-height: 1.6;
 }
-
 .modal-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 25px;
 }
-
 .modal-button {
     padding: 14px;
     border-radius: 12px;
@@ -398,17 +370,14 @@ input {
     color: #eee;
     font-size: 15px;
 }
-
 .modal-button:active {
     opacity: .7;
 }
-
 .modal-button.save {
     background: #f2f2f2;
     color: #111;
     font-weight: 600;
 }
-
 .delete-button {
     width: 100%;
     margin-top: 10px;
@@ -418,11 +387,9 @@ input {
     color: #ff453a;
     font-size: 14px;
 }
-
 /* =========================================================
    CONFIRM MODAL
 ========================================================= */
-
 .confirm-overlay {
     position: fixed;
     inset: 0;
@@ -433,11 +400,9 @@ input {
     background: rgba(0,0,0,.55);
     z-index: 200;
 }
-
 .confirm-overlay.show {
     display: flex;
 }
-
 .confirm-box {
     width: min(320px, 100%);
     overflow: hidden;
@@ -447,7 +412,6 @@ input {
         0 15px 50px rgba(0,0,0,.55);
     animation: confirmAppear .18s ease;
 }
-
 @keyframes confirmAppear {
     from {
         transform: scale(.94);
@@ -458,7 +422,6 @@ input {
         opacity: 1;
     }
 }
-
 .confirm-content {
     padding:
         22px
@@ -466,26 +429,22 @@ input {
         20px;
     text-align: center;
 }
-
 .confirm-title {
     margin-bottom: 7px;
     color: #fff;
     font-size: 17px;
     font-weight: 600;
 }
-
 .confirm-message {
     color: #aaa;
     font-size: 13px;
     line-height: 1.5;
 }
-
 .confirm-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-top: 1px solid #444;
 }
-
 .confirm-button {
     min-height: 44px;
     padding: 0;
@@ -495,165 +454,142 @@ input {
     font-size: 17px;
     font-weight: 500;
 }
-
 .confirm-button + .confirm-button {
     border-left: 1px solid #444;
 }
-
 .confirm-button:active {
     background: #3a3a3c;
 }
-
 .confirm-button.danger {
     color: #ff453a;
 }
-
 /* =========================================================
    iPAD
    600px〜
 ========================================================= */
-
 @media (min-width: 600px) {
     .app {
         padding-left: 48px;
         padding-right: 48px;
     }
-
     header,
     main {
         max-width: 900px;
     }
-
     header {
         margin-bottom: 70px;
     }
-
     .title {
         font-size: 15px;
         letter-spacing: 2.5px;
     }
-
     .status {
         font-size: 12px;
     }
-
     .timer-area {
         margin-bottom: 65px;
     }
-
     .timer {
         font-size:
             clamp(90px, 14vw, 180px);
         letter-spacing: -5px;
     }
-
     .timer.long {
         font-size:
             clamp(70px, 11vw, 150px);
     }
-
+    /*
+     * iPadではボタンを
+     * 画面左右端に配置
+     */
     .controls {
-        width: 360px;
-        margin-bottom: 70px;
+        width: 100%;
+        margin:
+            0 0 70px;
     }
-
     .circle-button {
         width: 92px;
         height: 92px;
         font-size: 15px;
     }
-
     .circle-button.primary {
         width: 98px;
         height: 98px;
         font-size: 16px;
     }
-
     .section-header {
         padding: 0 8px;
     }
-
     .section-title {
         font-size: 13px;
     }
-
     .lap-count {
         font-size: 13px;
     }
-
     .lap {
         min-height: 82px;
         padding:
             14px 8px;
     }
-
     .lap-day {
         font-size: 17px;
     }
-
     .lap-number {
         width: 65px;
         font-size: 11px;
     }
-
     .lap-time {
         font-size: 18px;
     }
 }
-
 /* =========================================================
    iPAD LANDSCAPE / LARGE TABLET
    900px〜
 ========================================================= */
-
 @media (min-width: 900px) {
     .app {
         padding-left: 70px;
         padding-right: 70px;
     }
-
     header,
     main {
         max-width: 1100px;
     }
-
     header {
         margin-bottom: 60px;
     }
-
     .timer-area {
         padding: 30px 0 10px;
         margin-bottom: 55px;
     }
-
     .timer {
         font-size:
             clamp(110px, 11vw, 190px);
         letter-spacing: -7px;
     }
-
     .timer.long {
         font-size:
             clamp(85px, 8vw, 160px);
     }
-
+    /*
+     * 大型タブレットでも
+     * ボタンを左右端に配置
+     */
     .controls {
-        width: 420px;
-        margin-bottom: 75px;
+        width: 100%;
+        margin:
+            0 0 75px;
     }
-
     .circle-button {
         width: 105px;
         height: 105px;
         font-size: 16px;
     }
-
     .circle-button.primary {
         width: 112px;
         height: 112px;
         font-size: 17px;
     }
-
     .lap {
         grid-template-columns:
             1fr 220px;
@@ -661,89 +597,76 @@ input {
         padding-left: 15px;
         padding-right: 15px;
     }
-
     .lap-day {
         font-size: 18px;
     }
-
     .lap-number {
         width: 80px;
         font-size: 11px;
     }
-
     .lap-time {
         font-size: 19px;
     }
 }
-
 /* =========================================================
    PC
    1200px〜
 ========================================================= */
-
 @media (min-width: 1200px) {
     .app {
         padding:
             45px
             80px
-            60px;
+            40px;
     }
-
     header,
     main {
         max-width: 1200px;
     }
-
     header {
         margin-bottom: 65px;
     }
-
     .timer-area {
         padding-top: 25px;
         margin-bottom: 65px;
     }
-
     .timer {
         font-size:
             clamp(130px, 10vw, 200px);
         letter-spacing: -9px;
     }
-
     .timer.long {
         font-size:
             clamp(100px, 8vw, 175px);
     }
-
+    /*
+     * PCでは左右端いっぱいに配置
+     */
     .controls {
-        width: 460px;
-        margin-bottom: 85px;
+        width: 100%;
+        margin:
+            0 0 85px;
     }
-
     .circle-button {
         width: 112px;
         height: 112px;
         font-size: 17px;
     }
-
     .circle-button.primary {
         width: 120px;
         height: 120px;
         font-size: 18px;
     }
-
     .section-header {
         padding: 0 15px;
         margin-bottom: 15px;
     }
-
     .section-title {
         font-size: 14px;
     }
-
     .lap-count {
         font-size: 14px;
     }
-
     .lap {
         grid-template-columns:
             1fr 250px;
@@ -751,75 +674,60 @@ input {
         padding:
             15px;
     }
-
     .lap-day {
         font-size: 19px;
     }
-
     .lap-number {
         width: 90px;
         font-size: 12px;
     }
-
     .lap-time {
         font-size: 20px;
     }
 }
-
 /* =========================================================
    VERY LARGE PC
    1600px〜
 ========================================================= */
-
 @media (min-width: 1600px) {
     .app {
         padding-left: 120px;
         padding-right: 120px;
     }
-
     header,
     main {
         max-width: 1400px;
     }
-
     .timer {
         font-size: 210px;
     }
-
     .timer.long {
         font-size: 180px;
     }
 }
-
 /* =========================================================
    SMALL PHONE
 ========================================================= */
-
 @media (max-width: 380px) {
     .app {
         padding-left: 16px;
         padding-right: 16px;
     }
-
     .controls {
         width: 280px;
     }
-
     .circle-button {
         width: 70px;
         height: 70px;
     }
-
     .circle-button.primary {
         width: 76px;
         height: 76px;
     }
-
     .timer {
         font-size: 18vw;
         letter-spacing: -2px;
     }
-
     .timer.long {
         font-size: 13.5vw;
         letter-spacing: -2px;
@@ -827,484 +735,330 @@ input {
 }
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
 <header>
-    <div class="title">
-        STUDY TIMER
-    </div>
-
-    <div
-        class="status"
-        id="status">
-
-        <div class="status-dot"></div>
-
-        <span id="statusText">
-            READY
-        </span>
-
-    </div>
-</header>
-
-<main>
-
-    <!-- ======================================
-         TIMER
-    ======================================= -->
-
-    <section class="timer-area">
-
-        <div
-            class="timer"
-            id="timer">
-
-            00:00.00
-
-        </div>
-
-    </section>
-
-    <!-- ======================================
-         CONTROLS
-    ======================================= -->
-
-    <section class="controls">
-
-        <button
-            class="circle-button"
-            id="secondaryButton">
-
-            リセット
-
-        </button>
-
-        <button
-            class="circle-button primary"
-            id="startStopButton">
-
-            開始
-
-        </button>
-
-    </section>
-
-    <!-- ======================================
-         LAPS
-    ======================================= -->
-
-    <section>
-
-        <div class="section-header">
-
-            <div class="section-title">
-                LAPS
-            </div>
-
-            <div
-                class="lap-count"
-                id="lapCount">
-
-                0
-
-            </div>
-
-        </div>
-
-        <div
-            class="laps"
-            id="laps">
-
-            <div class="empty">
-                ラップを記録すると、ここに表示されます
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
+<div class="title">
+    STUDY TIMER
 </div>
-
-<!-- ==========================================
+<div
+    class="status"
+    id="status">
+    <div class="status-dot"></div>
+    <span id="statusText">
+        READY
+    </span>
+</div>
+</header>
+<main>
+<!-- =====================================================
+     TIMER
+====================================================== -->
+<section class="timer-area">
+<div
+    class="timer"
+    id="timer">
+    00:00.00
+</div>
+</section>
+<!-- =====================================================
+     CONTROLS
+====================================================== -->
+<section class="controls">
+<button
+    class="circle-button"
+    id="secondaryButton">
+    リセット
+</button>
+<button
+    class="circle-button primary"
+    id="startStopButton">
+    開始
+</button>
+</section>
+<!-- =====================================================
+     LAPS
+====================================================== -->
+<section class="laps-section">
+<div class="section-header">
+    <div class="section-title">
+        LAPS
+    </div>
+    <div
+        class="lap-count"
+        id="lapCount">
+        0
+    </div>
+</div>
+<div
+    class="laps"
+    id="laps">
+    <div class="empty">
+        ラップを記録すると、ここに表示されます
+    </div>
+</div>
+</section>
+</main>
+</div>
+<!-- =====================================================
      EDIT MODAL
-=========================================== -->
-
+====================================================== -->
 <div
     class="modal-overlay"
     id="modalOverlay">
-
-    <div class="modal">
-
-        <div class="modal-title">
-            ラップを編集
-        </div>
-
-        <div class="field">
-
-            <label>
-                経過時間
-            </label>
-
-            <div class="time-picker">
-
-                <select
-                    id="editHours"
-                    aria-label="時間">
-                </select>
-
-                <span>時間</span>
-
-                <select
-                    id="editMinutes"
-                    aria-label="分">
-                </select>
-
-                <span>分</span>
-
-                <select
-                    id="editSeconds"
-                    aria-label="秒">
-                </select>
-
-                <span>秒</span>
-
-            </div>
-
-        </div>
-
-        <div class="info">
-            ラップの経過時間を変更します。
-        </div>
-
-        <div class="modal-buttons">
-
-            <button
-                class="modal-button"
-                id="cancelEdit">
-
-                キャンセル
-
-            </button>
-
-            <button
-                class="modal-button save"
-                id="saveEdit">
-
-                保存
-
-            </button>
-
-        </div>
-
-        <button
-            class="delete-button"
-            id="deleteLap">
-
-            このラップを削除
-
-        </button>
-
+<div class="modal">
+    <div class="modal-title">
+        ラップを編集
     </div>
-
+    <div class="field">
+        <label>
+            経過時間
+        </label>
+        <div class="time-picker">
+            <select
+                id="editHours"
+                aria-label="時間">
+            </select>
+            <span>時間</span>
+            <select
+                id="editMinutes"
+                aria-label="分">
+            </select>
+            <span>分</span>
+            <select
+                id="editSeconds"
+                aria-label="秒">
+            </select>
+            <span>秒</span>
+        </div>
+    </div>
+    <div class="info">
+        ラップの経過時間を変更します。
+    </div>
+    <div class="modal-buttons">
+        <button
+            class="modal-button"
+            id="cancelEdit">
+            キャンセル
+        </button>
+        <button
+            class="modal-button save"
+            id="saveEdit">
+            保存
+        </button>
+    </div>
+    <button
+        class="delete-button"
+        id="deleteLap">
+        このラップを削除
+    </button>
 </div>
-
-<!-- ==========================================
+</div>
+<!-- =====================================================
      CONFIRM MODAL
-=========================================== -->
-
+====================================================== -->
 <div
     class="confirm-overlay"
     id="confirmOverlay">
-
-    <div class="confirm-box">
-
-        <div class="confirm-content">
-
-            <div
-                class="confirm-title"
-                id="confirmTitle">
-
-                確認
-
-            </div>
-
+<div class="confirm-box">
+    <div class="confirm-content">
+        <div
+            class="confirm-title"
+            id="confirmTitle">
+            確認
         </div>
-
-        <div class="confirm-buttons">
-
-            <button
-                class="confirm-button"
-                id="confirmCancel">
-
-                キャンセル
-
-            </button>
-
-            <button
-                class="confirm-button danger"
-                id="confirmOK">
-
-                実行
-
-            </button>
-
-        </div>
-
     </div>
-
+    <div class="confirm-buttons">
+        <button
+            class="confirm-button"
+            id="confirmCancel">
+            キャンセル
+        </button>
+        <button
+            class="confirm-button danger"
+            id="confirmOK">
+            実行
+        </button>
+    </div>
 </div>
-
+</div>
 <script>
-
 /* =========================================================
    STORAGE
 ========================================================= */
-
 const STORAGE_KEY =
     "studyStopwatch_v3";
-
 /* =========================================================
    STATE
 ========================================================= */
-
 let state = {
     running: false,
     currentRunStart: null,
     accumulated: 0,
     laps: []
 };
-
 let editingLapId = null;
-
 let animationFrame = null;
-
 /* =========================================================
    CUSTOM CONFIRM
 ========================================================= */
-
 let confirmResolver = null;
-
-function showConfirm(title, okText) {
-
-    return new Promise(resolve => {
-
-        confirmResolver = resolve;
-
-        document
-            .getElementById(
-                "confirmTitle"
-            )
-            .textContent = title;
-
-        document
-            .getElementById(
-                "confirmOK"
-            )
-            .textContent = okText;
-
-        document
-            .getElementById(
-                "confirmOverlay"
-            )
-            .classList.add(
-                "show"
-            );
-
-    });
-
+function showConfirm(
+    title,
+    okText
+) {
+    return new Promise(
+        resolve => {
+            confirmResolver =
+                resolve;
+            document
+                .getElementById(
+                    "confirmTitle"
+                )
+                .textContent =
+                title;
+            document
+                .getElementById(
+                    "confirmOK"
+                )
+                .textContent =
+                okText;
+            document
+                .getElementById(
+                    "confirmOverlay"
+                )
+                .classList
+                .add("show");
+        }
+    );
 }
-
 function closeConfirm(result) {
-
     document
         .getElementById(
             "confirmOverlay"
         )
-        .classList.remove(
-            "show"
-        );
-
+        .classList
+        .remove("show");
     if (confirmResolver) {
-
         const resolve =
             confirmResolver;
-
         confirmResolver = null;
-
         resolve(result);
-
     }
-
 }
-
 /* =========================================================
    STORAGE FUNCTIONS
 ========================================================= */
-
 function saveState() {
-
     localStorage.setItem(
         STORAGE_KEY,
         JSON.stringify(state)
     );
-
 }
-
 function loadState() {
-
     try {
-
         const saved =
             localStorage.getItem(
                 STORAGE_KEY
             );
-
         if (!saved) {
             return;
         }
-
         const parsed =
             JSON.parse(saved);
-
         if (
             parsed &&
             typeof parsed === "object"
         ) {
-
             state = {
-
                 running:
                     Boolean(
                         parsed.running
                     ),
-
                 currentRunStart:
                     Number(
                         parsed.currentRunStart
                     ) || null,
-
                 accumulated:
                     Number(
                         parsed.accumulated
                     ) || 0,
-
                 laps:
                     Array.isArray(
                         parsed.laps
                     )
                         ? parsed.laps
                         : []
-
             };
-
         }
-
     } catch (error) {
-
         state = {
             running: false,
             currentRunStart: null,
             accumulated: 0,
             laps: []
         };
-
     }
-
 }
-
 /* =========================================================
    ELAPSED
 ========================================================= */
-
 function getElapsed() {
-
     let elapsed =
         Number(
             state.accumulated
         ) || 0;
-
     if (
         state.running &&
         state.currentRunStart
     ) {
-
         elapsed +=
             Date.now() -
             state.currentRunStart;
-
     }
-
     return Math.max(
         0,
         elapsed
     );
-
 }
-
 /* =========================================================
    FORMAT
 ========================================================= */
-
 function pad(
     number,
     digits = 2
 ) {
-
     return String(number)
         .padStart(
             digits,
             "0"
         );
-
 }
-
-/*
- * ストップウォッチ
- *
- * 1時間未満
- * 00:00.00
- *
- * 1時間以上
- * 1:00:00.00
- */
-
 function formatStopwatch(ms) {
-
     ms = Math.max(
         0,
         Math.floor(ms)
     );
-
     const hours =
         Math.floor(
             ms / 3600000
         );
-
     const minutes =
         Math.floor(
             (ms % 3600000) /
             60000
         );
-
     const seconds =
         Math.floor(
             (ms % 60000) /
             1000
         );
-
     const centiseconds =
         Math.floor(
             (ms % 1000) /
             10
         );
-
     if (hours === 0) {
-
         return (
             pad(minutes) +
             ":" +
@@ -1312,9 +1066,7 @@ function formatStopwatch(ms) {
             "." +
             pad(centiseconds)
         );
-
     }
-
     return (
         hours +
         ":" +
@@ -1324,655 +1076,410 @@ function formatStopwatch(ms) {
         "." +
         pad(centiseconds)
     );
-
 }
-
-/*
- * ラップの経過時間
- */
-
 function formatStudyTime(ms) {
-
     ms = Math.max(
         0,
         Math.floor(ms)
     );
-
     const totalSeconds =
         Math.floor(
             ms / 1000
         );
-
     const hours =
         Math.floor(
             totalSeconds / 3600
         );
-
     const minutes =
         Math.floor(
             (totalSeconds % 3600) /
             60
         );
-
     const seconds =
         totalSeconds % 60;
-
     const result = [];
-
     if (hours > 0) {
-
         result.push(
             hours + "時間"
         );
-
     }
-
     if (minutes > 0) {
-
         result.push(
             minutes + "分"
         );
-
     }
-
     if (
         seconds > 0 ||
         result.length === 0
     ) {
-
         result.push(
             seconds + "秒"
         );
-
     }
-
     return result.join("");
-
 }
-
 /* =========================================================
    LAP
 ========================================================= */
-
 function getLapElapsed(lap) {
-
     return Math.max(
         0,
         Number(
             lap.elapsed
         ) || 0
     );
-
 }
-
-/*
- * ラップの経過時間を計算
- *
- * 例：
- *
- * LAP3 elapsed = 4時間10分
- * LAP2 elapsed = 2時間00分
- * LAP1 elapsed = 1時間30分
- *
- * LAP3 = 4時間10分 − 2時間00分
- *      = 2時間10分
- *
- * LAP2 = 2時間00分 − 1時間30分
- *      = 30分
- *
- * LAP1 = 1時間30分
- */
-
 function calculateLapDuration(index) {
-
     const lap =
         state.laps[index];
-
     if (!lap) {
         return 0;
     }
-
     const previous =
         state.laps[index + 1];
-
     if (!previous) {
-
         return getLapElapsed(
             lap
         );
-
     }
-
     return Math.max(
         0,
         getLapElapsed(lap) -
         getLapElapsed(previous)
     );
-
 }
-
 /* =========================================================
    ADD LAP
 ========================================================= */
-
 function addLap() {
-
     if (!state.running) {
         return;
     }
-
     const now =
         Date.now();
-
     const elapsed =
         getElapsed();
-
     state.laps.unshift({
-
         id:
             Date.now().toString() +
             Math.random()
                 .toString(36)
                 .slice(2),
-
-        /*
-         * ラップを押した時刻
-         *
-         * 経過時間を編集しても
-         * この値は変更しない
-         */
-
         timestamp:
             new Date(
                 now
             ).toISOString(),
-
-        /*
-         * ストップウォッチ開始からの
-         * 累積経過時間
-         */
-
         elapsed:
             elapsed
-
     });
-
     state.laps.sort(
         (a, b) =>
             new Date(b.timestamp) -
             new Date(a.timestamp)
     );
-
     saveState();
-
     renderLaps();
-
 }
-
 /* =========================================================
    TIMER
 ========================================================= */
-
 function updateTimer() {
-
     const timer =
         document.getElementById(
             "timer"
         );
-
     const elapsed =
         getElapsed();
-
     timer.textContent =
         formatStopwatch(
             elapsed
         );
-
-    /*
-     * 1時間以上なら long クラスを追加
-     */
-
     const hours =
         Math.floor(
             elapsed / 3600000
         );
-
     timer.classList.toggle(
         "long",
         hours > 0
     );
-
     if (state.running) {
-
         animationFrame =
             requestAnimationFrame(
                 updateTimer
             );
-
     }
-
 }
-
 /* =========================================================
    START / STOP
 ========================================================= */
-
 function startStopwatch() {
-
-    /*
-     * RUNNING → STOP
-     */
-
     if (state.running) {
-
         state.accumulated =
             getElapsed();
-
         state.running =
             false;
-
         state.currentRunStart =
             null;
-
         saveState();
-
         cancelAnimationFrame(
             animationFrame
         );
-
         updateTimer();
-
         updateControls();
-
         return;
-
     }
-
-    /*
-     * STOPPED → START
-     */
-
     state.running =
         true;
-
     state.currentRunStart =
         Date.now();
-
     saveState();
-
     updateControls();
-
     updateTimer();
-
 }
-
 /* =========================================================
    RESET
 ========================================================= */
-
 async function resetStopwatch() {
-
     if (state.running) {
         return;
     }
-
     if (
         state.accumulated > 0 ||
         state.laps.length > 0
     ) {
-
         const confirmed =
             await showConfirm(
                 "リセットしますか？",
                 "リセット"
             );
-
         if (!confirmed) {
             return;
         }
-
     }
-
     state = {
-
         running: false,
-
         currentRunStart: null,
-
         accumulated: 0,
-
         laps: []
-
     };
-
     saveState();
-
     cancelAnimationFrame(
         animationFrame
     );
-
     updateTimer();
-
     updateControls();
-
     renderLaps();
-
 }
-
 /* =========================================================
    CONTROLS
 ========================================================= */
-
 function updateControls() {
-
     const secondary =
         document.getElementById(
             "secondaryButton"
         );
-
     const primary =
         document.getElementById(
             "startStopButton"
         );
-
     const status =
         document.getElementById(
             "status"
         );
-
     const statusText =
         document.getElementById(
             "statusText"
         );
-
     if (state.running) {
-
         secondary.textContent =
             "ラップ";
-
         primary.textContent =
             "停止";
-
         primary.classList.add(
             "running"
         );
-
         status.classList.add(
             "running"
         );
-
         statusText.textContent =
             "FOCUS";
-
         return;
-
     }
-
     secondary.textContent =
         "リセット";
-
     primary.textContent =
         "開始";
-
     primary.classList.remove(
         "running"
     );
-
     status.classList.remove(
         "running"
     );
-
     statusText.textContent =
         getElapsed() > 0
             ? "PAUSED"
             : "READY";
-
 }
-
 /* =========================================================
    RENDER LAPS
 ========================================================= */
-
 function renderLaps() {
-
     const container =
         document.getElementById(
             "laps"
         );
-
     const count =
         document.getElementById(
             "lapCount"
         );
-
     count.textContent =
         state.laps.length;
-
     if (
         state.laps.length === 0
     ) {
-
         container.innerHTML = `
             <div class="empty">
                 ラップを記録すると、ここに表示されます
             </div>
         `;
-
         return;
-
     }
-
     container.innerHTML =
         state.laps
             .map(
                 (lap, index) => {
-
-                    /*
-                     * このラップの経過時間
-                     */
-
                     const duration =
                         calculateLapDuration(
                             index
                         );
-
                     const lapNumber =
                         state.laps.length -
                         index;
-
-                    /*
-                     * ラップを押した時刻
-                     *
-                     * timestampは編集しない
-                     */
-
                     const date =
                         new Date(
                             lap.timestamp
                         );
-
                     const month =
                         date.getMonth() + 1;
-
                     const day =
                         date.getDate();
-
                     const hours =
                         pad(
                             date.getHours()
                         );
-
                     const minutes =
                         pad(
                             date.getMinutes()
                         );
-
                     return `
                         <div
                             class="lap"
                             data-id="${lap.id}">
-
                             <div class="lap-day">
-
                                 <span class="lap-number">
                                     LAP ${lapNumber}
                                 </span>
-
-                                <span>
                                 <span>
                                     ${month}/${day}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${hours}:${minutes}〜
                                 </span>
-
                             </div>
-
                             <div class="lap-time">
                                 ${formatStudyTime(
                                     duration
                                 )}
                             </div>
-
                         </div>
                     `;
-
                 }
             )
             .join("");
-
     container
         .querySelectorAll(".lap")
         .forEach(
             element => {
-
                 element.addEventListener(
                     "click",
                     () => {
-
                         openEditModal(
                             element.dataset.id
                         );
-
                     }
                 );
-
             }
         );
-
 }
-
 /* =========================================================
    EDIT MODAL
 ========================================================= */
-
 function populateTimePicker() {
-
     const hours =
         document.getElementById(
             "editHours"
         );
-
     const minutes =
         document.getElementById(
             "editMinutes"
         );
-
     const seconds =
         document.getElementById(
             "editSeconds"
         );
-
     if (!hours.options.length) {
-
         for (
             let i = 0;
             i <= 99;
             i++
         ) {
-
             hours.add(
                 new Option(
                     pad(i),
                     i
                 )
             );
-
         }
-
         for (
             let i = 0;
             i <= 59;
             i++
         ) {
-
             minutes.add(
                 new Option(
                     pad(i),
                     i
                 )
             );
-
             seconds.add(
                 new Option(
                     pad(i),
                     i
                 )
             );
-
         }
-
     }
-
 }
-
 function openEditModal(id) {
-
-    /*
-     * タイマー動作中は
-     * ラップ編集不可
-     */
-
     if (state.running) {
         return;
     }
-
     const index =
         state.laps.findIndex(
             lap =>
                 lap.id === id
         );
-
     if (index === -1) {
         return;
     }
-
     const lap =
         state.laps[index];
-
     editingLapId =
         id;
-
     populateTimePicker();
-
-    /*
-     * ここが変更点
-     *
-     * 累積時間ではなく、
-     * ラップ自身の経過時間を表示する
-     *
-     * 例：
-     *
-     * LAP2 elapsed = 2時間00分
-     * LAP1 elapsed = 1時間30分
-     *
-     * → 編集画面には30分を表示
-     */
-
     const totalSeconds =
         Math.floor(
             calculateLapDuration(
                 index
             ) / 1000
         );
-
     document
         .getElementById(
             "editHours"
@@ -1985,7 +1492,6 @@ function openEditModal(id) {
                 3600
             )
         );
-
     document
         .getElementById(
             "editMinutes"
@@ -1995,7 +1501,6 @@ function openEditModal(id) {
             (totalSeconds % 3600) /
             60
         );
-
     document
         .getElementById(
             "editSeconds"
@@ -2003,85 +1508,49 @@ function openEditModal(id) {
         .value =
         totalSeconds %
         60;
-
     document
         .getElementById(
             "modalOverlay"
         )
-        .classList.add(
-            "show"
-        );
-
+        .classList
+        .add("show");
 }
-
 function closeEditModal() {
-
     editingLapId = null;
-
     document
         .getElementById(
             "modalOverlay"
         )
-        .classList.remove(
-            "show"
-        );
-
+        .classList
+        .remove("show");
 }
-
 /* =========================================================
    SAVE EDIT
 ========================================================= */
-
 function saveEdit() {
-
-    /*
-     * タイマー動作中は
-     * 編集内容を保存しない
-     */
-
     if (
         !editingLapId ||
         state.running
     ) {
         return;
     }
-
     const index =
         state.laps.findIndex(
             lap =>
                 lap.id ===
                 editingLapId
         );
-
     if (index === -1) {
         return;
     }
-
     const lap =
         state.laps[index];
-
-    /*
-     * 編集前の累積時間を保存
-     *
-     * 例：
-     * LAP2 elapsed = 2時間00分
-     */
-
     const oldElapsed =
         getLapElapsed(lap);
-
-    /*
-     * 編集前のラップ経過時間
-     *
-     * 例：
-     * LAP2 = 30分
-     */
-
     const oldDuration =
         calculateLapDuration(
             index
         );
-
     const hours =
         Number(
             document
@@ -2090,7 +1559,6 @@ function saveEdit() {
                 )
                 .value
         );
-
     const minutes =
         Number(
             document
@@ -2099,7 +1567,6 @@ function saveEdit() {
                 )
                 .value
         );
-
     const seconds =
         Number(
             document
@@ -2108,14 +1575,6 @@ function saveEdit() {
                 )
                 .value
         );
-
-    /*
-     * 編集後のラップ経過時間
-     *
-     * 例：
-     * 25分
-     */
-
     const newDuration =
         (
             (
@@ -2124,76 +1583,29 @@ function saveEdit() {
             ) * 60 +
             seconds
         ) * 1000;
-
-    /*
-     * ラップ経過時間の差分
-     *
-     * 例：
-     * 25分 − 30分
-     * = −5分
-     */
-
     const difference =
         newDuration -
         oldDuration;
-
-    /*
-     * 編集したラップ自身を変更
-     *
-     * 例：
-     * 2時間00分 − 5分
-     * = 1時間55分
-     */
-
     lap.elapsed =
         Math.max(
             0,
             oldElapsed +
             difference
         );
-
-    /*
-     * 編集したラップより新しいラップも
-     * 同じ差分だけ変更
-     *
-     * 例：
-     *
-     * LAP3 elapsed = 4時間10分
-     * LAP2 elapsed = 2時間00分
-     *
-     * LAP2を−5分
-     *
-     * → LAP3 elapsed = 4時間05分
-     * → LAP2 elapsed = 1時間55分
-     *
-     * これにより、
-     *
-     * LAP3 = 4時間05分 − 1時間55分
-     *      = 2時間10分
-     *
-     * LAP2 = 1時間55分 − 1時間30分
-     *      = 25分
-     *
-     * となる
-     */
-
     state.laps.forEach(
         otherLap => {
-
             if (
                 otherLap.id ===
                 lap.id
             ) {
                 return;
             }
-
             if (
                 getLapElapsed(
                     otherLap
                 ) >
                 oldElapsed
             ) {
-
                 otherLap.elapsed =
                     Math.max(
                         0,
@@ -2202,21 +1614,9 @@ function saveEdit() {
                         ) +
                         difference
                     );
-
             }
-
         }
     );
-
-    /*
-     * 現在のストップウォッチ時間も
-     * 同じ差分だけ変更
-     *
-     * 例：
-     * 4時間10分 − 5分
-     * = 4時間05分
-     */
-
     state.accumulated =
         Math.max(
             0,
@@ -2227,108 +1627,73 @@ function saveEdit() {
             ) +
             difference
         );
-
-    /*
-     * 経過時間順に並べる
-     */
-
     state.laps.sort(
         (a, b) =>
             getLapElapsed(b) -
             getLapElapsed(a)
     );
-
     normalizeLaps();
-
     saveState();
-
     renderLaps();
-
     updateTimer();
-
     closeEditModal();
-
 }
-
 /* =========================================================
    NORMALIZE
 ========================================================= */
-
 function normalizeLaps() {
-
     if (
         state.laps.length <= 1
     ) {
         return;
     }
-
     for (
         let i = 0;
         i < state.laps.length - 1;
         i++
     ) {
-
         const newer =
             state.laps[i];
-
         const older =
             state.laps[i + 1];
-
         if (
             newer.elapsed <
             older.elapsed
         ) {
-
             newer.elapsed =
                 older.elapsed;
-
         }
-
     }
-
 }
-
 /* =========================================================
    DELETE
 ========================================================= */
-
 async function deleteLap() {
-
     if (!editingLapId) {
         return;
     }
-
     const confirmed =
         await showConfirm(
             "ラップを削除しますか？",
             "削除"
         );
-
     if (!confirmed) {
         return;
     }
-
     state.laps =
         state.laps.filter(
             lap =>
                 lap.id !==
                 editingLapId
         );
-
     normalizeLaps();
-
     saveState();
-
     renderLaps();
-
     closeEditModal();
-
 }
-
 /* =========================================================
    EVENTS
 ========================================================= */
-
 document
     .getElementById(
         "startStopButton"
@@ -2337,7 +1702,6 @@ document
         "click",
         startStopwatch
     );
-
 document
     .getElementById(
         "secondaryButton"
@@ -2345,20 +1709,13 @@ document
     .addEventListener(
         "click",
         () => {
-
             if (state.running) {
-
                 addLap();
-
             } else {
-
                 resetStopwatch();
-
             }
-
         }
     );
-
 document
     .getElementById(
         "cancelEdit"
@@ -2367,7 +1724,6 @@ document
         "click",
         closeEditModal
     );
-
 document
     .getElementById(
         "saveEdit"
@@ -2376,7 +1732,6 @@ document
         "click",
         saveEdit
     );
-
 document
     .getElementById(
         "deleteLap"
@@ -2385,7 +1740,6 @@ document
         "click",
         deleteLap
     );
-
 document
     .getElementById(
         "modalOverlay"
@@ -2393,25 +1747,19 @@ document
     .addEventListener(
         "click",
         event => {
-
             if (
                 event.target ===
                 document.getElementById(
                     "modalOverlay"
                 )
             ) {
-
                 closeEditModal();
-
             }
-
         }
     );
-
-/*
- * カスタム確認ダイアログ
- */
-
+/* =========================================================
+   CONFIRM DIALOG
+========================================================= */
 document
     .getElementById(
         "confirmCancel"
@@ -2419,12 +1767,9 @@ document
     .addEventListener(
         "click",
         () => {
-
             closeConfirm(false);
-
         }
     );
-
 document
     .getElementById(
         "confirmOK"
@@ -2432,12 +1777,9 @@ document
     .addEventListener(
         "click",
         () => {
-
             closeConfirm(true);
-
         }
     );
-
 document
     .getElementById(
         "confirmOverlay"
@@ -2445,40 +1787,26 @@ document
     .addEventListener(
         "click",
         event => {
-
             if (
                 event.target ===
                 document.getElementById(
                     "confirmOverlay"
                 )
             ) {
-
                 closeConfirm(false);
-
             }
-
         }
     );
-
 /* =========================================================
    INITIALIZE
 ========================================================= */
-
 loadState();
-
 updateTimer();
-
 updateControls();
-
 renderLaps();
-
 if (state.running) {
-
     updateTimer();
-
 }
-
 </script>
-
 </body>
 </html>
