@@ -831,10 +831,6 @@ input {
             id="confirmTitle">
             確認
         </div>
-        <div
-            class="confirm-message"
-            id="confirmMessage">
-        </div>
     </div>
     <div class="confirm-buttons">
         <button
@@ -871,54 +867,22 @@ let animationFrame = null;
    CUSTOM CONFIRM
 ========================================================= */
 let confirmResolver = null;
-function showConfirm(
-    title,
-    message,
-    okText = "実行"
-) {
-    return new Promise(
-        resolve => {
-            confirmResolver =
-                resolve;
-            document
-                .getElementById(
-                    "confirmTitle"
-                )
-                .textContent =
-                title;
-            document
-                .getElementById(
-                    "confirmMessage"
-                )
-                .textContent =
-                message;
-            document
-                .getElementById(
-                    "confirmOK"
-                )
-                .textContent =
-                okText;
-            document
-                .getElementById(
-                    "confirmOverlay"
-                )
-                .classList.add(
-                    "show"
-                );
-        }
-    );
+
+function showConfirm(title, okText) {
+    return new Promise(resolve => {
+        confirmResolver = resolve;
+
+        document.getElementById("confirmTitle").textContent = title;
+        document.getElementById("confirmOK").textContent = okText;
+        document.getElementById("confirmOverlay").classList.add("show");
+    });
 }
+
 function closeConfirm(result) {
-    document
-        .getElementById(
-            "confirmOverlay"
-        )
-        .classList.remove(
-            "show"
-        );
+    document.getElementById("confirmOverlay").classList.remove("show");
+
     if (confirmResolver) {
-        const resolve =
-            confirmResolver;
+        const resolve = confirmResolver;
         confirmResolver = null;
         resolve(result);
     }
