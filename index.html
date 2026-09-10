@@ -5,24 +5,14 @@
 
 <meta
     name="viewport"
-    content="
-        width=device-width,
-        initial-scale=1,
-        maximum-scale=1,
-        user-scalable=no,
-        viewport-fit=cover
-    "
->
+    content="width=device-width,
+             initial-scale=1,
+             maximum-scale=1,
+             user-scalable=no,
+             viewport-fit=cover">
 
-<meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
->
-
-<meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent"
->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <title>Study Timer</title>
 
@@ -86,19 +76,11 @@ button {
 
     min-height: 0;
 
-    /*
-     * iPhoneのノッチ / Dynamic Island対策。
-     *
-     * 上：
-     *   最低16px + safe area
-     *
-     * 下：
-     *   safe area + 最低24px
-     */
     padding:
-        max(16px, calc(env(safe-area-inset-top) + 12px))
+        max(32px, env(safe-area-inset-top))
         24px
-        max(24px, calc(env(safe-area-inset-bottom) + 16px));
+        max(40px, env(safe-area-inset-bottom))
+        24px;
 
     background:
         radial-gradient(
@@ -109,9 +91,6 @@ button {
         );
 
     overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
 }
 
 
@@ -123,24 +102,21 @@ header {
     width: 100%;
     max-width: 760px;
 
-    min-height: 20px;
+    height: 30px;
 
     margin:
         0 auto
-        clamp(18px, 3vh, 28px);
+        20px;
 
     display: flex;
+
     justify-content: space-between;
     align-items: center;
-
-    gap: 16px;
 
     flex-shrink: 0;
 }
 
 .title {
-    min-width: 0;
-
     color: #f5f5f7;
 
     font-size: 14px;
@@ -149,8 +125,6 @@ header {
     letter-spacing: 2px;
 
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .status {
@@ -159,11 +133,10 @@ header {
 
     gap: 7px;
 
-    flex-shrink: 0;
-
     color: #555;
 
     font-size: 11px;
+
     letter-spacing: 1.5px;
 
     white-space: nowrap;
@@ -176,8 +149,6 @@ header {
     border-radius: 50%;
 
     background: #444;
-
-    flex-shrink: 0;
 }
 
 .status.running {
@@ -188,7 +159,7 @@ header {
     background: #30d158;
 
     box-shadow:
-        0 0 8px rgba(48, 209, 88, .7);
+        0 0 8px rgba(48,209,88,.7);
 }
 
 
@@ -200,14 +171,24 @@ main {
     width: 100%;
     max-width: 760px;
 
-    flex: 1;
-
-    min-height: 0;
+    height:
+        calc(
+            100dvh
+            - 32px
+            - 30px
+            - 20px
+            - 40px
+            - env(safe-area-inset-top)
+            - env(safe-area-inset-bottom)
+        );
 
     margin: 0 auto;
 
     display: flex;
+
     flex-direction: column;
+
+    min-height: 0;
 }
 
 
@@ -220,41 +201,17 @@ main {
 
     text-align: center;
 
-    /*
-     * 画面の高さに応じて上下の余白を変える。
-     *
-     * 低い画面では余白を小さくし、
-     * 高い画面では少し余裕を持たせる。
-     */
     margin:
-        clamp(24px, 6vh, 60px)
-        0
-        clamp(28px, 6vh, 60px);
+        50px 0;
 
     flex-shrink: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .timer {
-    width: 100%;
-
     color: #f5f5f7;
 
-    /*
-     * vwだけではなくvhも考慮。
-     *
-     * 横幅が十分でも高さが低い端末で
-     * タイマーが大きくなりすぎるのを防止。
-     */
     font-size:
-        clamp(
-            62px,
-            min(22vw, 15vh),
-            165px
-        );
+        clamp(66px, 22vw, 165px);
 
     font-weight: 300;
 
@@ -265,19 +222,12 @@ main {
     white-space: nowrap;
 
     font-variant-numeric: tabular-nums;
-
     font-feature-settings: "tnum";
-
-    overflow: hidden;
 }
 
 .timer.long {
     font-size:
-        clamp(
-            52px,
-            min(16.5vw, 12vh),
-            165px
-        );
+        clamp(58px, 16.5vw, 165px);
 
     letter-spacing: -3px;
 }
@@ -297,7 +247,7 @@ main {
 
     margin:
         0 auto
-        clamp(28px, 5vh, 50px);
+        50px;
 
     flex-shrink: 0;
 }
@@ -357,6 +307,7 @@ main {
 
 main > section:last-child {
     display: flex;
+
     flex-direction: column;
 
     min-height: 0;
@@ -375,7 +326,8 @@ main > section:last-child {
     justify-content: space-between;
     align-items: baseline;
 
-    padding: 0 5px;
+    padding:
+        0 5px;
 
     margin-bottom: 12px;
 
@@ -394,8 +346,6 @@ main > section:last-child {
     color: #555;
 
     font-size: 12px;
-
-    font-variant-numeric: tabular-nums;
 }
 
 
@@ -404,7 +354,8 @@ main > section:last-child {
 ========================================================= */
 
 .laps {
-    border-top: 1px solid #242424;
+    border-top:
+        1px solid #242424;
 
     min-height: 0;
 
@@ -416,22 +367,19 @@ main > section:last-child {
     overscroll-behavior: contain;
 
     scrollbar-width: none;
+
+    flex: 1;
 }
 
 .laps::-webkit-scrollbar {
     display: none;
 }
 
-
-/* =========================================================
-   LAP
-========================================================= */
-
 .lap {
     display: grid;
 
     grid-template-columns:
-        minmax(0, 1fr)
+        1fr
         auto;
 
     align-items: center;
@@ -441,7 +389,8 @@ main > section:last-child {
     padding:
         12px 5px;
 
-    border-bottom: 1px solid #202020;
+    border-bottom:
+        1px solid #202020;
 
     cursor: pointer;
 
@@ -465,8 +414,6 @@ main > section:last-child {
     font-size: 15px;
 
     font-variant-numeric: tabular-nums;
-
-    white-space: nowrap;
 }
 
 .lap-number {
@@ -479,20 +426,6 @@ main > section:last-child {
     flex-shrink: 0;
 }
 
-.lap-date {
-    width: 48px;
-
-    flex-shrink: 0;
-}
-
-.lap-clock {
-    margin-left: 16px;
-
-    color: #bbb;
-
-    flex-shrink: 0;
-}
-
 .lap-time {
     color: #eee;
 
@@ -500,15 +433,14 @@ main > section:last-child {
 
     text-align: right;
 
-    white-space: nowrap;
-
     font-variant-numeric: tabular-nums;
 
-    margin-left: 12px;
+    white-space: nowrap;
 }
 
 .empty {
-    padding: 42px 0;
+    padding:
+        42px 0;
 
     color: #555;
 
@@ -532,7 +464,8 @@ main > section:last-child {
     align-items: flex-end;
     justify-content: center;
 
-    background: rgba(0,0,0,.68);
+    background:
+        rgba(0,0,0,.68);
 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -670,7 +603,8 @@ input {
 .modal-buttons {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
     gap: 10px;
 
@@ -734,7 +668,8 @@ input {
 
     padding: 10px;
 
-    background: rgba(0,0,0,.55);
+    background:
+        rgba(0,0,0,.55);
 
     z-index: 200;
 }
@@ -800,9 +735,11 @@ input {
 .confirm-buttons {
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns:
+        1fr 1fr;
 
-    border-top: 1px solid #444;
+    border-top:
+        1px solid #444;
 }
 
 .confirm-button {
@@ -821,7 +758,8 @@ input {
 }
 
 .confirm-button + .confirm-button {
-    border-left: 1px solid #444;
+    border-left:
+        1px solid #444;
 }
 
 .confirm-button:active {
@@ -834,133 +772,18 @@ input {
 
 
 /* =========================================================
-   SMALL HEIGHT PHONE
+   iPAD / LANDSCAPE
+   600px以上
 ========================================================= */
 
-@media (
-    max-width: 599px
-) and (
-    max-height: 700px
-) {
+@media (min-width: 600px) {
 
     .app {
-        padding-top:
-            max(
-                12px,
-                calc(env(safe-area-inset-top) + 8px)
-            );
-    }
-
-    header {
-        margin-bottom: 12px;
-    }
-
-    .timer-area {
-        margin:
-            18px 0
-            24px;
-    }
-
-    .timer {
-        font-size:
-            clamp(
-                58px,
-                min(20vw, 14vh),
-                120px
-            );
-    }
-
-    .timer.long {
-        font-size:
-            clamp(
-                48px,
-                min(15vw, 11vh),
-                115px
-            );
-    }
-
-    .controls {
-        margin-bottom: 24px;
-    }
-
-    .circle-button {
-        width: 72px;
-        height: 72px;
-    }
-
-    .circle-button.primary {
-        width: 76px;
-        height: 76px;
-    }
-}
-
-
-/* =========================================================
-   SMALL PHONE
-========================================================= */
-
-@media (max-width: 380px) {
-
-    .app {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .controls {
-        width: 280px;
-    }
-
-    .circle-button {
-        width: 70px;
-        height: 70px;
-    }
-
-    .circle-button.primary {
-        width: 76px;
-        height: 76px;
-    }
-
-    .lap {
-        grid-template-columns:
-            minmax(0, 1fr)
-            auto;
-
-        padding-left: 3px;
-        padding-right: 3px;
-    }
-
-    .lap-number {
-        width: 43px;
-    }
-
-    .lap-date {
-        width: 43px;
-    }
-
-    .lap-clock {
-        margin-left: 10px;
-    }
-
-    .lap-time {
-        margin-left: 8px;
-    }
-}
-
-
-/* =========================================================
-   iPAD PORTRAIT / TABLET
-   600px〜
-========================================================= */
-
-@media (
-    min-width: 600px
-) and (
-    min-height: 500px
-) {
-
-    .app {
-        padding-left: 48px;
-        padding-right: 48px;
+        padding:
+            max(32px, env(safe-area-inset-top))
+            48px
+            max(32px, env(safe-area-inset-bottom))
+            48px;
     }
 
     header,
@@ -969,16 +792,27 @@ input {
     }
 
     header {
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
 
     main {
+        height:
+            calc(
+                100dvh
+                - 32px
+                - 30px
+                - 25px
+                - 32px
+                - env(safe-area-inset-top)
+                - env(safe-area-inset-bottom)
+            );
+
         display: grid;
 
         grid-template-columns:
-            1fr
+            minmax(90px, 1fr)
             minmax(360px, 650px)
-            1fr;
+            minmax(90px, 1fr);
 
         grid-template-rows:
             auto
@@ -998,40 +832,38 @@ input {
         font-size: 12px;
     }
 
+
+    /* =====================================================
+       TIMER
+    ===================================================== */
+
     .timer-area {
         grid-column: 1 / 4;
         grid-row: 1;
 
         margin:
-            clamp(24px, 5vh, 50px)
-            0
-            clamp(36px, 6vh, 65px);
+            20px 0 45px;
+
+        padding: 0;
     }
 
     .timer {
         font-size:
-            clamp(
-                110px,
-                min(21vw, 18vh),
-                220px
-            );
+            clamp(110px, 18vw, 190px);
 
         letter-spacing: -5px;
     }
 
     .timer.long {
         font-size:
-            clamp(
-                90px,
-                min(16.5vw, 15vh),
-                190px
-            );
+            clamp(90px, 14vw, 160px);
     }
 
-    /*
-     * ボタンを左右に配置。
-     * ラップ一覧と同じ2行目に置く。
-     */
+
+    /* =====================================================
+       CONTROLS
+    ===================================================== */
+
     .controls {
         grid-column: 1 / 4;
         grid-row: 2;
@@ -1039,19 +871,20 @@ input {
         display: grid;
 
         grid-template-columns:
-            1fr
+            minmax(90px, 1fr)
             minmax(360px, 650px)
-            1fr;
+            minmax(90px, 1fr);
 
         column-gap: 30px;
 
         align-items: start;
 
+        justify-content: initial;
+
         width: 100%;
         height: 100%;
 
         margin: 0;
-
         padding: 0;
 
         pointer-events: none;
@@ -1081,6 +914,25 @@ input {
         pointer-events: auto;
     }
 
+    .circle-button {
+        width: 78px;
+        height: 78px;
+
+        font-size: 13px;
+    }
+
+    .circle-button.primary {
+        width: 82px;
+        height: 82px;
+
+        font-size: 14px;
+    }
+
+
+    /* =====================================================
+       LAPS
+    ===================================================== */
+
     main > section:last-child {
         grid-column: 2;
         grid-row: 2;
@@ -1094,7 +946,10 @@ input {
     }
 
     .section-header {
-        padding: 0 8px;
+        padding:
+            0 8px;
+
+        margin-bottom: 10px;
     }
 
     .section-title {
@@ -1107,38 +962,286 @@ input {
 
     .lap {
         padding:
-            14px 8px;
+            12px 8px;
     }
 
     .lap-day {
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .lap-number {
         width: 65px;
-        font-size: 11px;
-    }
 
-    .lap-date {
-        width: 55px;
+        font-size: 10px;
     }
 
     .lap-time {
-        font-size: 18px;
+        font-size: 17px;
+    }
+}
+
+
+/* =========================================================
+   iPHONE LANDSCAPE
+   横向きiPhone専用
+========================================================= */
+
+@media (
+    orientation: landscape
+) and (
+    max-width: 599px
+) {
+
+    .app {
+        padding:
+            max(10px, env(safe-area-inset-top))
+            max(18px, env(safe-area-inset-right))
+            max(10px, env(safe-area-inset-bottom))
+            max(18px, env(safe-area-inset-left));
+    }
+
+    header {
+        height: 22px;
+
+        margin:
+            0 auto
+            8px;
+
+        max-width: 900px;
+    }
+
+    .title {
+        font-size: 11px;
+
+        letter-spacing: 1.8px;
+    }
+
+    .status {
+        font-size: 9px;
+
+        gap: 5px;
+
+        letter-spacing: 1px;
+    }
+
+    .status-dot {
+        width: 5px;
+        height: 5px;
+    }
+
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    main {
+        width: 100%;
+        max-width: 900px;
+
+        height:
+            calc(
+                100dvh
+                - 10px
+                - 22px
+                - 8px
+                - 10px
+                - env(safe-area-inset-top)
+                - env(safe-area-inset-bottom)
+            );
+
+        display: grid;
+
+        grid-template-columns:
+            minmax(72px, 1fr)
+            minmax(250px, 520px)
+            minmax(72px, 1fr);
+
+        grid-template-rows:
+            auto
+            minmax(0, 1fr);
+
+        column-gap: 16px;
+
+        align-items: start;
+    }
+
+
+    /* =====================================================
+       TIMER
+    ===================================================== */
+
+    .timer-area {
+        grid-column: 1 / 4;
+        grid-row: 1;
+
+        margin:
+            5px 0 18px;
+
+        padding: 0;
+    }
+
+    .timer {
+        font-size:
+            clamp(64px, 16vw, 105px);
+
+        line-height: .92;
+
+        letter-spacing: -3px;
+    }
+
+    .timer.long {
+        font-size:
+            clamp(52px, 12vw, 85px);
+
+        letter-spacing: -3px;
+    }
+
+
+    /* =====================================================
+       CONTROLS
+    ===================================================== */
+
+    .controls {
+        grid-column: 1 / 4;
+        grid-row: 2;
+
+        display: grid;
+
+        grid-template-columns:
+            minmax(72px, 1fr)
+            minmax(250px, 520px)
+            minmax(72px, 1fr);
+
+        column-gap: 16px;
+
+        align-items: start;
+
+        width: 100%;
+        height: 100%;
+
+        margin: 0;
+        padding: 0;
+
+        pointer-events: none;
+
+        z-index: 2;
+    }
+
+    #secondaryButton {
+        grid-column: 1;
+        grid-row: 1;
+
+        justify-self: start;
+
+        margin: 0;
+
+        pointer-events: auto;
+    }
+
+    #startStopButton {
+        grid-column: 3;
+        grid-row: 1;
+
+        justify-self: end;
+
+        margin: 0;
+
+        pointer-events: auto;
+    }
+
+    .circle-button {
+        width: 62px;
+        height: 62px;
+
+        font-size: 11px;
+    }
+
+    .circle-button.primary {
+        width: 66px;
+        height: 66px;
+
+        font-size: 12px;
+    }
+
+
+    /* =====================================================
+       LAPS
+    ===================================================== */
+
+    main > section:last-child {
+        grid-column: 2;
+        grid-row: 2;
+
+        width: 100%;
+        height: 100%;
+
+        min-height: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        z-index: 1;
+    }
+
+    .section-header {
+        padding:
+            0 5px;
+
+        margin-bottom: 6px;
+    }
+
+    .section-title {
+        font-size: 10px;
+
+        letter-spacing: 1.8px;
+    }
+
+    .lap-count {
+        font-size: 10px;
+    }
+
+    .laps {
+        flex: 1;
+
+        min-height: 0;
+
+        overflow-y: auto;
+    }
+
+    .lap {
+        padding:
+            7px 5px;
+    }
+
+    .lap-day {
+        font-size: 12px;
+    }
+
+    .lap-number {
+        width: 48px;
+
+        font-size: 8px;
+    }
+
+    .lap-time {
+        font-size: 13px;
+    }
+
+    .empty {
+        padding:
+            20px 0;
+
+        font-size: 10px;
     }
 }
 
 
 /* =========================================================
    iPAD LANDSCAPE / LARGE TABLET
-   900px〜
+   900px以上
 ========================================================= */
 
-@media (
-    min-width: 900px
-) and (
-    min-height: 500px
-) {
+@media (min-width: 900px) {
 
     .app {
         padding-left: 70px;
@@ -1151,7 +1254,7 @@ input {
     }
 
     header {
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
 
     main {
@@ -1160,40 +1263,24 @@ input {
             minmax(450px, 700px)
             minmax(140px, 1fr);
 
-        grid-template-rows:
-            auto
-            minmax(0, 1fr);
-
         column-gap: 40px;
     }
 
     .timer-area {
-        padding: 0;
-
         margin:
-            clamp(24px, 5vh, 45px)
-            0
-            clamp(40px, 6vh, 70px);
+            20px 0 45px;
     }
 
     .timer {
         font-size:
-            clamp(
-                135px,
-                min(16.5vw, 22vh),
-                285px
-            );
+            clamp(140px, 15vw, 230px);
 
-        letter-spacing: -7px;
+        letter-spacing: -6px;
     }
 
     .timer.long {
         font-size:
-            clamp(
-                110px,
-                min(12vw, 18vh),
-                240px
-            );
+            clamp(110px, 11vw, 195px);
     }
 
     .controls {
@@ -1206,17 +1293,17 @@ input {
     }
 
     .circle-button {
-        width: 105px;
-        height: 105px;
+        width: 96px;
+        height: 96px;
 
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .circle-button.primary {
-        width: 112px;
-        height: 112px;
+        width: 104px;
+        height: 104px;
 
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .lap {
@@ -1224,44 +1311,36 @@ input {
             1fr
             220px;
 
-        padding-left: 15px;
-        padding-right: 15px;
+        padding:
+            12px 12px;
     }
 
     .lap-day {
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .lap-number {
-        width: 80px;
+        width: 75px;
 
         font-size: 11px;
     }
 
-    .lap-date {
-        width: 65px;
-    }
-
     .lap-time {
-        font-size: 19px;
+        font-size: 18px;
     }
 }
 
 
 /* =========================================================
    PC
-   1200px〜
+   1200px以上
 ========================================================= */
 
-@media (
-    min-width: 1200px
-) and (
-    min-height: 600px
-) {
+@media (min-width: 1200px) {
 
     .app {
         padding:
-            40px
+            45px
             80px
             60px;
     }
@@ -1276,45 +1355,37 @@ input {
     }
 
     main {
+        height:
+            calc(
+                100dvh
+                - 45px
+                - 30px
+                - 60px
+            );
+
         grid-template-columns:
             minmax(180px, 1fr)
             minmax(500px, 760px)
             minmax(180px, 1fr);
 
-        grid-template-rows:
-            auto
-            minmax(0, 1fr);
-
         column-gap: 50px;
     }
 
     .timer-area {
-        padding-top: 0;
-
         margin:
-            clamp(25px, 5vh, 50px)
-            0
-            clamp(45px, 7vh, 80px);
+            25px 0 55px;
     }
 
     .timer {
         font-size:
-            clamp(
-                130px,
-                min(10vw, 22vh),
-                200px
-            );
+            clamp(130px, 10vw, 200px);
 
-        letter-spacing: -9px;
+        letter-spacing: -7px;
     }
 
     .timer.long {
         font-size:
-            clamp(
-                100px,
-                min(8vw, 18vh),
-                175px
-            );
+            clamp(100px, 8vw, 175px);
     }
 
     .controls {
@@ -1327,17 +1398,17 @@ input {
     }
 
     .circle-button {
-        width: 112px;
-        height: 112px;
+        width: 108px;
+        height: 108px;
 
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .circle-button.primary {
-        width: 120px;
-        height: 120px;
+        width: 116px;
+        height: 116px;
 
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .section-header {
@@ -1360,7 +1431,7 @@ input {
             1fr
             250px;
 
-        min-height: 92px;
+        min-height: 82px;
 
         padding: 15px;
     }
@@ -1375,10 +1446,6 @@ input {
         font-size: 12px;
     }
 
-    .lap-date {
-        width: 70px;
-    }
-
     .lap-time {
         font-size: 20px;
     }
@@ -1387,14 +1454,10 @@ input {
 
 /* =========================================================
    VERY LARGE PC
-   1600px〜
+   1600px以上
 ========================================================= */
 
-@media (
-    min-width: 1600px
-) and (
-    min-height: 700px
-) {
+@media (min-width: 1600px) {
 
     .app {
         padding-left: 120px;
@@ -1435,6 +1498,50 @@ input {
 
 
 /* =========================================================
+   SMALL PHONE
+   縦向きのみ
+========================================================= */
+
+@media (
+    max-width: 380px
+) and (
+    orientation: portrait
+) {
+
+    .app {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .controls {
+        width: 280px;
+    }
+
+    .circle-button {
+        width: 70px;
+        height: 70px;
+    }
+
+    .circle-button.primary {
+        width: 76px;
+        height: 76px;
+    }
+
+    .timer {
+        font-size: 20vw;
+
+        letter-spacing: -2px;
+    }
+
+    .timer.long {
+        font-size: 15vw;
+
+        letter-spacing: -2px;
+    }
+}
+
+
+/* =========================================================
    TOUCH / SELECTION
 ========================================================= */
 
@@ -1453,116 +1560,109 @@ button {
 
 <div class="app">
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+<header>
 
-    <header>
+    <div class="title">
+        STUDY TIMER
+    </div>
 
-        <div class="title">
-            STUDY TIMER
+    <div class="status" id="status">
+
+        <div class="status-dot"></div>
+
+        <span id="statusText">
+            READY
+        </span>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     TIMER
+===================================================== -->
+
+<section class="timer-area">
+
+    <div
+        class="timer"
+        id="timer"
+    >
+        00:00.00
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTROLS
+===================================================== -->
+
+<section class="controls">
+
+    <button
+        class="circle-button"
+        id="secondaryButton"
+    >
+        リセット
+    </button>
+
+    <button
+        class="circle-button primary"
+        id="startStopButton"
+    >
+        開始
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     LAPS
+===================================================== -->
+
+<section>
+
+    <div class="section-header">
+
+        <div class="section-title">
+            LAPS
         </div>
 
-        <div class="status" id="status">
-
-            <div class="status-dot"></div>
-
-            <span id="statusText">
-                READY
-            </span>
-
+        <div
+            class="lap-count"
+            id="lapCount"
+        >
+            0
         </div>
 
-    </header>
+    </div>
 
 
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
+    <div
+        class="laps"
+        id="laps"
+    >
 
-    <main>
+        <div class="empty">
+            ラップを記録すると、ここに表示されます
+        </div>
 
-        <!-- =================================================
-             TIMER
-        ================================================== -->
+    </div>
 
-        <section class="timer-area">
+</section>
 
-            <div
-                class="timer"
-                id="timer"
-            >
-                00:00.00
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CONTROLS
-        ================================================== -->
-
-        <section class="controls">
-
-            <button
-                class="circle-button"
-                id="secondaryButton"
-            >
-                リセット
-            </button>
-
-            <button
-                class="circle-button primary"
-                id="startStopButton"
-            >
-                開始
-            </button>
-
-        </section>
-
-
-        <!-- =================================================
-             LAPS
-        ================================================== -->
-
-        <section>
-
-            <div class="section-header">
-
-                <div class="section-title">
-                    LAPS
-                </div>
-
-                <div
-                    class="lap-count"
-                    id="lapCount"
-                >
-                    0
-                </div>
-
-            </div>
-
-            <div
-                class="laps"
-                id="laps"
-            >
-
-                <div class="empty">
-                    ラップを記録すると、ここに表示されます
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
+</main>
 
 </div>
 
 
-<!-- =========================================================
+<!-- =====================================================
      EDIT MODAL
-========================================================= -->
+===================================================== -->
 
 <div
     class="modal-overlay"
@@ -1575,11 +1675,13 @@ button {
             ラップを編集
         </div>
 
+
         <div class="field">
 
             <label>
                 経過時間
             </label>
+
 
             <div class="time-picker">
 
@@ -1593,6 +1695,7 @@ button {
                     時間
                 </span>
 
+
                 <select
                     id="editMinutes"
                     aria-label="分"
@@ -1602,6 +1705,7 @@ button {
                 <span>
                     分
                 </span>
+
 
                 <select
                     id="editSeconds"
@@ -1617,9 +1721,11 @@ button {
 
         </div>
 
+
         <div class="info">
             ラップの経過時間を変更します。
         </div>
+
 
         <div class="modal-buttons">
 
@@ -1630,6 +1736,7 @@ button {
                 キャンセル
             </button>
 
+
             <button
                 class="modal-button save"
                 id="saveEdit"
@@ -1638,6 +1745,7 @@ button {
             </button>
 
         </div>
+
 
         <button
             class="delete-button"
@@ -1651,9 +1759,9 @@ button {
 </div>
 
 
-<!-- =========================================================
+<!-- =====================================================
      CONFIRM MODAL
-========================================================= -->
+===================================================== -->
 
 <div
     class="confirm-overlay"
@@ -1673,6 +1781,7 @@ button {
 
         </div>
 
+
         <div class="confirm-buttons">
 
             <button
@@ -1681,6 +1790,7 @@ button {
             >
                 キャンセル
             </button>
+
 
             <button
                 class="confirm-button danger"
@@ -1726,12 +1836,13 @@ let editingLapId = null;
 
 let animationFrame = null;
 
-let confirmResolver = null;
-
 
 /* =========================================================
    CUSTOM CONFIRM
 ========================================================= */
+
+let confirmResolver = null;
+
 
 function showConfirm(
     title,
@@ -1744,12 +1855,14 @@ function showConfirm(
             confirmResolver =
                 resolve;
 
+
             document
                 .getElementById(
                     "confirmTitle"
                 )
                 .textContent =
                 title;
+
 
             document
                 .getElementById(
@@ -1758,12 +1871,14 @@ function showConfirm(
                 .textContent =
                 okText;
 
+
             document
                 .getElementById(
                     "confirmOverlay"
                 )
-                .classList
-                .add("show");
+                .classList.add(
+                    "show"
+                );
 
         }
     );
@@ -1771,16 +1886,16 @@ function showConfirm(
 }
 
 
-function closeConfirm(
-    result
-) {
+function closeConfirm(result) {
 
     document
         .getElementById(
             "confirmOverlay"
         )
-        .classList
-        .remove("show");
+        .classList.remove(
+            "show"
+        );
+
 
     if (confirmResolver) {
 
@@ -1802,21 +1917,10 @@ function closeConfirm(
 
 function saveState() {
 
-    try {
-
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(state)
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Failed to save state:",
-            error
-        );
-
-    }
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state)
+    );
 
 }
 
@@ -1830,12 +1934,15 @@ function loadState() {
                 STORAGE_KEY
             );
 
+
         if (!saved) {
             return;
         }
 
+
         const parsed =
             JSON.parse(saved);
+
 
         if (
             parsed &&
@@ -1872,11 +1979,6 @@ function loadState() {
 
     } catch (error) {
 
-        console.error(
-            "Failed to load state:",
-            error
-        );
-
         state = {
 
             running: false,
@@ -1905,6 +2007,7 @@ function getElapsed() {
             state.accumulated
         ) || 0;
 
+
     if (
         state.running &&
         state.currentRunStart
@@ -1915,6 +2018,7 @@ function getElapsed() {
             state.currentRunStart;
 
     }
+
 
     return Math.max(
         0,
@@ -1942,19 +2046,19 @@ function pad(
 }
 
 
-function formatStopwatch(
-    ms
-) {
+function formatStopwatch(ms) {
 
     ms = Math.max(
         0,
         Math.floor(ms)
     );
 
+
     const hours =
         Math.floor(
             ms / 3600000
         );
+
 
     const minutes =
         Math.floor(
@@ -1962,17 +2066,20 @@ function formatStopwatch(
             60000
         );
 
+
     const seconds =
         Math.floor(
             (ms % 60000) /
             1000
         );
 
+
     const centiseconds =
         Math.floor(
             (ms % 1000) /
             10
         );
+
 
     if (hours === 0) {
 
@@ -1985,6 +2092,7 @@ function formatStopwatch(
         );
 
     }
+
 
     return (
         hours +
@@ -1999,24 +2107,25 @@ function formatStopwatch(
 }
 
 
-function formatStudyTime(
-    ms
-) {
+function formatStudyTime(ms) {
 
     ms = Math.max(
         0,
         Math.floor(ms)
     );
 
+
     const totalSeconds =
         Math.floor(
             ms / 1000
         );
 
+
     const hours =
         Math.floor(
             totalSeconds / 3600
         );
+
 
     const minutes =
         Math.floor(
@@ -2024,10 +2133,13 @@ function formatStudyTime(
             60
         );
 
+
     const seconds =
         totalSeconds % 60;
 
+
     const result = [];
+
 
     if (hours > 0) {
 
@@ -2037,6 +2149,7 @@ function formatStudyTime(
 
     }
 
+
     if (minutes > 0) {
 
         result.push(
@@ -2044,6 +2157,7 @@ function formatStudyTime(
         );
 
     }
+
 
     if (
         seconds > 0 ||
@@ -2056,6 +2170,7 @@ function formatStudyTime(
 
     }
 
+
     return result.join("");
 
 }
@@ -2065,9 +2180,7 @@ function formatStudyTime(
    LAP
 ========================================================= */
 
-function getLapElapsed(
-    lap
-) {
+function getLapElapsed(lap) {
 
     return Math.max(
         0,
@@ -2079,19 +2192,20 @@ function getLapElapsed(
 }
 
 
-function calculateLapDuration(
-    index
-) {
+function calculateLapDuration(index) {
 
     const lap =
         state.laps[index];
+
 
     if (!lap) {
         return 0;
     }
 
+
     const previous =
         state.laps[index + 1];
+
 
     if (!previous) {
 
@@ -2101,65 +2215,12 @@ function calculateLapDuration(
 
     }
 
+
     return Math.max(
         0,
         getLapElapsed(lap) -
         getLapElapsed(previous)
     );
-
-}
-
-
-/* =========================================================
-   LAP NORMALIZE
-========================================================= */
-
-function normalizeLaps() {
-
-    if (
-        state.laps.length <= 1
-    ) {
-        return;
-    }
-
-    /*
-     * 新しいラップ → 古いラップ
-     * の順に並んでいることを保証。
-     */
-    state.laps.sort(
-        (a, b) =>
-            getLapElapsed(b) -
-            getLapElapsed(a)
-    );
-
-    /*
-     * elapsedの逆転を防止。
-     */
-    for (
-        let i = 0;
-        i < state.laps.length - 1;
-        i++
-    ) {
-
-        const newer =
-            state.laps[i];
-
-        const older =
-            state.laps[i + 1];
-
-        if (
-            getLapElapsed(newer) <
-            getLapElapsed(older)
-        ) {
-
-            newer.elapsed =
-                getLapElapsed(
-                    older
-                );
-
-        }
-
-    }
 
 }
 
@@ -2174,16 +2235,22 @@ function addLap() {
         return;
     }
 
+
     const now =
         Date.now();
+
 
     const elapsed =
         getElapsed();
 
-    state.laps.push({
+
+    state.laps.unshift({
 
         id:
-            crypto.randomUUID(),
+            Date.now().toString() +
+            Math.random()
+                .toString(36)
+                .slice(2),
 
         timestamp:
             new Date(
@@ -2195,7 +2262,13 @@ function addLap() {
 
     });
 
-    normalizeLaps();
+
+    state.laps.sort(
+        (a, b) =>
+            new Date(b.timestamp) -
+            new Date(a.timestamp)
+    );
+
 
     saveState();
 
@@ -2215,23 +2288,28 @@ function updateTimer() {
             "timer"
         );
 
+
     const elapsed =
         getElapsed();
+
 
     timer.textContent =
         formatStopwatch(
             elapsed
         );
 
+
     const hours =
         Math.floor(
             elapsed / 3600000
         );
 
+
     timer.classList.toggle(
         "long",
         hours > 0
     );
+
 
     if (state.running) {
 
@@ -2262,11 +2340,14 @@ function startStopwatch() {
         state.currentRunStart =
             null;
 
+
         saveState();
+
 
         cancelAnimationFrame(
             animationFrame
         );
+
 
         updateTimer();
 
@@ -2276,11 +2357,13 @@ function startStopwatch() {
 
     }
 
+
     state.running =
         true;
 
     state.currentRunStart =
         Date.now();
+
 
     saveState();
 
@@ -2301,6 +2384,7 @@ async function resetStopwatch() {
         return;
     }
 
+
     if (
         state.accumulated > 0 ||
         state.laps.length > 0
@@ -2312,11 +2396,13 @@ async function resetStopwatch() {
                 "リセット"
             );
 
+
         if (!confirmed) {
             return;
         }
 
     }
+
 
     state = {
 
@@ -2330,11 +2416,14 @@ async function resetStopwatch() {
 
     };
 
+
     saveState();
+
 
     cancelAnimationFrame(
         animationFrame
     );
+
 
     updateTimer();
 
@@ -2356,20 +2445,24 @@ function updateControls() {
             "secondaryButton"
         );
 
+
     const primary =
         document.getElementById(
             "startStopButton"
         );
+
 
     const status =
         document.getElementById(
             "status"
         );
 
+
     const statusText =
         document.getElementById(
             "statusText"
         );
+
 
     if (state.running) {
 
@@ -2379,34 +2472,43 @@ function updateControls() {
         primary.textContent =
             "停止";
 
+
         primary.classList.add(
             "running"
         );
+
 
         status.classList.add(
             "running"
         );
 
+
         statusText.textContent =
             "FOCUS";
+
 
         return;
 
     }
 
+
     secondary.textContent =
         "リセット";
 
+
     primary.textContent =
         "開始";
+
 
     primary.classList.remove(
         "running"
     );
 
+
     status.classList.remove(
         "running"
     );
+
 
     statusText.textContent =
         getElapsed() > 0
@@ -2427,13 +2529,16 @@ function renderLaps() {
             "laps"
         );
 
+
     const count =
         document.getElementById(
             "lapCount"
         );
 
+
     count.textContent =
         state.laps.length;
+
 
     if (
         state.laps.length === 0
@@ -2449,10 +2554,6 @@ function renderLaps() {
 
     }
 
-    /*
-     * 念のため描画前に順序を統一。
-     */
-    normalizeLaps();
 
     container.innerHTML =
         state.laps
@@ -2464,32 +2565,40 @@ function renderLaps() {
                             index
                         );
 
+
                     const lapNumber =
                         state.laps.length -
                         index;
+
 
                     const date =
                         new Date(
                             lap.timestamp
                         );
 
+
                     const month =
                         date.getMonth() + 1;
 
+
                     const day =
                         date.getDate();
+
 
                     const hours =
                         pad(
                             date.getHours()
                         );
 
+
                     const minutes =
                         pad(
                             date.getMinutes()
                         );
 
+
                     return `
+
                         <div
                             class="lap"
                             data-id="${lap.id}"
@@ -2501,15 +2610,14 @@ function renderLaps() {
                                     LAP ${lapNumber}
                                 </span>
 
-                                <span class="lap-date">
+                                <span>
                                     ${month}/${day}
-                                </span>
-
-                                <span class="lap-clock">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     ${hours}:${minutes}〜
                                 </span>
 
                             </div>
+
 
                             <div class="lap-time">
                                 ${formatStudyTime(
@@ -2518,11 +2626,13 @@ function renderLaps() {
                             </div>
 
                         </div>
+
                     `;
 
                 }
             )
             .join("");
+
 
     container
         .querySelectorAll(
@@ -2559,67 +2669,71 @@ function populateTimePicker() {
             "editHours"
         );
 
+
     const minutes =
         document.getElementById(
             "editMinutes"
         );
+
 
     const seconds =
         document.getElementById(
             "editSeconds"
         );
 
-    if (hours.options.length) {
-        return;
-    }
 
-    for (
-        let i = 0;
-        i <= 99;
-        i++
-    ) {
+    if (!hours.options.length) {
 
-        hours.add(
-            new Option(
-                pad(i),
-                i
-            )
-        );
+        for (
+            let i = 0;
+            i <= 99;
+            i++
+        ) {
 
-    }
+            hours.add(
+                new Option(
+                    pad(i),
+                    i
+                )
+            );
 
-    for (
-        let i = 0;
-        i <= 59;
-        i++
-    ) {
+        }
 
-        minutes.add(
-            new Option(
-                pad(i),
-                i
-            )
-        );
 
-        seconds.add(
-            new Option(
-                pad(i),
-                i
-            )
-        );
+        for (
+            let i = 0;
+            i <= 59;
+            i++
+        ) {
+
+            minutes.add(
+                new Option(
+                    pad(i),
+                    i
+                )
+            );
+
+
+            seconds.add(
+                new Option(
+                    pad(i),
+                    i
+                )
+            );
+
+        }
 
     }
 
 }
 
 
-function openEditModal(
-    id
-) {
+function openEditModal(id) {
 
     if (state.running) {
         return;
     }
+
 
     const index =
         state.laps.findIndex(
@@ -2627,17 +2741,22 @@ function openEditModal(
                 lap.id === id
         );
 
+
     if (index === -1) {
         return;
     }
 
+
     const lap =
         state.laps[index];
+
 
     editingLapId =
         id;
 
+
     populateTimePicker();
+
 
     const totalSeconds =
         Math.floor(
@@ -2645,6 +2764,7 @@ function openEditModal(
                 index
             ) / 1000
         );
+
 
     document
         .getElementById(
@@ -2659,6 +2779,7 @@ function openEditModal(
             )
         );
 
+
     document
         .getElementById(
             "editMinutes"
@@ -2669,6 +2790,7 @@ function openEditModal(
             60
         );
 
+
     document
         .getElementById(
             "editSeconds"
@@ -2677,12 +2799,14 @@ function openEditModal(
         totalSeconds %
         60;
 
+
     document
         .getElementById(
             "modalOverlay"
         )
-        .classList
-        .add("show");
+        .classList.add(
+            "show"
+        );
 
 }
 
@@ -2691,12 +2815,14 @@ function closeEditModal() {
 
     editingLapId = null;
 
+
     document
         .getElementById(
             "modalOverlay"
         )
-        .classList
-        .remove("show");
+        .classList.remove(
+            "show"
+        );
 
 }
 
@@ -2714,6 +2840,7 @@ function saveEdit() {
         return;
     }
 
+
     const index =
         state.laps.findIndex(
             lap =>
@@ -2721,22 +2848,25 @@ function saveEdit() {
                 editingLapId
         );
 
+
     if (index === -1) {
         return;
     }
 
+
     const lap =
         state.laps[index];
 
+
     const oldElapsed =
-        getLapElapsed(
-            lap
-        );
+        getLapElapsed(lap);
+
 
     const oldDuration =
         calculateLapDuration(
             index
         );
+
 
     const hours =
         Number(
@@ -2747,6 +2877,7 @@ function saveEdit() {
                 .value
         );
 
+
     const minutes =
         Number(
             document
@@ -2755,6 +2886,7 @@ function saveEdit() {
                 )
                 .value
         );
+
 
     const seconds =
         Number(
@@ -2765,6 +2897,7 @@ function saveEdit() {
                 .value
         );
 
+
     const newDuration =
         (
             (
@@ -2774,13 +2907,12 @@ function saveEdit() {
             seconds
         ) * 1000;
 
+
     const difference =
         newDuration -
         oldDuration;
 
-    /*
-     * 編集したラップ自身を変更。
-     */
+
     lap.elapsed =
         Math.max(
             0,
@@ -2788,10 +2920,7 @@ function saveEdit() {
             difference
         );
 
-    /*
-     * 編集対象より新しいラップは、
-     * 編集差分を引き継ぐ。
-     */
+
     state.laps.forEach(
         otherLap => {
 
@@ -2801,6 +2930,7 @@ function saveEdit() {
             ) {
                 return;
             }
+
 
             if (
                 getLapElapsed(
@@ -2823,9 +2953,7 @@ function saveEdit() {
         }
     );
 
-    /*
-     * タイマー全体にも差分を反映。
-     */
+
     state.accumulated =
         Math.max(
             0,
@@ -2837,7 +2965,16 @@ function saveEdit() {
             difference
         );
 
+
+    state.laps.sort(
+        (a, b) =>
+            getLapElapsed(b) -
+            getLapElapsed(a)
+    );
+
+
     normalizeLaps();
+
 
     saveState();
 
@@ -2845,15 +2982,55 @@ function saveEdit() {
 
     updateTimer();
 
-    updateControls();
-
     closeEditModal();
 
 }
 
 
 /* =========================================================
-   DELETE LAP
+   NORMALIZE
+========================================================= */
+
+function normalizeLaps() {
+
+    if (
+        state.laps.length <= 1
+    ) {
+        return;
+    }
+
+
+    for (
+        let i = 0;
+        i < state.laps.length - 1;
+        i++
+    ) {
+
+        const newer =
+            state.laps[i];
+
+
+        const older =
+            state.laps[i + 1];
+
+
+        if (
+            newer.elapsed <
+            older.elapsed
+        ) {
+
+            newer.elapsed =
+                older.elapsed;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   DELETE
 ========================================================= */
 
 async function deleteLap() {
@@ -2862,15 +3039,18 @@ async function deleteLap() {
         return;
     }
 
+
     const confirmed =
         await showConfirm(
             "ラップを削除しますか？",
             "削除"
         );
 
+
     if (!confirmed) {
         return;
     }
+
 
     state.laps =
         state.laps.filter(
@@ -2879,7 +3059,9 @@ async function deleteLap() {
                 editingLapId
         );
 
+
     normalizeLaps();
+
 
     saveState();
 
@@ -2991,9 +3173,7 @@ document
         "click",
         () => {
 
-            closeConfirm(
-                false
-            );
+            closeConfirm(false);
 
         }
     );
@@ -3007,9 +3187,7 @@ document
         "click",
         () => {
 
-            closeConfirm(
-                true
-            );
+            closeConfirm(true);
 
         }
     );
@@ -3030,9 +3208,7 @@ document
                 )
             ) {
 
-                closeConfirm(
-                    false
-                );
+                closeConfirm(false);
 
             }
 
@@ -3041,12 +3217,9 @@ document
 
 
 /* =========================================================
-   iOS / SAFARI ZOOM PREVENTION
+   ZOOM PREVENTION
 ========================================================= */
 
-/*
- * ピンチズーム・ジェスチャーズームを防止。
- */
 document.addEventListener(
     "gesturestart",
     event => {
@@ -3086,12 +3259,12 @@ document.addEventListener(
 );
 
 
-/*
- * ダブルタップズームを防止。
- *
- * ボタン・入力欄などの操作対象は除外。
- */
+/* =========================================================
+   DOUBLE TAP ZOOM PREVENTION
+========================================================= */
+
 let lastTouchEnd = 0;
+
 
 document.addEventListener(
     "touchend",
@@ -3100,13 +3273,16 @@ document.addEventListener(
         const now =
             Date.now();
 
+
         const target =
             event.target;
+
 
         const interactive =
             target.closest(
                 "button, input, select, textarea, a"
             );
+
 
         if (
             !interactive &&
@@ -3117,59 +3293,12 @@ document.addEventListener(
 
         }
 
-        lastTouchEnd =
-            now;
+
+        lastTouchEnd = now;
 
     },
     {
         passive: false
-    }
-);
-
-
-/* =========================================================
-   PAGE VISIBILITY
-========================================================= */
-
-/*
- * iOS Safariではバックグラウンド中に
- * requestAnimationFrameが停止する。
- *
- * 実時間の計算自体はDate.now()で正しいので、
- * 復帰した瞬間に画面を更新する。
- */
-document.addEventListener(
-    "visibilitychange",
-    () => {
-
-        if (
-            document.visibilityState ===
-            "visible"
-        ) {
-
-            updateTimer();
-
-            updateControls();
-
-        } else {
-
-            saveState();
-
-        }
-
-    }
-);
-
-
-/*
- * ページを離れる直前にも保存。
- */
-window.addEventListener(
-    "pagehide",
-    () => {
-
-        saveState();
-
     }
 );
 
@@ -3180,13 +3309,12 @@ window.addEventListener(
 
 loadState();
 
-normalizeLaps();
-
 updateTimer();
 
 updateControls();
 
 renderLaps();
+
 
 if (state.running) {
 
