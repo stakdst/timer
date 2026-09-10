@@ -516,6 +516,26 @@ input {
             - 32px
             - env(safe-area-inset-bottom)
         );
+        /*
+         * タイマー
+         *
+         * ─────────────────────────
+         *        タイマー
+         * ─────────────────────────
+         *
+         * 左       中央       右
+         * ボタン   ラップ     ボタン
+         */
+        display: grid;
+        grid-template-columns:
+            1fr
+            minmax(360px, 650px)
+            1fr;
+        grid-template-rows:
+            auto
+            minmax(0, 1fr);
+        column-gap: 30px;
+        align-items: start;
     }
     .title {
         font-size: 15px;
@@ -525,6 +545,8 @@ input {
         font-size: 12px;
     }
     .timer-area {
+        grid-column: 1 / 4;
+        grid-row: 1;
         margin-bottom: 45px;
     }
     .timer {
@@ -537,52 +559,60 @@ input {
             clamp(70px, 11vw, 150px);
     }
     /*
-     * iPadでは
+     * ボタンとラップ一覧を同じ行に配置する。
      *
-     * 左       中央       右
-     * ラップ   ラップ一覧 開始
-     *
-     * の3列構成にする
+     * 左：リセット / ラップ
+     * 中：ラップ一覧
+     * 右：開始 / 停止
      */
-    main {
+    .controls {
+        grid-column: 1 / 4;
+        grid-row: 2;
         display: grid;
         grid-template-columns:
             1fr
             minmax(360px, 650px)
             1fr;
-        grid-template-rows:
-            auto
-            auto
-            minmax(0, 1fr);
         column-gap: 30px;
         align-items: start;
-    }
-    .timer-area {
-        grid-column: 1 / 4;
-        grid-row: 1;
-    }
-    .controls {
-        grid-column: 1 / 4;
-        grid-row: 2;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: initial;
         width: 100%;
+        height: 100%;
         margin: 0;
         padding: 0;
+        /*
+         * ラップ一覧と同じGridセルに重ねる。
+         * ボタンだけを左右の列に配置する。
+         */
+        pointer-events: none;
+        z-index: 2;
     }
     #secondaryButton {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: start;
         margin: 0;
+        pointer-events: auto;
     }
     #startStopButton {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
         margin: 0;
+        pointer-events: auto;
     }
     main > section:last-child {
         grid-column: 2;
-        grid-row: 3;
+        grid-row: 2;
         width: 100%;
         height: 100%;
         min-height: 0;
+        /*
+         * controlsより下に置く。
+         * ボタン自体は左右にあるため中央の
+         * ラップ一覧とは干渉しない。
+         */
+        z-index: 1;
     }
     .section-header {
         padding:
@@ -640,6 +670,9 @@ input {
             minmax(140px, 1fr)
             minmax(450px, 700px)
             minmax(140px, 1fr);
+        grid-template-rows:
+            auto
+            minmax(0, 1fr);
         column-gap: 40px;
     }
     .timer-area {
@@ -655,9 +688,12 @@ input {
         font-size:
             clamp(85px, 8vw, 160px);
     }
-    #secondaryButton,
-    #startStopButton {
-        margin-top: 0;
+    .controls {
+        grid-template-columns:
+            minmax(140px, 1fr)
+            minmax(450px, 700px)
+            minmax(140px, 1fr);
+        column-gap: 40px;
     }
     .circle-button {
         width: 105px;
@@ -717,6 +753,9 @@ input {
             minmax(180px, 1fr)
             minmax(500px, 760px)
             minmax(180px, 1fr);
+        grid-template-rows:
+            auto
+            minmax(0, 1fr);
         column-gap: 50px;
     }
     .timer-area {
@@ -732,9 +771,12 @@ input {
         font-size:
             clamp(100px, 8vw, 175px);
     }
-    #secondaryButton,
-    #startStopButton {
-        margin-top: 0;
+    .controls {
+        grid-template-columns:
+            minmax(180px, 1fr)
+            minmax(500px, 760px)
+            minmax(180px, 1fr);
+        column-gap: 50px;
     }
     .circle-button {
         width: 112px;
@@ -796,6 +838,13 @@ input {
             minmax(200px, 1fr);
         column-gap: 70px;
     }
+    .controls {
+        grid-template-columns:
+            minmax(200px, 1fr)
+            minmax(600px, 800px)
+            minmax(200px, 1fr);
+        column-gap: 70px;
+    }
     .timer {
         font-size: 210px;
     }
@@ -839,6 +888,15 @@ input {
 button {
     -webkit-user-select: none;
     user-select: none;
+}
+/*
+ * iOS / iPadOSのジェスチャーによるズームを抑制。
+ * touch-action: manipulation だけではダブルタップズームを
+ * 完全に抑制できない環境があるため、gesture系イベントも禁止する。
+ */
+html,
+body {
+    -webkit-touch-callout: none;
 }
 </style>
 </head>
@@ -1900,6 +1958,61 @@ document
             }
         }
     );
+/* =========================================================
+   ZOOM PREVENTION
+========================================================= */
+/*
+ * iOS / iPadOS Safariのピンチズーム・ジェスチャーズームを禁止。
+ */
+document.addEventListener(
+    "gesturestart",
+    event => {
+        event.preventDefault();
+    },
+    { passive: false }
+);
+document.addEventListener(
+    "gesturechange",
+    event => {
+        event.preventDefault();
+    },
+    { passive: false }
+);
+document.addEventListener(
+    "gestureend",
+    event => {
+        event.preventDefault();
+    },
+    { passive: false }
+);
+/*
+ * ダブルタップによるズームを禁止。
+ *
+ * ボタン・入力欄など通常の操作対象は除外し、
+ * ページ上の空白部分などでのダブルタップだけを
+ * ブラウザに渡さない。
+ */
+let lastTouchEnd = 0;
+document.addEventListener(
+    "touchend",
+    event => {
+        const now = Date.now();
+        const target =
+            event.target;
+        const interactive =
+            target.closest(
+                "button, input, select, textarea, a"
+            );
+        if (
+            !interactive &&
+            now - lastTouchEnd <= 300
+        ) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    },
+    { passive: false }
+);
 /* =========================================================
    INITIALIZE
 ========================================================= */
