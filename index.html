@@ -2,6 +2,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width,
+             initial-scale=1,
+             maximum-scale=1,
+             user-scalable=no,
+             viewport-fit=cover">
+<meta
+    name="apple-mobile-web-app-capable"
+    content="yes">
+<meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent">
 <title>Study Timer</title>
 <style>
 /* =========================================================
@@ -503,24 +516,6 @@ input {
             - 32px
             - env(safe-area-inset-bottom)
         );
-        /*
-         * 3段構成
-         *
-         * row 1 = タイマー
-         * row 2 = ボタン
-         * row 3 = ラップ一覧
-         */
-        display: grid;
-        grid-template-columns:
-            minmax(90px, 1fr)
-            minmax(360px, 650px)
-            minmax(90px, 1fr);
-        grid-template-rows:
-            auto
-            auto
-            minmax(0, 1fr);
-        column-gap: 30px;
-        align-items: start;
     }
     .title {
         font-size: 15px;
@@ -529,12 +524,7 @@ input {
     .status {
         font-size: 12px;
     }
-    /* -----------------------------------------
-       TIMER
-    ----------------------------------------- */
     .timer-area {
-        grid-column: 1 / 4;
-        grid-row: 1;
         margin-bottom: 45px;
     }
     .timer {
@@ -546,45 +536,53 @@ input {
         font-size:
             clamp(70px, 11vw, 150px);
     }
-    /* -----------------------------------------
-       CONTROLS
-    ----------------------------------------- */
-    .controls {
+    /*
+     * iPadでは
+     *
+     * 左       中央       右
+     * ラップ   ラップ一覧 開始
+     *
+     * の3列構成にする
+     */
+    main {
         display: grid;
+        grid-template-columns:
+            1fr
+            minmax(360px, 650px)
+            1fr;
+        grid-template-rows:
+            auto
+            auto
+            minmax(0, 1fr);
+        column-gap: 30px;
+        align-items: start;
+    }
+    .timer-area {
+        grid-column: 1 / 4;
+        grid-row: 1;
+    }
+    .controls {
         grid-column: 1 / 4;
         grid-row: 2;
-        grid-template-columns:
-            minmax(90px, 1fr)
-            minmax(360px, 650px)
-            minmax(90px, 1fr);
-        column-gap: 30px;
-        width: 100%;
-        margin:
-            0
-            0
-            35px;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
     #secondaryButton {
-        grid-column: 1;
-        justify-self: start;
-        align-self: center;
+        margin: 0;
     }
     #startStopButton {
-        grid-column: 3;
-        justify-self: end;
-        align-self: center;
+        margin: 0;
     }
-    /* -----------------------------------------
-       LAP LIST
-    ----------------------------------------- */
     main > section:last-child {
         grid-column: 2;
         grid-row: 3;
         width: 100%;
         height: 100%;
         min-height: 0;
-        flex: none;
     }
     .section-header {
         padding:
@@ -642,10 +640,6 @@ input {
             minmax(140px, 1fr)
             minmax(450px, 700px)
             minmax(140px, 1fr);
-        grid-template-rows:
-            auto
-            auto
-            minmax(0, 1fr);
         column-gap: 40px;
     }
     .timer-area {
@@ -661,17 +655,9 @@ input {
         font-size:
             clamp(85px, 8vw, 160px);
     }
-    .controls {
-        grid-template-columns:
-            minmax(140px, 1fr)
-            minmax(450px, 700px)
-            minmax(140px, 1fr);
-        column-gap: 40px;
-        margin-bottom: 35px;
-    }
     #secondaryButton,
     #startStopButton {
-        margin-top: 15px;
+        margin-top: 0;
     }
     .circle-button {
         width: 105px;
@@ -682,13 +668,6 @@ input {
         width: 112px;
         height: 112px;
         font-size: 17px;
-    }
-    /* -----------------------------------------
-       LAP LIST
-    ----------------------------------------- */
-    main > section:last-child {
-        grid-column: 2;
-        grid-row: 3;
     }
     .lap {
         grid-template-columns:
@@ -738,10 +717,6 @@ input {
             minmax(180px, 1fr)
             minmax(500px, 760px)
             minmax(180px, 1fr);
-        grid-template-rows:
-            auto
-            auto
-            minmax(0, 1fr);
         column-gap: 50px;
     }
     .timer-area {
@@ -757,17 +732,9 @@ input {
         font-size:
             clamp(100px, 8vw, 175px);
     }
-    .controls {
-        grid-template-columns:
-            minmax(180px, 1fr)
-            minmax(500px, 760px)
-            minmax(180px, 1fr);
-        column-gap: 50px;
-        margin-bottom: 35px;
-    }
     #secondaryButton,
     #startStopButton {
-        margin-top: 20px;
+        margin-top: 0;
     }
     .circle-button {
         width: 112px;
@@ -778,13 +745,6 @@ input {
         width: 120px;
         height: 120px;
         font-size: 18px;
-    }
-    /* -----------------------------------------
-       LAP LIST
-    ----------------------------------------- */
-    main > section:last-child {
-        grid-column: 2;
-        grid-row: 3;
     }
     .section-header {
         padding:
@@ -830,13 +790,6 @@ input {
         max-width: 1400px;
     }
     main {
-        grid-template-columns:
-            minmax(200px, 1fr)
-            minmax(600px, 800px)
-            minmax(200px, 1fr);
-        column-gap: 70px;
-    }
-    .controls {
         grid-template-columns:
             minmax(200px, 1fr)
             minmax(600px, 800px)
@@ -892,66 +845,66 @@ button {
 <body>
 <div class="app">
 <header>
-<div class="title">
-    STUDY TIMER
-</div>
-<div
-    class="status"
-    id="status">
-    <div class="status-dot"></div>
-    <span id="statusText">
-        READY
-    </span>
-</div>
+    <div class="title">
+        STUDY TIMER
+    </div>
+    <div
+        class="status"
+        id="status">
+        <div class="status-dot"></div>
+        <span id="statusText">
+            READY
+        </span>
+    </div>
 </header>
 <main>
-<!-- ======================================
-     TIMER
-======================================= -->
-<section class="timer-area">
-    <div
-        class="timer"
-        id="timer">
-        00:00.00
-    </div>
-</section>
-<!-- ======================================
-     CONTROLS
-======================================= -->
-<section class="controls">
-    <button
-        class="circle-button"
-        id="secondaryButton">
-        リセット
-    </button>
-    <button
-        class="circle-button primary"
-        id="startStopButton">
-        開始
-    </button>
-</section>
-<!-- ======================================
-     LAPS
-======================================= -->
-<section>
-    <div class="section-header">
-        <div class="section-title">
-            LAPS
+    <!-- ======================================
+         TIMER
+    ======================================= -->
+    <section class="timer-area">
+        <div
+            class="timer"
+            id="timer">
+            00:00.00
+        </div>
+    </section>
+    <!-- ======================================
+         CONTROLS
+    ======================================= -->
+    <section class="controls">
+        <button
+            class="circle-button"
+            id="secondaryButton">
+            リセット
+        </button>
+        <button
+            class="circle-button primary"
+            id="startStopButton">
+            開始
+        </button>
+    </section>
+    <!-- ======================================
+         LAPS
+    ======================================= -->
+    <section>
+        <div class="section-header">
+            <div class="section-title">
+                LAPS
+            </div>
+            <div
+                class="lap-count"
+                id="lapCount">
+                0
+            </div>
         </div>
         <div
-            class="lap-count"
-            id="lapCount">
-            0
+            class="laps"
+            id="laps">
+            <div class="empty">
+                ラップを記録すると、ここに表示されます
+            </div>
         </div>
-    </div>
-    <div
-        class="laps"
-        id="laps">
-        <div class="empty">
-            ラップを記録すると、ここに表示されます
-        </div>
-    </div>
-</section>
+    </section>
 </main>
 </div>
 <!-- ==========================================
@@ -960,53 +913,53 @@ button {
 <div
     class="modal-overlay"
     id="modalOverlay">
-<div class="modal">
-    <div class="modal-title">
-        ラップを編集
-    </div>
-    <div class="field">
-        <label>
-            経過時間
-        </label>
-        <div class="time-picker">
-            <select
-                id="editHours"
-                aria-label="時間">
-            </select>
-            <span>時間</span>
-            <select
-                id="editMinutes"
-                aria-label="分">
-            </select>
-            <span>分</span>
-            <select
-                id="editSeconds"
-                aria-label="秒">
-            </select>
-            <span>秒</span>
+    <div class="modal">
+        <div class="modal-title">
+            ラップを編集
         </div>
-    </div>
-    <div class="info">
-        ラップの経過時間を変更します。
-    </div>
-    <div class="modal-buttons">
+        <div class="field">
+            <label>
+                経過時間
+            </label>
+            <div class="time-picker">
+                <select
+                    id="editHours"
+                    aria-label="時間">
+                </select>
+                <span>時間</span>
+                <select
+                    id="editMinutes"
+                    aria-label="分">
+                </select>
+                <span>分</span>
+                <select
+                    id="editSeconds"
+                    aria-label="秒">
+                </select>
+                <span>秒</span>
+            </div>
+        </div>
+        <div class="info">
+            ラップの経過時間を変更します。
+        </div>
+        <div class="modal-buttons">
+            <button
+                class="modal-button"
+                id="cancelEdit">
+                キャンセル
+            </button>
+            <button
+                class="modal-button save"
+                id="saveEdit">
+                保存
+            </button>
+        </div>
         <button
-            class="modal-button"
-            id="cancelEdit">
-            キャンセル
-        </button>
-        <button
-            class="modal-button save"
-            id="saveEdit">
-            保存
+            class="delete-button"
+            id="deleteLap">
+            このラップを削除
         </button>
     </div>
-    <button
-        class="delete-button"
-        id="deleteLap">
-        このラップを削除
-    </button>
-</div>
 </div>
 <!-- ==========================================
      CONFIRM MODAL
@@ -1014,27 +967,27 @@ button {
 <div
     class="confirm-overlay"
     id="confirmOverlay">
-<div class="confirm-box">
-    <div class="confirm-content">
-        <div
-            class="confirm-title"
-            id="confirmTitle">
-            確認
+    <div class="confirm-box">
+        <div class="confirm-content">
+            <div
+                class="confirm-title"
+                id="confirmTitle">
+                確認
+            </div>
+        </div>
+        <div class="confirm-buttons">
+            <button
+                class="confirm-button"
+                id="confirmCancel">
+                キャンセル
+            </button>
+            <button
+                class="confirm-button danger"
+                id="confirmOK">
+                実行
+            </button>
         </div>
     </div>
-    <div class="confirm-buttons">
-        <button
-            class="confirm-button"
-            id="confirmCancel">
-            キャンセル
-        </button>
-        <button
-            class="confirm-button danger"
-            id="confirmOK">
-            実行
-        </button>
-    </div>
-</div>
 </div>
 <script>
 /* =========================================================
