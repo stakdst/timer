@@ -1632,10 +1632,6 @@
                         }
                     }
 
-                    /*
-                     * 配列は新しいラップ順。
-                     * 累計値が同じ場合も、元の並び順を維持する。
-                     */
                     laps.sort((a, b) => b.elapsed - a.elapsed);
 
                     const currentRunStart = Number(parsed.currentRunStart);
@@ -1669,10 +1665,6 @@
                         )
                     };
 
-                    /*
-                     * 旧データでは各ラップの timestamp が区間の終了時刻。
-                     * ひとつ前の終了時刻から開始時刻を補完する。
-                     */
                     for (let index = 0; index < state.laps.length; index++) {
                         const lap = state.laps[index];
                         const previous = state.laps[index + 1];
@@ -1690,9 +1682,6 @@
                         state.activeLapStartedAt = state.laps[0].timestamp;
                     }
 
-                    /*
-                     * 累計時間が最新の確定ラップより小さいデータを補正。
-                     */
                     const latestElapsed = getLapElapsed(state.laps[0]);
                     const currentElapsed = getElapsed();
 
@@ -1853,10 +1842,6 @@
                 const timestamp = new Date(now).toISOString();
                 const elapsed = getElapsed(now);
 
-                /*
-                 * 現在の区間を確定。
-                 * 次の未確定ラップは、この累計値を起点に進む。
-                 */
                 state.laps.unshift({
                     id: createLapId(),
                     timestamp,
@@ -1881,9 +1866,6 @@
                 const duration = getActiveLapDuration(elapsed);
                 const totalSeconds = Math.floor(duration / 1000);
 
-                /*
-                 * ラップ表示は秒単位なので、秒が変わったときだけ更新。
-                 */
                 if (totalSeconds === lastActiveLapSeconds) {
                     return;
                 }
@@ -2092,10 +2074,6 @@
 
                 const fragment = document.createDocumentFragment();
 
-                /*
-                 * 未確定ラップを常に先頭に表示する。
-                 * 保存済みの確定ラップとは分離して扱う。
-                 */
                 if (state.hasActiveLap) {
                     fragment.append(
                         createLapRow({
@@ -2125,9 +2103,6 @@
             function populateTimePicker(requiredHours = 99) {
                 const maxHours = Math.max(99, requiredHours);
 
-                /*
-                 * 99時間を超える既存ラップも、そのまま編集できるようにする。
-                 */
                 elements.editHours.replaceChildren();
 
                 for (let hour = 0; hour <= maxHours; hour++) {
@@ -2228,11 +2203,6 @@
 
                 const difference = newDuration - oldDuration;
 
-                /*
-                 * 対象ラップと、それより新しい確定ラップを補正。
-                 * 値の大小ではなく配列の位置で判断するため、
-                 * 同じ累計値のラップがあっても正しく補正できる。
-                 */
                 for (let current = 0; current <= index; current++) {
                     state.laps[current].elapsed = Math.max(
                         0,
@@ -2240,10 +2210,6 @@
                     );
                 }
 
-                /*
-                 * 総時間も同じ差分だけ補正し、
-                 * 最新の未確定ラップの区間時間は維持する。
-                 */
                 state.accumulated = Math.max(
                     0,
                     state.accumulated + difference
@@ -2259,10 +2225,6 @@
 
             /* NORMALIZE */
             function normalizeLaps() {
-                /*
-                 * 古いラップから新しいラップへ累計値を確認。
-                 * ラップ順序は変更しない。
-                 */
                 for (
                     let index = state.laps.length - 2;
                     index >= 0;
@@ -2311,11 +2273,6 @@
 
                 const deletedDuration = calculateLapDuration(index);
 
-                /*
-                 * 削除対象より新しいラップの累計値から、
-                 * 削除する区間の時間を差し引く。
-                 * これにより、ほかのラップの区間時間を維持する。
-                 */
                 for (let current = 0; current < index; current++) {
                     state.laps[current].elapsed = Math.max(
                         0,
@@ -2325,10 +2282,6 @@
 
                 state.laps.splice(index, 1);
 
-                /*
-                 * 合計時間も同じ分だけ減らす。
-                 * 最新の未確定ラップの時間や開始時刻は変更しない。
-                 */
                 state.accumulated = Math.max(
                     0,
                     state.accumulated - deletedDuration
@@ -2402,10 +2355,6 @@
                     }
                 });
 
-                /*
-                 * バックグラウンド中は描画を止める。
-                 * 復帰時は実際の経過時間から表示を再計算する。
-                 */
                 document.addEventListener("visibilitychange", () => {
                     if (document.hidden) {
                         stopTimerLoop();
