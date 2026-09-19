@@ -1,17 +1,12 @@
-<!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width,
+    <meta name="viewport" content="width=device-width,
                  initial-scale=1,
                  maximum-scale=1,
                  user-scalable=no,
-                 viewport-fit=cover"
-    >
+                 viewport-fit=cover">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -428,30 +423,164 @@
             font-size: 16px;
         }
 
+        /* =========================================================
+           REEL PICKER
+           ★ 修正箇所①
+           
+           iPhone風の操作感を優先。
+           JSでドラッグ・慣性・スナップを制御する。
+        ========================================================= */
+
         .time-picker {
+            position: relative;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 7px;
+
+            gap: 8px;
+
+            height: 150px;
+
+            overflow: hidden;
+
+            --reel-item-height: 50px;
+
+            /*
+             * リール全体がブラウザのスクロール対象に
+             * ならないようにする。
+             */
+            touch-action: none;
+
+            /*
+             * iOS Safariの長押し選択を防止。
+             */
+            user-select: none;
+            -webkit-user-select: none;
         }
 
-        .time-picker select {
+        .time-picker::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+
+            top: 50%;
+
+            height: 50px;
+
+            transform: translateY(-50%);
+
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+
+            pointer-events: none;
+
+            border-radius: 10px;
+        }
+
+        .time-reel {
+            position: relative;
+
             width: 82px;
-            padding:
-                13px 8px;
-            border: none;
-            outline: none;
+            height: 150px;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            /*
+             * ★ JSで完全に慣性を制御。
+             */
+            touch-action: none;
+
+            /*
+             * ネイティブのscroll-snapとは併用しない。
+             */
+            scroll-snap-type: none;
+
+            -webkit-overflow-scrolling: auto;
+
+            scrollbar-width: none;
+
+            padding-top: 50px;
+            padding-bottom: 50px;
+
             border-radius: 11px;
-            background: #2c2c2e;
-            color: #fff;
-            font-size: 20px;
-            text-align: center;
+
+            user-select: none;
+            -webkit-user-select: none;
+
+            /*
+             * iOS Safariで描画を安定させる。
+             */
+            will-change: scroll-position;
+
+            /*
+             * 不要なハイライトを消す。
+             */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .time-picker span {
-            color: #aaa;
-            font-size: 14px;
+        .time-reel::-webkit-scrollbar {
+            display: none;
         }
+
+        .time-reel-item {
+            width: 100%;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #666;
+
+            font-size: 22px;
+            font-weight: 400;
+
+            font-variant-numeric: tabular-nums;
+
+            transition:
+                color .12s ease,
+                transform .12s ease,
+                opacity .12s ease;
+
+            user-select: none;
+            -webkit-user-select: none;
+
+            cursor: pointer;
+
+            /*
+             * iOSのタップハイライトを無効化。
+             */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .time-reel-item.selected {
+            color: #fff;
+            font-weight: 500;
+            transform: scale(1.08);
+        }
+
+        .time-unit {
+            flex-shrink: 0;
+
+            width: 24px;
+
+            color: #777;
+
+            font-size: 12px;
+            text-align: center;
+
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* =========================================================
+           REST OF MODAL
+        ========================================================= */
 
         .info {
             margin-top: 5px;
@@ -593,7 +722,6 @@
 
         /* =========================================================
            iPAD / LANDSCAPE
-           600px以上
         ========================================================= */
 
         @media (min-width: 600px) {
@@ -646,10 +774,6 @@
                 font-size: 12px;
             }
 
-            /* =====================================================
-               TIMER
-            ===================================================== */
-
             .timer-area {
                 grid-column: 1 / 4;
                 grid-row: 1;
@@ -668,10 +792,6 @@
                 font-size:
                     clamp(110px, 18vw, 190px);
             }
-
-            /* =====================================================
-               CONTROLS
-            ===================================================== */
 
             .controls {
                 grid-column: 1 / 4;
@@ -720,10 +840,6 @@
                 font-size: 14px;
             }
 
-            /* =====================================================
-               LAPS
-            ===================================================== */
-
             main > section:last-child {
                 grid-column: 2;
                 grid-row: 2;
@@ -768,7 +884,6 @@
 
         /* =========================================================
            iPHONE LANDSCAPE
-           横向きiPhone専用
         ========================================================= */
 
         @media (
@@ -807,10 +922,6 @@
                 height: 5px;
             }
 
-            /* =====================================================
-               MAIN
-            ===================================================== */
-
             main {
                 width: 100%;
                 max-width: 900px;
@@ -836,10 +947,6 @@
                 align-items: start;
             }
 
-            /* =====================================================
-               TIMER
-            ===================================================== */
-
             .timer-area {
                 grid-column: 1 / 4;
                 grid-row: 1;
@@ -859,10 +966,6 @@
                     clamp(52px, 12vw, 85px);
                 letter-spacing: -3px;
             }
-
-            /* =====================================================
-               CONTROLS
-            ===================================================== */
 
             .controls {
                 grid-column: 1 / 4;
@@ -909,10 +1012,6 @@
                 height: 66px;
                 font-size: 12px;
             }
-
-            /* =====================================================
-               LAPS
-            ===================================================== */
 
             main > section:last-child {
                 grid-column: 2;
@@ -973,7 +1072,6 @@
 
         /* =========================================================
            iPAD LANDSCAPE / LARGE TABLET
-           900px以上
         ========================================================= */
 
         @media (min-width: 900px) {
@@ -1059,7 +1157,6 @@
 
         /* =========================================================
            PC
-           1200px以上
         ========================================================= */
 
         @media (min-width: 1200px) {
@@ -1168,7 +1265,6 @@
 
         /* =========================================================
            VERY LARGE PC
-           1600px以上
         ========================================================= */
 
         @media (min-width: 1600px) {
@@ -1209,7 +1305,6 @@
 
         /* =========================================================
            SMALL PHONE
-           縦向きのみ
         ========================================================= */
 
         @media (
@@ -1245,6 +1340,19 @@
                 font-size: 15vw;
                 letter-spacing: -2px;
             }
+
+            .time-reel {
+                width: 70px;
+            }
+
+            .time-unit {
+                width: 18px;
+                font-size: 11px;
+            }
+
+            .time-picker {
+                gap: 4px;
+            }
         }
 
         /* =========================================================
@@ -1261,6 +1369,7 @@
 </head>
 
 <body>
+
     <div class="app">
 
         <header>
@@ -1271,9 +1380,7 @@
             <div class="status" id="status">
                 <div class="status-dot"></div>
 
-                <span id="statusText">
-                    READY
-                </span>
+                <span id="statusText">READY</span>
             </div>
         </header>
 
@@ -1284,12 +1391,7 @@
             ===================================================== -->
 
             <section class="timer-area">
-                <div
-                    class="timer"
-                    id="timer"
-                >
-                    00:00.00
-                </div>
+                <div class="timer" id="timer">00:00.00</div>
             </section>
 
             <!-- =====================================================
@@ -1297,17 +1399,11 @@
             ===================================================== -->
 
             <section class="controls">
-                <button
-                    class="circle-button"
-                    id="secondaryButton"
-                >
+                <button class="circle-button" id="secondaryButton">
                     リセット
                 </button>
 
-                <button
-                    class="circle-button primary"
-                    id="startStopButton"
-                >
+                <button class="circle-button primary" id="startStopButton">
                     開始
                 </button>
             </section>
@@ -1322,20 +1418,14 @@
                         LAPS
                     </div>
 
-                    <div
-                        class="lap-count"
-                        id="lapCount"
-                    >
+                    <div class="lap-count" id="lapCount">
                         0
                     </div>
                 </div>
 
-                <div
-                    class="laps"
-                    id="laps"
-                >
+                <div class="laps" id="laps">
                     <div class="empty">
-                        ラップを記録すると、ここに表示されます
+                        開始すると、最新ラップがここに表示されます
                     </div>
                 </div>
             </section>
@@ -1343,14 +1433,13 @@
         </main>
     </div>
 
+
     <!-- =====================================================
          EDIT MODAL
     ===================================================== -->
 
-    <div
-        class="modal-overlay"
-        id="modalOverlay"
-    >
+    <div class="modal-overlay" id="modalOverlay">
+
         <div class="modal">
 
             <div class="modal-title">
@@ -1358,41 +1447,48 @@
             </div>
 
             <div class="field">
+
                 <label>
                     経過時間
                 </label>
 
                 <div class="time-picker">
-                    <select
+
+                    <div
+                        class="time-reel"
                         id="editHours"
+                        data-type="hours"
                         aria-label="時間"
-                    >
-                    </select>
+                    ></div>
 
-                    <span>
+                    <div class="time-unit">
                         時間
-                    </span>
+                    </div>
 
-                    <select
+                    <div
+                        class="time-reel"
                         id="editMinutes"
+                        data-type="minutes"
                         aria-label="分"
-                    >
-                    </select>
+                    ></div>
 
-                    <span>
+                    <div class="time-unit">
                         分
-                    </span>
+                    </div>
 
-                    <select
+                    <div
+                        class="time-reel"
                         id="editSeconds"
+                        data-type="seconds"
                         aria-label="秒"
-                    >
-                    </select>
+                    ></div>
 
-                    <span>
+                    <div class="time-unit">
                         秒
-                    </span>
+                    </div>
+
                 </div>
+
             </div>
 
             <div class="info">
@@ -1400,6 +1496,7 @@
             </div>
 
             <div class="modal-buttons">
+
                 <button
                     class="modal-button"
                     id="cancelEdit"
@@ -1413,6 +1510,7 @@
                 >
                     保存
                 </button>
+
             </div>
 
             <button
@@ -1423,28 +1521,31 @@
             </button>
 
         </div>
+
     </div>
+
 
     <!-- =====================================================
          CONFIRM MODAL
     ===================================================== -->
 
-    <div
-        class="confirm-overlay"
-        id="confirmOverlay"
-    >
+    <div class="confirm-overlay" id="confirmOverlay">
+
         <div class="confirm-box">
 
             <div class="confirm-content">
+
                 <div
                     class="confirm-title"
                     id="confirmTitle"
                 >
-                    確認
+                    リセットしますか？
                 </div>
+
             </div>
 
             <div class="confirm-buttons">
+
                 <button
                     class="confirm-button"
                     id="confirmCancel"
@@ -1456,26 +1557,36 @@
                     class="confirm-button danger"
                     id="confirmOK"
                 >
-                    実行
+                    リセット
                 </button>
+
             </div>
 
         </div>
+
     </div>
 
 
-<!-- Output: html -->
 <script>
 (() => {
     "use strict";
 
-    /* STORAGE */
+    /* =========================================================
+       STORAGE
+    ========================================================= */
+
     const STORAGE_KEY = "studyStopwatch_v3";
 
-    /* ACTIVE LAP IDENTIFIER */
+    /* =========================================================
+       ACTIVE LAP IDENTIFIER
+    ========================================================= */
+
     const ACTIVE_LAP_ID = Symbol("activeLap");
 
-    /* STATE */
+    /* =========================================================
+       STATE
+    ========================================================= */
+
     function createInitialState() {
         return {
             running: false,
@@ -1488,6 +1599,7 @@
     }
 
     let state = createInitialState();
+
     let editingLapId = null;
     let animationFrame = null;
     let confirmResolver = null;
@@ -1495,9 +1607,21 @@
     let activeLapTimeElement = null;
     let lastActiveLapSeconds = null;
 
+    /*
+     * リールの現在値
+     */
+    const reelValues = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+    };
+
     const elements = {};
 
-    /* UTILITIES */
+    /* =========================================================
+       UTILITIES
+    ========================================================= */
+
     function toNonNegativeNumber(value, fallback = 0) {
         const number = Number(value);
 
@@ -1540,7 +1664,10 @@
         );
     }
 
-    /* CUSTOM CONFIRM */
+    /* =========================================================
+       CUSTOM CONFIRM
+    ========================================================= */
+
     function showConfirm(title, okText) {
         if (confirmResolver !== null) {
             return Promise.resolve(false);
@@ -1566,7 +1693,10 @@
         }
     }
 
-    /* STORAGE FUNCTIONS */
+    /* =========================================================
+       STORAGE FUNCTIONS
+    ========================================================= */
+
     function saveState() {
         try {
             localStorage.setItem(
@@ -1640,18 +1770,19 @@
                 }
             }
 
-            /*
-             * 新しいラップ順。
-             * 同じ累計値の場合は元の並び順を維持する。
-             */
-            laps.sort((a, b) => b.elapsed - a.elapsed);
+            laps.sort(
+                (a, b) => b.elapsed - a.elapsed
+            );
 
             const running = Boolean(parsed.running);
+
             const accumulated = toNonNegativeNumber(
                 parsed.accumulated
             );
 
-            const savedRunStart = Number(parsed.currentRunStart);
+            const savedRunStart = Number(
+                parsed.currentRunStart
+            );
 
             const currentRunStart = (
                 Number.isFinite(savedRunStart) &&
@@ -1660,11 +1791,6 @@
                 ? savedRunStart
                 : null;
 
-            /*
-             * 保存済みの false を尊重する。
-             * 最新ラップ削除後に勝手に未確定ラップを復元しない。
-             * 旧データでプロパティがない場合だけ推定する。
-             */
             const hasActiveLap = (
                 typeof parsed.hasActiveLap === "boolean"
             )
@@ -1688,20 +1814,21 @@
                 )
             };
 
-            /*
-             * startedAt が存在しない旧データのみ補完する。
-             * 明示的な null は「開始時刻不明」として維持する。
-             */
             if (Array.isArray(parsed.laps)) {
+
                 const originalById = new Map();
 
                 for (const item of parsed.laps) {
+
                     if (
                         item &&
                         typeof item === "object" &&
                         typeof item.id === "string"
                     ) {
-                        originalById.set(item.id, item);
+                        originalById.set(
+                            item.id,
+                            item
+                        );
                     }
                 }
 
@@ -1710,9 +1837,14 @@
                     index < state.laps.length;
                     index++
                 ) {
+
                     const lap = state.laps[index];
-                    const original = originalById.get(lap.id);
-                    const previous = state.laps[index + 1];
+
+                    const original =
+                        originalById.get(lap.id);
+
+                    const previous =
+                        state.laps[index + 1];
 
                     if (
                         original &&
@@ -1722,7 +1854,8 @@
                         ) &&
                         previous
                     ) {
-                        lap.startedAt = previous.timestamp;
+                        lap.startedAt =
+                            previous.timestamp;
                     }
                 }
             }
@@ -1735,28 +1868,35 @@
                 ) &&
                 state.laps.length > 0
             ) {
-                state.activeLapStartedAt = state.laps[0].timestamp;
+                state.activeLapStartedAt =
+                    state.laps[0].timestamp;
             }
 
             normalizeLaps();
 
-            const latestElapsed = getLapElapsed(state.laps[0]);
+            const latestElapsed =
+                getLapElapsed(state.laps[0]);
 
             if (!state.hasActiveLap) {
-                /*
-                 * 未確定ラップがない場合、
-                 * 合計は最新の確定ラップの累計値に一致する。
-                 */
-                state.accumulated = latestElapsed;
-                state.activeLapStartedAt = null;
+
+                state.accumulated =
+                    latestElapsed;
+
+                state.activeLapStartedAt =
+                    null;
+
             } else {
+
                 const elapsed = getElapsed();
 
                 if (elapsed < latestElapsed) {
-                    state.accumulated += latestElapsed - elapsed;
+                    state.accumulated +=
+                        latestElapsed - elapsed;
                 }
             }
+
         } catch (error) {
+
             console.warn(
                 "保存データを読み込めませんでした。",
                 error
@@ -1766,9 +1906,16 @@
         }
     }
 
-    /* ELAPSED */
+    /* =========================================================
+       ELAPSED
+    ========================================================= */
+
     function getElapsed(now = Date.now()) {
-        let elapsed = toNonNegativeNumber(state.accumulated);
+
+        let elapsed =
+            toNonNegativeNumber(
+                state.accumulated
+            );
 
         if (
             state.running &&
@@ -1783,20 +1930,42 @@
         return Math.max(0, elapsed);
     }
 
-    /* FORMAT */
+    /* =========================================================
+       FORMAT
+    ========================================================= */
+
     function pad(number, digits = 2) {
-        return String(number).padStart(digits, "0");
+        return String(number)
+            .padStart(digits, "0");
     }
 
     function formatStopwatch(ms) {
-        ms = Math.max(0, Math.floor(ms));
 
-        const hours = Math.floor(ms / 3600000);
-        const minutes = Math.floor((ms % 3600000) / 60000);
-        const seconds = Math.floor((ms % 60000) / 1000);
-        const centiseconds = Math.floor((ms % 1000) / 10);
+        ms = Math.max(
+            0,
+            Math.floor(ms)
+        );
+
+        const hours =
+            Math.floor(ms / 3600000);
+
+        const minutes =
+            Math.floor(
+                (ms % 3600000) / 60000
+            );
+
+        const seconds =
+            Math.floor(
+                (ms % 60000) / 1000
+            );
+
+        const centiseconds =
+            Math.floor(
+                (ms % 1000) / 10
+            );
 
         if (hours === 0) {
+
             return (
                 pad(minutes) +
                 ":" +
@@ -1818,12 +1987,27 @@
     }
 
     function formatStudyTime(ms) {
-        ms = Math.max(0, Math.floor(ms));
 
-        const totalSeconds = Math.floor(ms / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
+        ms = Math.max(
+            0,
+            Math.floor(ms)
+        );
+
+        const totalSeconds =
+            Math.floor(ms / 1000);
+
+        const hours =
+            Math.floor(
+                totalSeconds / 3600
+            );
+
+        const minutes =
+            Math.floor(
+                (totalSeconds % 3600) / 60
+            );
+
+        const seconds =
+            totalSeconds % 60;
 
         const result = [];
 
@@ -1835,7 +2019,10 @@
             result.push(minutes + "分");
         }
 
-        if (seconds > 0 || result.length === 0) {
+        if (
+            seconds > 0 ||
+            result.length === 0
+        ) {
             result.push(seconds + "秒");
         }
 
@@ -1843,6 +2030,7 @@
     }
 
     function formatLapStart(timestamp) {
+
         if (!timestamp) {
             return "開始時刻不明";
         }
@@ -1865,7 +2053,10 @@
         );
     }
 
-    /* LAP */
+    /* =========================================================
+       LAP
+    ========================================================= */
+
     function getLapElapsed(lap) {
         return lap
             ? toNonNegativeNumber(lap.elapsed)
@@ -1873,132 +2064,174 @@
     }
 
     function calculateLapDuration(index) {
+
         const lap = state.laps[index];
 
         if (!lap) {
             return 0;
         }
 
-        const previous = state.laps[index + 1];
+        const previous =
+            state.laps[index + 1];
 
         return Math.max(
             0,
-            getLapElapsed(lap) - getLapElapsed(previous)
+            getLapElapsed(lap) -
+            getLapElapsed(previous)
         );
     }
 
-    function getActiveLapDuration(elapsed = getElapsed()) {
+    function getActiveLapDuration(
+        elapsed = getElapsed()
+    ) {
+
         if (!state.hasActiveLap) {
             return 0;
         }
 
         return Math.max(
             0,
-            elapsed - getLapElapsed(state.laps[0])
+            elapsed -
+            getLapElapsed(state.laps[0])
         );
     }
 
     function getEditableLapDuration(id) {
+
         if (id === ACTIVE_LAP_ID) {
+
             return state.hasActiveLap
                 ? getActiveLapDuration()
                 : null;
         }
 
-        const index = state.laps.findIndex(
-            lap => lap.id === id
-        );
+        const index =
+            state.laps.findIndex(
+                lap => lap.id === id
+            );
 
         return index === -1
             ? null
             : calculateLapDuration(index);
     }
 
-    /* PREPARE LAP FOR RESUME */
+    /* =========================================================
+       PREPARE LAP FOR RESUME
+    ========================================================= */
+
     function prepareLapForResume(now) {
+
         if (state.hasActiveLap) {
             return;
         }
 
         if (state.laps.length > 0) {
-            /*
-             * 最新ラップ削除後にラップが残っている場合。
-             *
-             * 残った最新の確定ラップを未確定ラップへ切り替える。
-             * 確定ラップ数が1減り、未確定ラップが1になるため、
-             * 表示上のラップ数は増えない。
-             *
-             * 合計と開始日時を維持することで、
-             * このラップの既存の時間から計測を続ける。
-             */
-            const latestLap = state.laps.shift();
 
-            state.accumulated = getLapElapsed(latestLap);
+            const latestLap =
+                state.laps.shift();
+
+            state.accumulated =
+                getLapElapsed(latestLap);
+
             state.hasActiveLap = true;
-            state.activeLapStartedAt = latestLap.startedAt;
+
+            state.activeLapStartedAt =
+                latestLap.startedAt;
 
             return;
         }
 
-        /*
-         * ラップが1件もない場合だけ、
-         * 初回開始と同じく LAP 1 を0秒から開始する。
-         */
         state.accumulated = 0;
+
         state.hasActiveLap = true;
-        state.activeLapStartedAt = new Date(now).toISOString();
+
+        state.activeLapStartedAt =
+            new Date(now).toISOString();
     }
 
-    /* ADD LAP */
+    /* =========================================================
+       ADD LAP
+    ========================================================= */
+
     function addLap() {
-        if (!state.running || isDialogOpen()) {
+
+        if (
+            !state.running ||
+            isDialogOpen()
+        ) {
             return;
         }
 
         const now = Date.now();
-        const timestamp = new Date(now).toISOString();
-        const elapsed = getElapsed(now);
 
-        /*
-         * ラップボタンを押したときだけ、
-         * 現在の区間を確定して次のラップを開始する。
-         */
+        const timestamp =
+            new Date(now).toISOString();
+
+        const elapsed =
+            getElapsed(now);
+
         state.laps.unshift({
+
             id: createLapId(),
+
             timestamp,
-            startedAt: state.activeLapStartedAt,
+
+            startedAt:
+                state.activeLapStartedAt,
+
             elapsed
+
         });
 
         state.hasActiveLap = true;
-        state.activeLapStartedAt = timestamp;
+
+        state.activeLapStartedAt =
+            timestamp;
 
         saveState();
+
         renderLaps();
+
         updateTimer();
     }
 
-    /* TIMER */
+    /* =========================================================
+       TIMER
+    ========================================================= */
+
     function updateActiveLapTime(elapsed) {
+
         if (!activeLapTimeElement) {
             return;
         }
 
-        const duration = getActiveLapDuration(elapsed);
-        const totalSeconds = Math.floor(duration / 1000);
+        const duration =
+            getActiveLapDuration(elapsed);
 
-        if (totalSeconds === lastActiveLapSeconds) {
+        const totalSeconds =
+            Math.floor(duration / 1000);
+
+        if (
+            totalSeconds ===
+            lastActiveLapSeconds
+        ) {
             return;
         }
 
-        activeLapTimeElement.textContent = formatStudyTime(duration);
-        lastActiveLapSeconds = totalSeconds;
+        activeLapTimeElement.textContent =
+            formatStudyTime(duration);
+
+        lastActiveLapSeconds =
+            totalSeconds;
     }
 
     function updateTimer() {
-        const elapsed = getElapsed();
 
-        elements.timer.textContent = formatStopwatch(elapsed);
+        const elapsed =
+            getElapsed();
+
+        elements.timer.textContent =
+            formatStopwatch(elapsed);
 
         elements.timer.classList.toggle(
             "long",
@@ -2009,65 +2242,104 @@
     }
 
     function timerTick() {
+
         animationFrame = null;
 
         updateTimer();
 
-        if (state.running && !document.hidden) {
-            animationFrame = requestAnimationFrame(timerTick);
+        if (
+            state.running &&
+            !document.hidden
+        ) {
+            animationFrame =
+                requestAnimationFrame(
+                    timerTick
+                );
         }
     }
 
     function stopTimerLoop() {
+
         if (animationFrame !== null) {
-            cancelAnimationFrame(animationFrame);
+
+            cancelAnimationFrame(
+                animationFrame
+            );
+
             animationFrame = null;
         }
     }
 
     function startTimerLoop() {
+
         stopTimerLoop();
+
         updateTimer();
 
-        if (state.running && !document.hidden) {
-            animationFrame = requestAnimationFrame(timerTick);
+        if (
+            state.running &&
+            !document.hidden
+        ) {
+            animationFrame =
+                requestAnimationFrame(
+                    timerTick
+                );
         }
     }
 
-    /* START / STOP */
+    /* =========================================================
+       START / STOP
+    ========================================================= */
+
     function startStopwatch() {
+
         if (isDialogOpen()) {
             return;
         }
 
         if (state.running) {
-            state.accumulated = getElapsed();
+
+            state.accumulated =
+                getElapsed();
+
             state.running = false;
-            state.currentRunStart = null;
+
+            state.currentRunStart =
+                null;
 
             stopTimerLoop();
+
         } else {
+
             const now = Date.now();
 
-            /*
-             * 新しいラップを無条件に追加せず、
-             * 残っている最新ラップを優先して再開する。
-             */
             prepareLapForResume(now);
 
             state.running = true;
-            state.currentRunStart = now;
+
+            state.currentRunStart =
+                now;
         }
 
         saveState();
+
         updateControls();
+
         renderLaps();
+
         startTimerLoop();
     }
 
-    /* RESET */
+    /* =========================================================
+       RESET
+    ========================================================= */
+
     async function resetStopwatch() {
-        if (state.running || isDialogOpen()) {
+
+        if (
+            state.running ||
+            isDialogOpen()
+        ) {
             return;
         }
 
@@ -2076,38 +2348,55 @@
             state.laps.length > 0 ||
             state.hasActiveLap
         ) {
-            const confirmed = await showConfirm(
-                "リセットしますか？",
-                "リセット"
-            );
 
-            if (!confirmed || state.running) {
+            const confirmed =
+                await showConfirm(
+                    "リセットしますか？",
+                    "リセット"
+                );
+
+            if (
+                !confirmed ||
+                state.running
+            ) {
                 return;
             }
         }
 
         stopTimerLoop();
+
         closeEditModal();
 
-        state = createInitialState();
+        state =
+            createInitialState();
 
         saveState();
+
         updateControls();
+
         renderLaps();
+
         updateTimer();
     }
 
-    /* CONTROLS */
+    /* =========================================================
+       CONTROLS
+    ========================================================= */
+
     function updateControls() {
-        const running = state.running;
 
-        elements.secondaryButton.textContent = running
-            ? "ラップ"
-            : "リセット";
+        const running =
+            state.running;
 
-        elements.startStopButton.textContent = running
-            ? "停止"
-            : "開始";
+        elements.secondaryButton.textContent =
+            running
+                ? "ラップ"
+                : "リセット";
+
+        elements.startStopButton.textContent =
+            running
+                ? "停止"
+                : "開始";
 
         elements.startStopButton.classList.toggle(
             "running",
@@ -2125,14 +2414,18 @@
             getElapsed() > 0
         );
 
-        elements.statusText.textContent = running
-            ? "FOCUS"
-            : hasRecords
-                ? "PAUSED"
-                : "READY";
+        elements.statusText.textContent =
+            running
+                ? "FOCUS"
+                : hasRecords
+                    ? "PAUSED"
+                    : "READY";
     }
 
-    /* RENDER LAPS */
+    /* =========================================================
+       RENDER LAPS
+    ========================================================= */
+
     function createLapRow({
         number,
         startedAt,
@@ -2140,149 +2433,1317 @@
         active = false,
         id = null
     }) {
-        const row = document.createElement("div");
+
+        const row =
+            document.createElement("div");
+
         row.className = "lap";
 
-        const day = document.createElement("div");
+        const day =
+            document.createElement("div");
+
         day.className = "lap-day";
 
-        const numberElement = document.createElement("span");
-        numberElement.className = "lap-number";
-        numberElement.textContent = "LAP " + number;
+        const numberElement =
+            document.createElement("span");
 
-        const dateElement = document.createElement("span");
-        dateElement.textContent = formatLapStart(startedAt);
+        numberElement.className =
+            "lap-number";
 
-        const timeElement = document.createElement("div");
-        timeElement.className = "lap-time";
-        timeElement.textContent = formatStudyTime(duration);
+        numberElement.textContent =
+            "LAP " + number;
 
-        const targetId = active ? ACTIVE_LAP_ID : id;
+        const dateElement =
+            document.createElement("span");
+
+        dateElement.textContent =
+            formatLapStart(startedAt);
+
+        const timeElement =
+            document.createElement("div");
+
+        timeElement.className =
+            "lap-time";
+
+        timeElement.textContent =
+            formatStudyTime(duration);
+
+        const targetId =
+            active
+                ? ACTIVE_LAP_ID
+                : id;
 
         if (active) {
-            row.classList.add("lap-active");
 
-            activeLapTimeElement = timeElement;
-            lastActiveLapSeconds = Math.floor(duration / 1000);
+            row.classList.add(
+                "lap-active"
+            );
+
+            activeLapTimeElement =
+                timeElement;
+
+            lastActiveLapSeconds =
+                Math.floor(
+                    duration / 1000
+                );
+
         } else {
+
             row.dataset.id = id;
         }
 
-        /*
-         * 最新ラップを含め、停止中はすべて編集できる。
-         * ラップ内に「計測中」「一時停止」は表示しない。
-         */
-        row.title = state.running
-            ? "停止すると編集できます。"
-            : "クリックして編集";
+        row.title =
+            state.running
+                ? "停止すると編集できます。"
+                : "クリックして編集";
 
-        row.setAttribute("role", "button");
+        row.setAttribute(
+            "role",
+            "button"
+        );
+
         row.setAttribute(
             "aria-disabled",
             String(state.running)
         );
 
-        row.tabIndex = state.running ? -1 : 0;
+        row.tabIndex =
+            state.running
+                ? -1
+                : 0;
 
-        row.addEventListener("click", () => {
-            openEditModal(targetId);
-        });
-
-        row.addEventListener("keydown", event => {
-            if (
-                event.key === "Enter" ||
-                event.key === " "
-            ) {
-                event.preventDefault();
-                openEditModal(targetId);
+        row.addEventListener(
+            "click",
+            () => {
+                openEditModal(
+                    targetId
+                );
             }
-        });
+        );
 
-        day.append(numberElement, dateElement);
-        row.append(day, timeElement);
+        row.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
+
+                    event.preventDefault();
+
+                    openEditModal(
+                        targetId
+                    );
+                }
+            }
+        );
+
+        day.append(
+            numberElement,
+            dateElement
+        );
+
+        row.append(
+            day,
+            timeElement
+        );
 
         return row;
     }
 
     function renderLaps() {
+
         activeLapTimeElement = null;
+
         lastActiveLapSeconds = null;
 
         const totalCount = (
             state.laps.length +
-            (state.hasActiveLap ? 1 : 0)
+            (
+                state.hasActiveLap
+                    ? 1
+                    : 0
+            )
         );
 
-        elements.lapCount.textContent = String(totalCount);
+        elements.lapCount.textContent =
+            String(totalCount);
 
         if (totalCount === 0) {
-            const empty = document.createElement("div");
 
-            empty.className = "empty";
-            empty.textContent = "開始すると、最新ラップがここに表示されます";
+            const empty =
+                document.createElement(
+                    "div"
+                );
 
-            elements.laps.replaceChildren(empty);
+            empty.className =
+                "empty";
+
+            empty.textContent =
+                "開始すると、最新ラップがここに表示されます";
+
+            elements.laps.replaceChildren(
+                empty
+            );
+
             return;
         }
 
-        const fragment = document.createDocumentFragment();
+        const fragment =
+            document.createDocumentFragment();
 
         if (state.hasActiveLap) {
+
             fragment.append(
                 createLapRow({
-                    number: state.laps.length + 1,
-                    startedAt: state.activeLapStartedAt,
-                    duration: getActiveLapDuration(),
+
+                    number:
+                        state.laps.length + 1,
+
+                    startedAt:
+                        state.activeLapStartedAt,
+
+                    duration:
+                        getActiveLapDuration(),
+
                     active: true
                 })
             );
         }
 
-        state.laps.forEach((lap, index) => {
-            fragment.append(
-                createLapRow({
-                    number: state.laps.length - index,
-                    startedAt: lap.startedAt,
-                    duration: calculateLapDuration(index),
-                    id: lap.id
-                })
+        state.laps.forEach(
+            (lap, index) => {
+
+                fragment.append(
+                    createLapRow({
+
+                        number:
+                            state.laps.length -
+                            index,
+
+                        startedAt:
+                            lap.startedAt,
+
+                        duration:
+                            calculateLapDuration(
+                                index
+                            ),
+
+                        id:
+                            lap.id
+                    })
+                );
+            }
+        );
+
+        elements.laps.replaceChildren(
+            fragment
+        );
+    }
+
+    /* =========================================================
+       ★ 修正箇所②〜⑤
+       iPhone風リール
+       
+       ・1:1ドラッグ
+       ・複数サンプルから速度算出
+       ・自然なフリック
+       ・時間ベース慣性
+       ・境界処理
+       ・中央吸着
+    ========================================================= */
+
+    function createTimeReel(
+        element,
+        max,
+        value,
+        type
+    ) {
+
+        element.replaceChildren();
+
+        reelValues[type] =
+            Math.max(
+                0,
+                Math.min(
+                    max,
+                    Number(value) || 0
+                )
             );
+
+        const reelState = {
+
+            dragging: false,
+
+            moved: false,
+
+            pointerId: null,
+
+            startY: 0,
+
+            startScrollTop: 0,
+
+            lastY: 0,
+
+            lastTime: 0,
+
+            velocity: 0,
+
+            samples: [],
+
+            momentumFrame: null,
+
+            snapFrame: null,
+
+            suppressClick: false,
+
+            scrollTimer: null
+        };
+
+        /* =====================================================
+           ITEM生成
+        ===================================================== */
+
+        for (
+            let number = 0;
+            number <= max;
+            number++
+        ) {
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "time-reel-item";
+
+            item.dataset.value =
+                String(number);
+
+            item.textContent =
+                pad(number);
+
+            item.addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    if (
+                        reelState.suppressClick
+                    ) {
+                        return;
+                    }
+
+                    stopMomentum();
+
+                    stopSnap();
+
+                    reelValues[type] =
+                        number;
+
+                    snapReelToValue(
+                        element,
+                        type,
+                        number
+                    );
+                }
+            );
+
+            element.appendChild(item);
+        }
+
+        /* =====================================================
+           HELPERS
+        ===================================================== */
+
+        function getMaxScroll() {
+
+            return Math.max(
+                0,
+                element.scrollHeight -
+                element.clientHeight
+            );
+        }
+
+        function clampScroll(value) {
+
+            return Math.max(
+                0,
+                Math.min(
+                    getMaxScroll(),
+                    value
+                )
+            );
+        }
+
+        function stopMomentum() {
+
+            if (
+                reelState.momentumFrame !== null
+            ) {
+
+                cancelAnimationFrame(
+                    reelState.momentumFrame
+                );
+
+                reelState.momentumFrame =
+                    null;
+            }
+        }
+
+        function stopSnap() {
+
+            if (
+                reelState.snapFrame !== null
+            ) {
+
+                cancelAnimationFrame(
+                    reelState.snapFrame
+                );
+
+                reelState.snapFrame =
+                    null;
+            }
+        }
+
+        function getNearestIndex() {
+
+            const items =
+                element.querySelectorAll(
+                    ".time-reel-item"
+                );
+
+            if (!items.length) {
+                return 0;
+            }
+
+            const center =
+                element.scrollTop +
+                element.clientHeight / 2;
+
+            let closestIndex = 0;
+
+            let closestDistance =
+                Infinity;
+
+            items.forEach(
+                (item, index) => {
+
+                    const itemCenter =
+                        item.offsetTop +
+                        item.offsetHeight / 2;
+
+                    const distance =
+                        Math.abs(
+                            itemCenter - center
+                        );
+
+                    if (
+                        distance <
+                        closestDistance
+                    ) {
+
+                        closestDistance =
+                            distance;
+
+                        closestIndex =
+                            index;
+                    }
+                }
+            );
+
+            return closestIndex;
+        }
+
+        function getSnapPosition(index) {
+
+            const items =
+                element.querySelectorAll(
+                    ".time-reel-item"
+                );
+
+            const item =
+                items[index];
+
+            if (!item) {
+                return 0;
+            }
+
+            return clampScroll(
+                item.offsetTop -
+                (
+                    element.clientHeight -
+                    item.offsetHeight
+                ) / 2
+            );
+        }
+
+        function updateSelection() {
+
+            updateReelSelection(
+                element,
+                type
+            );
+        }
+
+        /* =====================================================
+           SMOOTH SNAP
+           
+           CSSのsmooth scrollではなく、
+           JSで短いease-outを作る。
+           
+           iPhoneのピッカーの「吸着」に近い。
+        ===================================================== */
+
+        function snapToNearest() {
+
+            stopSnap();
+
+            const index =
+                getNearestIndex();
+
+            const target =
+                getSnapPosition(index);
+
+            const start =
+                element.scrollTop;
+
+            const distance =
+                target - start;
+
+            reelValues[type] =
+                index;
+
+            updateSelection();
+
+            if (
+                Math.abs(distance) < 0.5
+            ) {
+
+                element.scrollTop =
+                    target;
+
+                return;
+            }
+
+            const duration =
+                Math.min(
+                    180,
+                    Math.max(
+                        90,
+                        Math.abs(distance) * 0.7
+                    )
+                );
+
+            const startTime =
+                performance.now();
+
+            function frame(now) {
+
+                const progress =
+                    Math.min(
+                        1,
+                        (
+                            now -
+                            startTime
+                        ) / duration
+                    );
+
+                /*
+                 * cubic ease-out
+                 */
+                const eased =
+                    1 -
+                    Math.pow(
+                        1 - progress,
+                        3
+                    );
+
+                element.scrollTop =
+                    start +
+                    distance * eased;
+
+                updateSelection();
+
+                if (progress < 1) {
+
+                    reelState.snapFrame =
+                        requestAnimationFrame(
+                            frame
+                        );
+
+                } else {
+
+                    reelState.snapFrame =
+                        null;
+
+                    element.scrollTop =
+                        target;
+
+                    updateSelection();
+                }
+            }
+
+            reelState.snapFrame =
+                requestAnimationFrame(frame);
+        }
+
+        function snapReelToValue(
+            targetElement,
+            targetType,
+            value
+        ) {
+
+            const item =
+                targetElement.querySelector(
+                    `[data-value="${value}"]`
+                );
+
+            if (!item) {
+                return;
+            }
+
+            const target =
+                item.offsetTop -
+                (
+                    targetElement.clientHeight -
+                    item.offsetHeight
+                ) / 2;
+
+            const start =
+                targetElement.scrollTop;
+
+            const distance =
+                target - start;
+
+            reelValues[targetType] =
+                Number(value);
+
+            if (
+                Math.abs(distance) < 0.5
+            ) {
+
+                targetElement.scrollTop =
+                    target;
+
+                updateReelSelection(
+                    targetElement,
+                    targetType
+                );
+
+                return;
+            }
+
+            const duration =
+                Math.min(
+                    180,
+                    Math.max(
+                        100,
+                        Math.abs(distance) * 0.7
+                    )
+                );
+
+            const startTime =
+                performance.now();
+
+            function frame(now) {
+
+                const progress =
+                    Math.min(
+                        1,
+                        (
+                            now -
+                            startTime
+                        ) / duration
+                    );
+
+                const eased =
+                    1 -
+                    Math.pow(
+                        1 - progress,
+                        3
+                    );
+
+                targetElement.scrollTop =
+                    start +
+                    distance * eased;
+
+                updateReelSelection(
+                    targetElement,
+                    targetType
+                );
+
+                if (progress < 1) {
+
+                    reelState.snapFrame =
+                        requestAnimationFrame(
+                            frame
+                        );
+
+                } else {
+
+                    reelState.snapFrame =
+                        null;
+
+                    targetElement.scrollTop =
+                        target;
+
+                    updateReelSelection(
+                        targetElement,
+                        targetType
+                    );
+                }
+            }
+
+            stopSnap();
+
+            reelState.snapFrame =
+                requestAnimationFrame(frame);
+        }
+
+        /* =====================================================
+           POINTER DOWN
+        ===================================================== */
+
+        element.addEventListener(
+            "pointerdown",
+            event => {
+
+                if (
+                    event.pointerType === "mouse" &&
+                    event.button !== 0
+                ) {
+                    return;
+                }
+
+                stopMomentum();
+
+                stopSnap();
+
+                reelState.dragging =
+                    true;
+
+                reelState.moved =
+                    false;
+
+                reelState.pointerId =
+                    event.pointerId;
+
+                reelState.startY =
+                    event.clientY;
+
+                reelState.startScrollTop =
+                    element.scrollTop;
+
+                reelState.lastY =
+                    event.clientY;
+
+                reelState.lastTime =
+                    performance.now();
+
+                reelState.velocity =
+                    0;
+
+                reelState.samples =
+                    [{
+                        y: event.clientY,
+                        time: performance.now()
+                    }];
+
+                element.setPointerCapture?.(
+                    event.pointerId
+                );
+
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+
+        /* =====================================================
+           POINTER MOVE
+           
+           ★ 1:1ドラッグ
+           
+           以前は1.8倍だった。
+           ここを1:1にすることで、
+           指と数字が一体になった感覚にする。
+        ===================================================== */
+
+        element.addEventListener(
+            "pointermove",
+            event => {
+
+                if (
+                    !reelState.dragging ||
+                    reelState.pointerId !==
+                        event.pointerId
+                ) {
+                    return;
+                }
+
+                const now =
+                    performance.now();
+
+                const deltaY =
+                    event.clientY -
+                    reelState.startY;
+
+                if (
+                    Math.abs(deltaY) > 4
+                ) {
+
+                    reelState.moved =
+                        true;
+                }
+
+                /*
+                 * ★ 1:1
+                 */
+                const targetScroll =
+                    reelState.startScrollTop -
+                    deltaY;
+
+                element.scrollTop =
+                    clampScroll(
+                        targetScroll
+                    );
+
+                /*
+                 * =================================================
+                   速度サンプルを保存
+                   
+                   直近約80msだけを見る。
+                   これで「指を離す直前」の速度を
+                   安定して取得できる。
+                 * =================================================
+                 */
+
+                reelState.samples.push({
+                    y: event.clientY,
+                    time: now
+                });
+
+                const cutoff =
+                    now - 80;
+
+                while (
+                    reelState.samples.length > 2 &&
+                    reelState.samples[0].time <
+                        cutoff
+                ) {
+
+                    reelState.samples.shift();
+                }
+
+                if (
+                    reelState.samples.length >= 2
+                ) {
+
+                    const first =
+                        reelState.samples[0];
+
+                    const last =
+                        reelState.samples[
+                            reelState.samples.length - 1
+                        ];
+
+                    const timeDelta =
+                        Math.max(
+                            1,
+                            last.time -
+                            first.time
+                        );
+
+                    /*
+                     * scrollTopの速度(px/ms)
+                     */
+                    reelState.velocity =
+                        -(
+                            last.y -
+                            first.y
+                        ) / timeDelta;
+                }
+
+                reelState.lastY =
+                    event.clientY;
+
+                reelState.lastTime =
+                    now;
+
+                updateSelection();
+
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+
+        /* =====================================================
+           POINTER UP
+        ===================================================== */
+
+        element.addEventListener(
+            "pointerup",
+            event => {
+
+                if (
+                    !reelState.dragging ||
+                    reelState.pointerId !==
+                        event.pointerId
+                ) {
+                    return;
+                }
+
+                reelState.dragging =
+                    false;
+
+                try {
+
+                    element.releasePointerCapture?.(
+                        event.pointerId
+                    );
+
+                } catch (error) {
+                    /* ignore */
+                }
+
+                const velocity =
+                    reelState.velocity;
+
+                const wasMoved =
+                    reelState.moved;
+
+                reelState.pointerId =
+                    null;
+
+                /*
+                 * ドラッグ後のclickを抑制。
+                 */
+                reelState.suppressClick =
+                    wasMoved;
+
+                if (wasMoved) {
+
+                    /*
+                     * フリック速度が十分なら慣性。
+                     */
+                    startMomentum(
+                        velocity
+                    );
+
+                } else {
+
+                    /*
+                     * タップなら即座に中央へ。
+                     */
+                    snapToNearest();
+                }
+
+                setTimeout(
+                    () => {
+
+                        reelState.suppressClick =
+                            false;
+
+                    },
+                    100
+                );
+
+                event.preventDefault();
+            },
+            {
+                passive: false
+            }
+        );
+
+        /* =====================================================
+           POINTER CANCEL
+        ===================================================== */
+
+        element.addEventListener(
+            "pointercancel",
+            event => {
+
+                if (
+                    !reelState.dragging
+                ) {
+                    return;
+                }
+
+                reelState.dragging =
+                    false;
+
+                reelState.pointerId =
+                    null;
+
+                snapToNearest();
+            },
+            {
+                passive: true
+            }
+        );
+
+        /* =====================================================
+           WHEEL
+        ===================================================== */
+
+        element.addEventListener(
+            "wheel",
+            event => {
+
+                event.preventDefault();
+
+                stopMomentum();
+
+                stopSnap();
+
+                /*
+                 * マウスホイールは少しだけ増幅。
+                 */
+                const WHEEL_SPEED =
+                    1.5;
+
+                element.scrollTop =
+                    clampScroll(
+                        element.scrollTop +
+                        event.deltaY *
+                        WHEEL_SPEED
+                    );
+
+                updateSelection();
+
+                clearTimeout(
+                    reelState.scrollTimer
+                );
+
+                reelState.scrollTimer =
+                    setTimeout(
+                        () => {
+                            snapToNearest();
+                        },
+                        60
+                    );
+            },
+            {
+                passive: false
+            }
+        );
+
+        /* =====================================================
+           ★ iPHONE風 慣性
+           
+           velocity:
+             px / ms
+
+           指を離した瞬間の速度をそのまま引き継ぎ、
+           時間経過に応じて指数的に減速する。
+        ===================================================== */
+
+        function startMomentum(
+            initialVelocity
+        ) {
+
+            stopMomentum();
+
+            /*
+             * 非常に遅い場合は慣性なし。
+             */
+            if (
+                Math.abs(initialVelocity) <
+                0.08
+            ) {
+
+                snapToNearest();
+
+                return;
+            }
+
+            /*
+             * iPhoneらしいフリック速度。
+             *
+             * 大きすぎると飛びすぎるので制限。
+             */
+            const MAX_VELOCITY =
+                2.8;
+
+            let velocity =
+                Math.max(
+                    -MAX_VELOCITY,
+                    Math.min(
+                        MAX_VELOCITY,
+                        initialVelocity
+                    )
+                );
+
+            let lastTime =
+                performance.now();
+
+            /*
+             * 1.0に近いほど長く滑る。
+             *
+             * 0.965前後でかなり自然。
+             */
+            const FRICTION =
+                0.965;
+
+            function frame(now) {
+
+                const delta =
+                    Math.min(
+                        32,
+                        Math.max(
+                            1,
+                            now - lastTime
+                        )
+                    );
+
+                lastTime =
+                    now;
+
+                /*
+                 * 時間ベースの減衰。
+                 *
+                 * 60fpsだけでなく、
+                 * 120HzのiPhone ProMotionでも
+                 * 同じ感覚になる。
+                 */
+                const friction =
+                    Math.pow(
+                        FRICTION,
+                        delta / 16.67
+                    );
+
+                velocity *= friction;
+
+                const nextScroll =
+                    element.scrollTop +
+                    velocity * delta;
+
+                const maxScroll =
+                    getMaxScroll();
+
+                /*
+                 * 境界に当たったら、
+                 * 速度を自然に消す。
+                 */
+                if (
+                    nextScroll <= 0
+                ) {
+
+                    element.scrollTop = 0;
+
+                    velocity *= 0.35;
+
+                } else if (
+                    nextScroll >= maxScroll
+                ) {
+
+                    element.scrollTop =
+                        maxScroll;
+
+                    velocity *= 0.35;
+
+                } else {
+
+                    element.scrollTop =
+                        nextScroll;
+                }
+
+                updateSelection();
+
+                /*
+                 * 十分遅くなったら終了。
+                 */
+                if (
+                    Math.abs(velocity) >
+                    0.025
+                ) {
+
+                    reelState.momentumFrame =
+                        requestAnimationFrame(
+                            frame
+                        );
+
+                } else {
+
+                    reelState.momentumFrame =
+                        null;
+
+                    /*
+                     * 慣性終了後に
+                     * 現在の数字へ自然に吸着。
+                     */
+                    snapToNearest();
+                }
+            }
+
+            reelState.momentumFrame =
+                requestAnimationFrame(
+                    frame
+                );
+        }
+
+        /* =====================================================
+           INITIAL POSITION
+        ===================================================== */
+
+        requestAnimationFrame(() => {
+
+            const item =
+                element.querySelector(
+                    `[data-value="${reelValues[type]}"]`
+                );
+
+            if (item) {
+
+                element.scrollTop =
+                    item.offsetTop -
+                    (
+                        element.clientHeight -
+                        item.offsetHeight
+                    ) / 2;
+            }
+
+            updateSelection();
         });
-
-        elements.laps.replaceChildren(fragment);
     }
 
-    /* EDIT MODAL */
-    function populateTimePicker(requiredHours = 99) {
-        const maxHours = Math.max(99, requiredHours);
+    /* =========================================================
+       REEL SELECTION
+    ========================================================= */
 
-        elements.editHours.replaceChildren();
-        elements.editMinutes.replaceChildren();
-        elements.editSeconds.replaceChildren();
+    function updateReelSelection(
+        element,
+        type
+    ) {
 
-        for (let hour = 0; hour <= maxHours; hour++) {
-            elements.editHours.add(
-                new Option(pad(hour), String(hour))
-            );
-        }
-
-        for (let value = 0; value <= 59; value++) {
-            elements.editMinutes.add(
-                new Option(pad(value), String(value))
+        const items =
+            element.querySelectorAll(
+                ".time-reel-item"
             );
 
-            elements.editSeconds.add(
-                new Option(pad(value), String(value))
-            );
-        }
-    }
-
-    function openEditModal(id) {
-        if (state.running || isDialogOpen()) {
+        if (!items.length) {
             return;
         }
 
-        const duration = getEditableLapDuration(id);
+        const center =
+            element.scrollTop +
+            element.clientHeight / 2;
+
+        let closest = null;
+
+        let closestDistance =
+            Infinity;
+
+        items.forEach(item => {
+
+            const itemCenter =
+                item.offsetTop +
+                item.offsetHeight / 2;
+
+            const distance =
+                Math.abs(
+                    itemCenter - center
+                );
+
+            if (
+                distance <
+                closestDistance
+            ) {
+
+                closestDistance =
+                    distance;
+
+                closest = item;
+            }
+
+            item.classList.remove(
+                "selected"
+            );
+        });
+
+        if (!closest) {
+            return;
+        }
+
+        closest.classList.add(
+            "selected"
+        );
+
+        reelValues[type] =
+            Number(
+                closest.dataset.value
+            );
+    }
+
+    /* =========================================================
+       POPULATE TIME PICKER
+    ========================================================= */
+
+    function populateTimePicker(
+        requiredHours = 99,
+        selectedHours = 0,
+        selectedMinutes = 0,
+        selectedSeconds = 0
+    ) {
+
+        const maxHours =
+            Math.max(
+                99,
+                requiredHours
+            );
+
+        createTimeReel(
+            elements.editHours,
+            maxHours,
+            selectedHours,
+            "hours"
+        );
+
+        createTimeReel(
+            elements.editMinutes,
+            59,
+            selectedMinutes,
+            "minutes"
+        );
+
+        createTimeReel(
+            elements.editSeconds,
+            59,
+            selectedSeconds,
+            "seconds"
+        );
+    }
+
+    function getTimeReelValue(type) {
+
+        return Math.max(
+            0,
+            Number(
+                reelValues[type]
+            ) || 0
+        );
+    }
+
+    /* =========================================================
+       OPEN EDIT MODAL
+    ========================================================= */
+
+    function openEditModal(id) {
+
+        if (
+            state.running ||
+            isDialogOpen()
+        ) {
+            return;
+        }
+
+        const duration =
+            getEditableLapDuration(id);
 
         if (duration === null) {
             return;
@@ -2290,27 +3751,52 @@
 
         editingLapId = id;
 
-        const totalSeconds = Math.floor(duration / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
+        const totalSeconds =
+            Math.floor(
+                duration / 1000
+            );
 
-        populateTimePicker(hours);
+        const hours =
+            Math.floor(
+                totalSeconds / 3600
+            );
 
-        elements.editHours.value = String(hours);
-        elements.editMinutes.value = String(minutes);
-        elements.editSeconds.value = String(seconds);
+        const minutes =
+            Math.floor(
+                (totalSeconds % 3600) /
+                60
+            );
 
-        elements.modalOverlay.classList.add("show");
+        const seconds =
+            totalSeconds % 60;
+
+        populateTimePicker(
+            hours,
+            hours,
+            minutes,
+            seconds
+        );
+
+        elements.modalOverlay.classList.add(
+            "show"
+        );
     }
 
     function closeEditModal() {
+
         editingLapId = null;
-        elements.modalOverlay.classList.remove("show");
+
+        elements.modalOverlay.classList.remove(
+            "show"
+        );
     }
 
-    /* SAVE EDIT */
+    /* =========================================================
+       SAVE EDIT
+    ========================================================= */
+
     function saveEdit() {
+
         if (
             editingLapId === null ||
             state.running ||
@@ -2319,16 +3805,26 @@
             return;
         }
 
-        const oldDuration = getEditableLapDuration(editingLapId);
+        const oldDuration =
+            getEditableLapDuration(
+                editingLapId
+            );
 
         if (oldDuration === null) {
+
             closeEditModal();
+
             return;
         }
 
-        const hours = Number(elements.editHours.value);
-        const minutes = Number(elements.editMinutes.value);
-        const seconds = Number(elements.editSeconds.value);
+        const hours =
+            getTimeReelValue("hours");
+
+        const minutes =
+            getTimeReelValue("minutes");
+
+        const seconds =
+            getTimeReelValue("seconds");
 
         if (
             !Number.isInteger(hours) ||
@@ -2344,84 +3840,130 @@
         }
 
         const newDuration = (
-            (hours * 60 + minutes) * 60 + seconds
+            (
+                hours * 60 +
+                minutes
+            ) * 60 +
+            seconds
         ) * 1000;
 
-        /*
-         * 表示値を変えずに保存した場合、
-         * 表示していないミリ秒部分もそのまま維持する。
-         */
         const displayedOldDuration = (
-            Math.floor(oldDuration / 1000) * 1000
+            Math.floor(
+                oldDuration / 1000
+            ) * 1000
         );
 
-        if (newDuration === displayedOldDuration) {
+        if (
+            newDuration ===
+            displayedOldDuration
+        ) {
+
             closeEditModal();
+
             return;
         }
 
-        if (editingLapId === ACTIVE_LAP_ID) {
-            /*
-             * 最新の未確定ラップだけを変更する。
-             * 確定済みラップには影響させない。
-             */
+        if (
+            editingLapId === ACTIVE_LAP_ID
+        ) {
+
             state.accumulated = (
-                getLapElapsed(state.laps[0]) +
+                getLapElapsed(
+                    state.laps[0]
+                ) +
                 newDuration
             );
+
         } else {
-            const index = state.laps.findIndex(
-                lap => lap.id === editingLapId
-            );
+
+            const index =
+                state.laps.findIndex(
+                    lap =>
+                        lap.id ===
+                        editingLapId
+                );
 
             if (index === -1) {
+
                 closeEditModal();
+
                 return;
             }
 
-            const difference = newDuration - oldDuration;
+            const difference =
+                newDuration -
+                oldDuration;
 
-            /*
-             * 対象と、それより新しい確定ラップの累計値を補正。
-             * ほかのラップの区間時間は維持する。
-             */
-            for (let current = 0; current <= index; current++) {
-                state.laps[current].elapsed = Math.max(
-                    0,
-                    getLapElapsed(state.laps[current]) + difference
-                );
+            for (
+                let current = 0;
+                current <= index;
+                current++
+            ) {
+
+                state.laps[current].elapsed =
+                    Math.max(
+                        0,
+                        getLapElapsed(
+                            state.laps[current]
+                        ) +
+                        difference
+                    );
             }
 
-            state.accumulated = Math.max(
-                0,
-                state.accumulated + difference
-            );
+            state.accumulated =
+                Math.max(
+                    0,
+                    state.accumulated +
+                    difference
+                );
         }
 
         normalizeLaps();
+
         saveState();
+
         renderLaps();
+
         updateTimer();
+
         updateControls();
+
         closeEditModal();
     }
 
-    /* NORMALIZE */
+    /* =========================================================
+       NORMALIZE
+    ========================================================= */
+
     function normalizeLaps() {
+
         for (
-            let index = state.laps.length - 2;
+            let index =
+                state.laps.length - 2;
+
             index >= 0;
+
             index--
         ) {
-            state.laps[index].elapsed = Math.max(
-                getLapElapsed(state.laps[index]),
-                getLapElapsed(state.laps[index + 1])
-            );
+
+            state.laps[index].elapsed =
+                Math.max(
+                    getLapElapsed(
+                        state.laps[index]
+                    ),
+                    getLapElapsed(
+                        state.laps[index + 1]
+                    )
+                );
         }
     }
 
-    /* DELETE */
+    /* =========================================================
+       DELETE
+    ========================================================= */
+
     async function deleteLap() {
+
         if (
             editingLapId === null ||
             state.running ||
@@ -2430,17 +3972,25 @@
             return;
         }
 
-        const targetId = editingLapId;
+        const targetId =
+            editingLapId;
 
-        if (getEditableLapDuration(targetId) === null) {
+        if (
+            getEditableLapDuration(
+                targetId
+            ) === null
+        ) {
+
             closeEditModal();
+
             return;
         }
 
-        const confirmed = await showConfirm(
-            "ラップを削除しますか？",
-            "削除"
-        );
+        const confirmed =
+            await showConfirm(
+                "ラップを削除しますか？",
+                "削除"
+            );
 
         if (
             !confirmed ||
@@ -2450,93 +4000,134 @@
             return;
         }
 
-        if (targetId === ACTIVE_LAP_ID) {
+        if (
+            targetId === ACTIVE_LAP_ID
+        ) {
+
             if (!state.hasActiveLap) {
+
                 closeEditModal();
+
                 return;
             }
 
-            /*
-             * 最新の未確定ラップを削除。
-             * 削除した時間は合計から除き、
-             * 残った確定ラップの時間は変更しない。
-             *
-             * この時点では新しいラップを作らない。
-             * 再開時に prepareLapForResume() が
-             * 残った最新ラップを再開対象へ切り替える。
-             */
-            state.accumulated = getLapElapsed(state.laps[0]);
+            state.accumulated =
+                getLapElapsed(
+                    state.laps[0]
+                );
+
             state.hasActiveLap = false;
-            state.activeLapStartedAt = null;
-            state.currentRunStart = null;
+
+            state.activeLapStartedAt =
+                null;
+
+            state.currentRunStart =
+                null;
+
         } else {
-            const index = state.laps.findIndex(
-                lap => lap.id === targetId
-            );
+
+            const index =
+                state.laps.findIndex(
+                    lap =>
+                        lap.id === targetId
+                );
 
             if (index === -1) {
+
                 closeEditModal();
+
                 return;
             }
 
-            const deletedDuration = calculateLapDuration(index);
-
-            /*
-             * 削除対象より新しいラップの累計値を補正。
-             * 削除した時間をほかのラップに引き継がせない。
-             */
-            for (let current = 0; current < index; current++) {
-                state.laps[current].elapsed = Math.max(
-                    0,
-                    getLapElapsed(state.laps[current]) -
-                    deletedDuration
+            const deletedDuration =
+                calculateLapDuration(
+                    index
                 );
+
+            for (
+                let current = 0;
+                current < index;
+                current++
+            ) {
+
+                state.laps[current].elapsed =
+                    Math.max(
+                        0,
+                        getLapElapsed(
+                            state.laps[current]
+                        ) -
+                        deletedDuration
+                    );
             }
 
-            state.laps.splice(index, 1);
-
-            state.accumulated = Math.max(
-                0,
-                state.accumulated - deletedDuration
+            state.laps.splice(
+                index,
+                1
             );
 
-            /*
-             * 未確定ラップがない場合は、
-             * 残った最新の確定ラップの累計値に合わせる。
-             */
+            state.accumulated =
+                Math.max(
+                    0,
+                    state.accumulated -
+                    deletedDuration
+                );
+
             if (!state.hasActiveLap) {
-                state.accumulated = getLapElapsed(state.laps[0]);
+
+                state.accumulated =
+                    getLapElapsed(
+                        state.laps[0]
+                    );
             }
         }
 
         normalizeLaps();
+
         saveState();
+
         renderLaps();
+
         updateTimer();
+
         updateControls();
+
         closeEditModal();
     }
 
-    /* EVENTS */
+    /* =========================================================
+       EVENTS
+    ========================================================= */
+
     function bindEvents() {
+
         elements.startStopButton.addEventListener(
             "click",
             startStopwatch
         );
 
-        elements.secondaryButton.addEventListener("click", () => {
-            if (state.running) {
-                addLap();
-            } else {
-                resetStopwatch();
-            }
-        });
+        elements.secondaryButton.addEventListener(
+            "click",
+            () => {
 
-        elements.cancelEdit.addEventListener("click", () => {
-            if (confirmResolver === null) {
-                closeEditModal();
+                if (state.running) {
+                    addLap();
+                } else {
+                    resetStopwatch();
+                }
             }
-        });
+        );
+
+        elements.cancelEdit.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    confirmResolver === null
+                ) {
+                    closeEditModal();
+                }
+            }
+        );
 
         elements.saveEdit.addEventListener(
             "click",
@@ -2548,68 +4139,127 @@
             deleteLap
         );
 
-        elements.modalOverlay.addEventListener("click", event => {
-            if (
-                event.target === elements.modalOverlay &&
-                confirmResolver === null
-            ) {
-                closeEditModal();
+        elements.modalOverlay.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                        elements.modalOverlay &&
+                    confirmResolver === null
+                ) {
+                    closeEditModal();
+                }
             }
-        });
+        );
 
-        /* CONFIRM EVENTS */
-        elements.confirmCancel.addEventListener("click", () => {
-            closeConfirm(false);
-        });
+        /* =====================================================
+           CONFIRM EVENTS
+        ===================================================== */
 
-        elements.confirmOK.addEventListener("click", () => {
-            closeConfirm(true);
-        });
-
-        elements.confirmOverlay.addEventListener("click", event => {
-            if (event.target === elements.confirmOverlay) {
+        elements.confirmCancel.addEventListener(
+            "click",
+            () => {
                 closeConfirm(false);
             }
-        });
+        );
 
-        document.addEventListener("keydown", event => {
-            if (event.key !== "Escape") {
-                return;
+        elements.confirmOK.addEventListener(
+            "click",
+            () => {
+                closeConfirm(true);
             }
+        );
 
-            if (confirmResolver !== null) {
-                closeConfirm(false);
-            } else if (editingLapId !== null) {
-                closeEditModal();
+        elements.confirmOverlay.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    elements.confirmOverlay
+                ) {
+                    closeConfirm(false);
+                }
             }
-        });
+        );
 
-        /* BACKGROUND / RESTORE */
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key !== "Escape"
+                ) {
+                    return;
+                }
+
+                if (
+                    confirmResolver !== null
+                ) {
+
+                    closeConfirm(false);
+
+                } else if (
+                    editingLapId !== null
+                ) {
+
+                    closeEditModal();
+                }
+            }
+        );
+
+        /* =====================================================
+           BACKGROUND / RESTORE
+        ===================================================== */
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (document.hidden) {
+
+                    stopTimerLoop();
+
+                    saveState();
+
+                } else {
+
+                    startTimerLoop();
+                }
+            }
+        );
+
+        window.addEventListener(
+            "pagehide",
+            () => {
+
                 stopTimerLoop();
+
                 saveState();
-            } else {
+            }
+        );
+
+        window.addEventListener(
+            "pageshow",
+            () => {
+
                 startTimerLoop();
             }
-        });
+        );
 
-        window.addEventListener("pagehide", () => {
-            stopTimerLoop();
-            saveState();
-        });
+        /* =====================================================
+           ZOOM PREVENTION
+        ===================================================== */
 
-        window.addEventListener("pageshow", () => {
-            startTimerLoop();
-        });
-
-        /* ZOOM PREVENTION */
         document.addEventListener(
             "gesturestart",
             event => {
                 event.preventDefault();
             },
-            { passive: false }
+            {
+                passive: false
+            }
         );
 
         document.addEventListener(
@@ -2617,7 +4267,9 @@
             event => {
                 event.preventDefault();
             },
-            { passive: false }
+            {
+                passive: false
+            }
         );
 
         document.addEventListener(
@@ -2625,91 +4277,137 @@
             event => {
                 event.preventDefault();
             },
-            { passive: false }
+            {
+                passive: false
+            }
         );
 
-        /* DOUBLE TAP ZOOM PREVENTION */
+        /* =====================================================
+           DOUBLE TAP ZOOM PREVENTION
+        ===================================================== */
+
         let lastTouchEnd = 0;
 
         document.addEventListener(
             "touchend",
             event => {
-                const now = Date.now();
-                const target = event.target;
 
-                const interactive = target instanceof Element
-                    ? target.closest(
-                        'button, input, select, textarea, a, [role="button"]'
-                    )
-                    : null;
+                const now =
+                    Date.now();
+
+                const target =
+                    event.target;
+
+                const interactive =
+                    target instanceof Element
+                        ? target.closest(
+                            'button, input, select, textarea, a, [role="button"]'
+                        )
+                        : null;
 
                 if (
                     !interactive &&
                     now - lastTouchEnd <= 300
                 ) {
+
                     event.preventDefault();
                 }
 
                 lastTouchEnd = now;
+
             },
-            { passive: false }
+            {
+                passive: false
+            }
         );
     }
 
-    /* INITIALIZE */
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
     function initialize() {
+
         const requiredIds = [
+
             "timer",
             "laps",
             "lapCount",
+
             "secondaryButton",
             "startStopButton",
+
             "status",
             "statusText",
+
             "editHours",
             "editMinutes",
             "editSeconds",
+
             "modalOverlay",
+
             "cancelEdit",
             "saveEdit",
             "deleteLap",
+
             "confirmTitle",
             "confirmOK",
             "confirmOverlay",
             "confirmCancel"
         ];
 
-        for (const id of requiredIds) {
-            const element = document.getElementById(id);
+        for (
+            const id of requiredIds
+        ) {
+
+            const element =
+                document.getElementById(id);
 
             if (!element) {
+
                 console.error(
-                    "必要なHTML要素が見つかりません: " + id
+                    "必要なHTML要素が見つかりません: " +
+                    id
                 );
+
                 return;
             }
 
-            elements[id] = element;
+            elements[id] =
+                element;
         }
 
         loadState();
+
         updateControls();
+
         renderLaps();
+
         bindEvents();
+
         startTimerLoop();
     }
 
-    if (document.readyState === "loading") {
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
         document.addEventListener(
             "DOMContentLoaded",
             initialize,
-            { once: true }
+            {
+                once: true
+            }
         );
+
     } else {
+
         initialize();
     }
+
 })();
 </script>
-</body>
 
+</body>
 </html>
