@@ -1,4 +1,5 @@
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
 
@@ -64,16 +65,12 @@
             height: 100dvh;
             min-height: 0;
             padding:
-                max(32px, env(safe-area-inset-top))
-                24px
-                max(32px, env(safe-area-inset-bottom));
+                max(32px, env(safe-area-inset-top)) 24px max(32px, env(safe-area-inset-bottom));
             background:
-                radial-gradient(
-                    circle at 50% -10%,
+                radial-gradient(circle at 50% -10%,
                     #292929 0%,
                     #111 38%,
-                    #080808 75%
-                );
+                    #080808 75%);
             overflow: hidden;
         }
 
@@ -86,8 +83,7 @@
             max-width: 760px;
             height: 30px;
             margin:
-                0 auto
-                10px;
+                0 auto 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -137,15 +133,7 @@
             width: 100%;
             max-width: 760px;
             height:
-                calc(
-                    100dvh
-                    - 32px
-                    - 30px
-                    - 20px
-                    - 40px
-                    - env(safe-area-inset-top)
-                    - env(safe-area-inset-bottom)
-                );
+                calc(100dvh - 32px - 30px - 20px - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -192,8 +180,7 @@
             align-items: center;
             width: min(310px, 100%);
             margin:
-                0 auto
-                50px;
+                0 auto 50px;
             flex-shrink: 0;
         }
 
@@ -201,12 +188,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 78px;
-            height: 78px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             background: #252527;
             color: #eeeeee;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 500;
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, .05),
@@ -222,11 +209,8 @@
         }
 
         .circle-button.primary {
-            width: 82px;
-            height: 82px;
             background: #b8b8ba;
             color: #111;
-            font-size: 14px;
         }
 
         .circle-button.primary.running {
@@ -238,7 +222,7 @@
            LAP SECTION
         ========================================================= */
 
-        main > section:last-child {
+        main>section:last-child {
             display: flex;
             flex-direction: column;
             min-height: 0;
@@ -293,8 +277,7 @@
         .lap {
             display: grid;
             grid-template-columns:
-                1fr
-                auto;
+                1fr auto;
             align-items: center;
             min-height: 0;
             padding:
@@ -366,15 +349,10 @@
         .modal {
             width: min(520px, 100%);
             padding:
-                22px
-                22px
-                max(25px, env(safe-area-inset-bottom));
+                22px 22px max(25px, env(safe-area-inset-bottom));
             background: #1c1c1e;
             border-radius:
-                24px
-                24px
-                0
-                0;
+                24px 24px 0 0;
             box-shadow:
                 0 -15px 50px rgba(0, 0, 0, .5);
             animation:
@@ -670,9 +648,7 @@
 
         .confirm-content {
             padding:
-                22px
-                20px
-                20px;
+                22px 20px 20px;
             text-align: center;
         }
 
@@ -707,7 +683,7 @@
             font-weight: 500;
         }
 
-        .confirm-button + .confirm-button {
+        .confirm-button+.confirm-button {
             border-left:
                 1px solid #444;
         }
@@ -724,13 +700,10 @@
            iPAD / LANDSCAPE
         ========================================================= */
 
-        @media (min-width: 600px) {
+        @media (min-width : 600px) {
             .app {
                 padding:
-                    max(32px, env(safe-area-inset-top))
-                    48px
-                    max(32px, env(safe-area-inset-bottom))
-                    48px;
+                    max(32px, env(safe-area-inset-top)) 48px max(32px, env(safe-area-inset-bottom)) 48px;
             }
 
             header,
@@ -744,23 +717,12 @@
 
             main {
                 height:
-                    calc(
-                        100dvh
-                        - 32px
-                        - 30px
-                        - 25px
-                        - 32px
-                        - env(safe-area-inset-top)
-                        - env(safe-area-inset-bottom)
-                    );
+                    calc(100dvh - 32px - 30px - 25px - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
                 display: grid;
                 grid-template-columns:
-                    minmax(90px, 1fr)
-                    minmax(360px, 650px)
-                    minmax(90px, 1fr);
+                    minmax(90px, 1fr) minmax(360px, 650px) minmax(90px, 1fr);
                 grid-template-rows:
-                    auto
-                    minmax(0, 1fr);
+                    auto minmax(0, 1fr);
                 column-gap: 30px;
                 align-items: start;
             }
@@ -798,9 +760,7 @@
                 grid-row: 2;
                 display: grid;
                 grid-template-columns:
-                    minmax(90px, 1fr)
-                    minmax(360px, 650px)
-                    minmax(90px, 1fr);
+                    minmax(90px, 1fr) minmax(360px, 650px) minmax(90px, 1fr);
                 column-gap: 30px;
                 align-items: start;
                 justify-content: initial;
@@ -829,18 +789,12 @@
             }
 
             .circle-button {
-                width: 78px;
-                height: 78px;
-                font-size: 13px;
+                width: 90px;
+                height: 90px;
+                font-size: 15px;
             }
 
-            .circle-button.primary {
-                width: 82px;
-                height: 82px;
-                font-size: 14px;
-            }
-
-            main > section:last-child {
+            main>section:last-child {
                 grid-column: 2;
                 grid-row: 2;
                 width: 100%;
@@ -886,17 +840,10 @@
            iPHONE LANDSCAPE
         ========================================================= */
 
-        @media (
-            orientation: landscape
-        ) and (
-            max-width: 599px
-        ) {
+        @media (orientation: landscape) and (max-width : 599px) {
             .app {
                 padding:
-                    max(10px, env(safe-area-inset-top))
-                    max(18px, env(safe-area-inset-right))
-                    max(10px, env(safe-area-inset-bottom))
-                    max(18px, env(safe-area-inset-left));
+                    max(10px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
             }
 
             header {
@@ -926,23 +873,12 @@
                 width: 100%;
                 max-width: 900px;
                 height:
-                    calc(
-                        100dvh
-                        - 10px
-                        - 22px
-                        - 8px
-                        - 10px
-                        - env(safe-area-inset-top)
-                        - env(safe-area-inset-bottom)
-                    );
+                    calc(100dvh - 10px - 22px - 8px - 10px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
                 display: grid;
                 grid-template-columns:
-                    minmax(72px, 1fr)
-                    minmax(250px, 520px)
-                    minmax(72px, 1fr);
+                    minmax(72px, 1fr) minmax(250px, 520px) minmax(72px, 1fr);
                 grid-template-rows:
-                    auto
-                    minmax(0, 1fr);
+                    auto minmax(0, 1fr);
                 column-gap: 16px;
                 align-items: start;
             }
@@ -972,9 +908,7 @@
                 grid-row: 2;
                 display: grid;
                 grid-template-columns:
-                    minmax(72px, 1fr)
-                    minmax(250px, 520px)
-                    minmax(72px, 1fr);
+                    minmax(72px, 1fr) minmax(250px, 520px) minmax(72px, 1fr);
                 column-gap: 16px;
                 align-items: start;
                 width: 100%;
@@ -1002,18 +936,12 @@
             }
 
             .circle-button {
-                width: 62px;
-                height: 62px;
-                font-size: 11px;
+                width: 75px;
+                height: 75px;
+                font-size: 13px;
             }
 
-            .circle-button.primary {
-                width: 66px;
-                height: 66px;
-                font-size: 12px;
-            }
-
-            main > section:last-child {
+            main>section:last-child {
                 grid-column: 2;
                 grid-row: 2;
                 width: 100%;
@@ -1074,7 +1002,7 @@
            iPAD LANDSCAPE / LARGE TABLET
         ========================================================= */
 
-        @media (min-width: 900px) {
+        @media (min-width : 900px) {
             .app {
                 padding-left: 70px;
                 padding-right: 70px;
@@ -1091,9 +1019,7 @@
 
             main {
                 grid-template-columns:
-                    minmax(140px, 1fr)
-                    minmax(450px, 700px)
-                    minmax(140px, 1fr);
+                    minmax(140px, 1fr) minmax(450px, 700px) minmax(140px, 1fr);
                 column-gap: 40px;
             }
 
@@ -1115,28 +1041,19 @@
 
             .controls {
                 grid-template-columns:
-                    minmax(140px, 1fr)
-                    minmax(450px, 700px)
-                    minmax(140px, 1fr);
+                    minmax(140px, 1fr) minmax(450px, 700px) minmax(140px, 1fr);
                 column-gap: 40px;
             }
 
             .circle-button {
-                width: 96px;
-                height: 96px;
-                font-size: 15px;
-            }
-
-            .circle-button.primary {
-                width: 104px;
-                height: 104px;
-                font-size: 16px;
+                width: 110px;
+                height: 110px;
+                font-size: 17px;
             }
 
             .lap {
                 grid-template-columns:
-                    1fr
-                    220px;
+                    1fr 220px;
                 padding:
                     12px 12px;
             }
@@ -1159,12 +1076,10 @@
            PC
         ========================================================= */
 
-        @media (min-width: 1200px) {
+        @media (min-width : 1200px) {
             .app {
                 padding:
-                    45px
-                    80px
-                    60px;
+                    45px 80px 60px;
             }
 
             header,
@@ -1178,16 +1093,9 @@
 
             main {
                 height:
-                    calc(
-                        100dvh
-                        - 45px
-                        - 30px
-                        - 60px
-                    );
+                    calc(100dvh - 45px - 30px - 60px);
                 grid-template-columns:
-                    minmax(180px, 1fr)
-                    minmax(500px, 760px)
-                    minmax(180px, 1fr);
+                    minmax(180px, 1fr) minmax(500px, 760px) minmax(180px, 1fr);
                 column-gap: 50px;
             }
 
@@ -1209,22 +1117,14 @@
 
             .controls {
                 grid-template-columns:
-                    minmax(180px, 1fr)
-                    minmax(500px, 760px)
-                    minmax(180px, 1fr);
+                    minmax(180px, 1fr) minmax(500px, 760px) minmax(180px, 1fr);
                 column-gap: 50px;
             }
 
             .circle-button {
-                width: 108px;
-                height: 108px;
-                font-size: 16px;
-            }
-
-            .circle-button.primary {
-                width: 116px;
-                height: 116px;
-                font-size: 17px;
+                width: 124px;
+                height: 124px;
+                font-size: 18px;
             }
 
             .section-header {
@@ -1243,8 +1143,7 @@
 
             .lap {
                 grid-template-columns:
-                    1fr
-                    250px;
+                    1fr 250px;
                 min-height: 82px;
                 padding: 15px;
             }
@@ -1267,7 +1166,7 @@
            VERY LARGE PC
         ========================================================= */
 
-        @media (min-width: 1600px) {
+        @media (min-width : 1600px) {
             .app {
                 padding-left: 120px;
                 padding-right: 120px;
@@ -1280,17 +1179,13 @@
 
             main {
                 grid-template-columns:
-                    minmax(200px, 1fr)
-                    minmax(600px, 800px)
-                    minmax(200px, 1fr);
+                    minmax(200px, 1fr) minmax(600px, 800px) minmax(200px, 1fr);
                 column-gap: 70px;
             }
 
             .controls {
                 grid-template-columns:
-                    minmax(200px, 1fr)
-                    minmax(600px, 800px)
-                    minmax(200px, 1fr);
+                    minmax(200px, 1fr) minmax(600px, 800px) minmax(200px, 1fr);
                 column-gap: 70px;
             }
 
@@ -1307,11 +1202,7 @@
            SMALL PHONE
         ========================================================= */
 
-        @media (
-            max-width: 380px
-        ) and (
-            orientation: portrait
-        ) {
+        @media (max-width : 380px) and (orientation: portrait) {
             .app {
                 padding-left: 16px;
                 padding-right: 16px;
@@ -1322,13 +1213,9 @@
             }
 
             .circle-button {
-                width: 70px;
-                height: 70px;
-            }
-
-            .circle-button.primary {
-                width: 76px;
-                height: 76px;
+                width: 80px;
+                height: 80px;
+                font-size: 13px;
             }
 
             .timer {
@@ -1454,34 +1341,19 @@
 
                 <div class="time-picker">
 
-                    <div
-                        class="time-reel"
-                        id="editHours"
-                        data-type="hours"
-                        aria-label="時間"
-                    ></div>
+                    <div class="time-reel" id="editHours" data-type="hours" aria-label="時間"></div>
 
                     <div class="time-unit">
                         時間
                     </div>
 
-                    <div
-                        class="time-reel"
-                        id="editMinutes"
-                        data-type="minutes"
-                        aria-label="分"
-                    ></div>
+                    <div class="time-reel" id="editMinutes" data-type="minutes" aria-label="分"></div>
 
                     <div class="time-unit">
                         分
                     </div>
 
-                    <div
-                        class="time-reel"
-                        id="editSeconds"
-                        data-type="seconds"
-                        aria-label="秒"
-                    ></div>
+                    <div class="time-reel" id="editSeconds" data-type="seconds" aria-label="秒"></div>
 
                     <div class="time-unit">
                         秒
@@ -1497,26 +1369,17 @@
 
             <div class="modal-buttons">
 
-                <button
-                    class="modal-button"
-                    id="cancelEdit"
-                >
+                <button class="modal-button" id="cancelEdit">
                     キャンセル
                 </button>
 
-                <button
-                    class="modal-button save"
-                    id="saveEdit"
-                >
+                <button class="modal-button save" id="saveEdit">
                     保存
                 </button>
 
             </div>
 
-            <button
-                class="delete-button"
-                id="deleteLap"
-            >
+            <button class="delete-button" id="deleteLap">
                 このラップを削除
             </button>
 
@@ -1535,10 +1398,7 @@
 
             <div class="confirm-content">
 
-                <div
-                    class="confirm-title"
-                    id="confirmTitle"
-                >
+                <div class="confirm-title" id="confirmTitle">
                     リセットしますか？
                 </div>
 
@@ -1546,17 +1406,11 @@
 
             <div class="confirm-buttons">
 
-                <button
-                    class="confirm-button"
-                    id="confirmCancel"
-                >
+                <button class="confirm-button" id="confirmCancel">
                     キャンセル
                 </button>
 
-                <button
-                    class="confirm-button danger"
-                    id="confirmOK"
-                >
+                <button class="confirm-button danger" id="confirmOK">
                     リセット
                 </button>
 
@@ -1567,1268 +1421,2079 @@
     </div>
 
 
-<script>
-(() => {
-    "use strict";
+    <script>
+        (() => {
+            "use strict";
 
-    /* =========================================================
-       STORAGE
-    ========================================================= */
+            /* =========================================================
+               STORAGE
+            ========================================================= */
 
-    const STORAGE_KEY = "studyStopwatch_v3";
+            const STORAGE_KEY = "studyStopwatch_v3";
 
-    /* =========================================================
-       ACTIVE LAP IDENTIFIER
-    ========================================================= */
+            /* =========================================================
+               ACTIVE LAP IDENTIFIER
+            ========================================================= */
 
-    const ACTIVE_LAP_ID = Symbol("activeLap");
+            const ACTIVE_LAP_ID = Symbol("activeLap");
 
-    /* =========================================================
-       STATE
-    ========================================================= */
+            /* =========================================================
+               STATE
+            ========================================================= */
 
-    function createInitialState() {
-        return {
-            running: false,
-            currentRunStart: null,
-            accumulated: 0,
-            laps: [],
-            hasActiveLap: false,
-            activeLapStartedAt: null
-        };
-    }
-
-    let state = createInitialState();
-
-    let editingLapId = null;
-    let animationFrame = null;
-    let confirmResolver = null;
-
-    let activeLapTimeElement = null;
-    let lastActiveLapSeconds = null;
-
-    /*
-     * リールの現在値
-     */
-    const reelValues = {
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-    };
-
-    const elements = {};
-
-    /* =========================================================
-       UTILITIES
-    ========================================================= */
-
-    function toNonNegativeNumber(value, fallback = 0) {
-        const number = Number(value);
-
-        return Number.isFinite(number)
-            ? Math.max(0, number)
-            : fallback;
-    }
-
-    function normalizeTimestamp(value) {
-        if (typeof value !== "string") {
-            return null;
-        }
-
-        const timestamp = Date.parse(value);
-
-        return Number.isFinite(timestamp)
-            ? new Date(timestamp).toISOString()
-            : null;
-    }
-
-    function createLapId() {
-        if (
-            typeof crypto !== "undefined" &&
-            typeof crypto.randomUUID === "function"
-        ) {
-            return crypto.randomUUID();
-        }
-
-        return (
-            Date.now().toString(36) +
-            "-" +
-            Math.random().toString(36).slice(2)
-        );
-    }
-
-    function isDialogOpen() {
-        return (
-            confirmResolver !== null ||
-            elements.modalOverlay.classList.contains("show")
-        );
-    }
-
-    /* =========================================================
-       CUSTOM CONFIRM
-    ========================================================= */
-
-    function showConfirm(title, okText) {
-        if (confirmResolver !== null) {
-            return Promise.resolve(false);
-        }
-
-        return new Promise(resolve => {
-            confirmResolver = resolve;
-
-            elements.confirmTitle.textContent = title;
-            elements.confirmOK.textContent = okText;
-            elements.confirmOverlay.classList.add("show");
-        });
-    }
-
-    function closeConfirm(result) {
-        elements.confirmOverlay.classList.remove("show");
-
-        if (confirmResolver !== null) {
-            const resolve = confirmResolver;
-
-            confirmResolver = null;
-            resolve(result);
-        }
-    }
-
-    /* =========================================================
-       STORAGE FUNCTIONS
-    ========================================================= */
-
-    function saveState() {
-        try {
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(state)
-            );
-        } catch (error) {
-            console.warn(
-                "ストップウォッチの状態を保存できませんでした。",
-                error
-            );
-        }
-    }
-
-    function loadState() {
-        try {
-            const saved = localStorage.getItem(STORAGE_KEY);
-
-            if (!saved) {
-                return;
+            function createInitialState() {
+                return {
+                    running: false,
+                    currentRunStart: null,
+                    accumulated: 0,
+                    laps: [],
+                    hasActiveLap: false,
+                    activeLapStartedAt: null
+                };
             }
 
-            const parsed = JSON.parse(saved);
+            let state = createInitialState();
 
-            if (
-                !parsed ||
-                typeof parsed !== "object" ||
-                Array.isArray(parsed)
-            ) {
-                return;
-            }
+            let editingLapId = null;
+            let animationFrame = null;
+            let confirmResolver = null;
 
-            const usedIds = new Set();
-            const laps = [];
+            let activeLapTimeElement = null;
+            let lastActiveLapSeconds = null;
 
-            if (Array.isArray(parsed.laps)) {
-                for (const item of parsed.laps) {
-                    if (
-                        !item ||
-                        typeof item !== "object" ||
-                        Array.isArray(item)
-                    ) {
-                        continue;
-                    }
-
-                    const elapsed = Number(item.elapsed);
-
-                    if (
-                        !Number.isFinite(elapsed) ||
-                        elapsed < 0
-                    ) {
-                        continue;
-                    }
-
-                    let id = typeof item.id === "string"
-                        ? item.id
-                        : "";
-
-                    if (!id || usedIds.has(id)) {
-                        id = createLapId();
-                    }
-
-                    usedIds.add(id);
-
-                    laps.push({
-                        id,
-                        timestamp: normalizeTimestamp(item.timestamp),
-                        startedAt: normalizeTimestamp(item.startedAt),
-                        elapsed
-                    });
-                }
-            }
-
-            laps.sort(
-                (a, b) => b.elapsed - a.elapsed
-            );
-
-            const running = Boolean(parsed.running);
-
-            const accumulated = toNonNegativeNumber(
-                parsed.accumulated
-            );
-
-            const savedRunStart = Number(
-                parsed.currentRunStart
-            );
-
-            const currentRunStart = (
-                Number.isFinite(savedRunStart) &&
-                savedRunStart > 0
-            )
-                ? savedRunStart
-                : null;
-
-            const hasActiveLap = (
-                typeof parsed.hasActiveLap === "boolean"
-            )
-                ? parsed.hasActiveLap
-                : (
-                    running ||
-                    accumulated > 0 ||
-                    laps.length > 0
-                );
-
-            state = {
-                running,
-                currentRunStart: running
-                    ? currentRunStart ?? Date.now()
-                    : null,
-                accumulated,
-                laps,
-                hasActiveLap: running || hasActiveLap,
-                activeLapStartedAt: normalizeTimestamp(
-                    parsed.activeLapStartedAt
-                )
+            /*
+             * リールの現在値
+             */
+            const reelValues = {
+                hours: 0,
+                minutes: 0,
+                seconds: 0
             };
 
-            if (Array.isArray(parsed.laps)) {
+            const elements = {};
 
-                const originalById = new Map();
+            /* =========================================================
+               UTILITIES
+            ========================================================= */
 
-                for (const item of parsed.laps) {
+            function toNonNegativeNumber(value, fallback = 0) {
+                const number = Number(value);
 
-                    if (
-                        item &&
-                        typeof item === "object" &&
-                        typeof item.id === "string"
-                    ) {
-                        originalById.set(
-                            item.id,
-                            item
-                        );
-                    }
+                return Number.isFinite(number)
+                    ? Math.max(0, number)
+                    : fallback;
+            }
+
+            function normalizeTimestamp(value) {
+                if (typeof value !== "string") {
+                    return null;
                 }
 
-                for (
-                    let index = 0;
-                    index < state.laps.length;
-                    index++
-                ) {
+                const timestamp = Date.parse(value);
 
-                    const lap = state.laps[index];
-
-                    const original =
-                        originalById.get(lap.id);
-
-                    const previous =
-                        state.laps[index + 1];
-
-                    if (
-                        original &&
-                        !Object.prototype.hasOwnProperty.call(
-                            original,
-                            "startedAt"
-                        ) &&
-                        previous
-                    ) {
-                        lap.startedAt =
-                            previous.timestamp;
-                    }
-                }
+                return Number.isFinite(timestamp)
+                    ? new Date(timestamp).toISOString()
+                    : null;
             }
 
-            if (
-                state.hasActiveLap &&
-                !Object.prototype.hasOwnProperty.call(
-                    parsed,
-                    "activeLapStartedAt"
-                ) &&
-                state.laps.length > 0
-            ) {
-                state.activeLapStartedAt =
-                    state.laps[0].timestamp;
-            }
-
-            normalizeLaps();
-
-            const latestElapsed =
-                getLapElapsed(state.laps[0]);
-
-            if (!state.hasActiveLap) {
-
-                state.accumulated =
-                    latestElapsed;
-
-                state.activeLapStartedAt =
-                    null;
-
-            } else {
-
-                const elapsed = getElapsed();
-
-                if (elapsed < latestElapsed) {
-                    state.accumulated +=
-                        latestElapsed - elapsed;
-                }
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "保存データを読み込めませんでした。",
-                error
-            );
-
-            state = createInitialState();
-        }
-    }
-
-    /* =========================================================
-       ELAPSED
-    ========================================================= */
-
-    function getElapsed(now = Date.now()) {
-
-        let elapsed =
-            toNonNegativeNumber(
-                state.accumulated
-            );
-
-        if (
-            state.running &&
-            state.currentRunStart !== null
-        ) {
-            elapsed += Math.max(
-                0,
-                now - state.currentRunStart
-            );
-        }
-
-        return Math.max(0, elapsed);
-    }
-
-    /* =========================================================
-       FORMAT
-    ========================================================= */
-
-    function pad(number, digits = 2) {
-        return String(number)
-            .padStart(digits, "0");
-    }
-
-    function formatStopwatch(ms) {
-
-        ms = Math.max(
-            0,
-            Math.floor(ms)
-        );
-
-        const hours =
-            Math.floor(ms / 3600000);
-
-        const minutes =
-            Math.floor(
-                (ms % 3600000) / 60000
-            );
-
-        const seconds =
-            Math.floor(
-                (ms % 60000) / 1000
-            );
-
-        const centiseconds =
-            Math.floor(
-                (ms % 1000) / 10
-            );
-
-        if (hours === 0) {
-
-            return (
-                pad(minutes) +
-                ":" +
-                pad(seconds) +
-                "." +
-                pad(centiseconds)
-            );
-        }
-
-        return (
-            hours +
-            ":" +
-            pad(minutes) +
-            ":" +
-            pad(seconds) +
-            "." +
-            pad(centiseconds)
-        );
-    }
-
-    function formatStudyTime(ms) {
-
-        ms = Math.max(
-            0,
-            Math.floor(ms)
-        );
-
-        const totalSeconds =
-            Math.floor(ms / 1000);
-
-        const hours =
-            Math.floor(
-                totalSeconds / 3600
-            );
-
-        const minutes =
-            Math.floor(
-                (totalSeconds % 3600) / 60
-            );
-
-        const seconds =
-            totalSeconds % 60;
-
-        const result = [];
-
-        if (hours > 0) {
-            result.push(hours + "時間");
-        }
-
-        if (minutes > 0) {
-            result.push(minutes + "分");
-        }
-
-        if (
-            seconds > 0 ||
-            result.length === 0
-        ) {
-            result.push(seconds + "秒");
-        }
-
-        return result.join("");
-    }
-
-    function formatLapStart(timestamp) {
-
-        if (!timestamp) {
-            return "開始時刻不明";
-        }
-
-        const date = new Date(timestamp);
-
-        if (!Number.isFinite(date.getTime())) {
-            return "開始時刻不明";
-        }
-
-        return (
-            (date.getMonth() + 1) +
-            "/" +
-            date.getDate() +
-            "\u00A0\u00A0\u00A0\u00A0" +
-            pad(date.getHours()) +
-            ":" +
-            pad(date.getMinutes()) +
-            "〜"
-        );
-    }
-
-    /* =========================================================
-       LAP
-    ========================================================= */
-
-    function getLapElapsed(lap) {
-        return lap
-            ? toNonNegativeNumber(lap.elapsed)
-            : 0;
-    }
-
-    function calculateLapDuration(index) {
-
-        const lap = state.laps[index];
-
-        if (!lap) {
-            return 0;
-        }
-
-        const previous =
-            state.laps[index + 1];
-
-        return Math.max(
-            0,
-            getLapElapsed(lap) -
-            getLapElapsed(previous)
-        );
-    }
-
-    function getActiveLapDuration(
-        elapsed = getElapsed()
-    ) {
-
-        if (!state.hasActiveLap) {
-            return 0;
-        }
-
-        return Math.max(
-            0,
-            elapsed -
-            getLapElapsed(state.laps[0])
-        );
-    }
-
-    function getEditableLapDuration(id) {
-
-        if (id === ACTIVE_LAP_ID) {
-
-            return state.hasActiveLap
-                ? getActiveLapDuration()
-                : null;
-        }
-
-        const index =
-            state.laps.findIndex(
-                lap => lap.id === id
-            );
-
-        return index === -1
-            ? null
-            : calculateLapDuration(index);
-    }
-
-    /* =========================================================
-       PREPARE LAP FOR RESUME
-    ========================================================= */
-
-    function prepareLapForResume(now) {
-
-        if (state.hasActiveLap) {
-            return;
-        }
-
-        if (state.laps.length > 0) {
-
-            const latestLap =
-                state.laps.shift();
-
-            state.accumulated =
-                getLapElapsed(latestLap);
-
-            state.hasActiveLap = true;
-
-            state.activeLapStartedAt =
-                latestLap.startedAt;
-
-            return;
-        }
-
-        state.accumulated = 0;
-
-        state.hasActiveLap = true;
-
-        state.activeLapStartedAt =
-            new Date(now).toISOString();
-    }
-
-    /* =========================================================
-       ADD LAP
-    ========================================================= */
-
-    function addLap() {
-
-        if (
-            !state.running ||
-            isDialogOpen()
-        ) {
-            return;
-        }
-
-        const now = Date.now();
-
-        const timestamp =
-            new Date(now).toISOString();
-
-        const elapsed =
-            getElapsed(now);
-
-        state.laps.unshift({
-
-            id: createLapId(),
-
-            timestamp,
-
-            startedAt:
-                state.activeLapStartedAt,
-
-            elapsed
-
-        });
-
-        state.hasActiveLap = true;
-
-        state.activeLapStartedAt =
-            timestamp;
-
-        saveState();
-
-        renderLaps();
-
-        updateTimer();
-    }
-
-    /* =========================================================
-       TIMER
-    ========================================================= */
-
-    function updateActiveLapTime(elapsed) {
-
-        if (!activeLapTimeElement) {
-            return;
-        }
-
-        const duration =
-            getActiveLapDuration(elapsed);
-
-        const totalSeconds =
-            Math.floor(duration / 1000);
-
-        if (
-            totalSeconds ===
-            lastActiveLapSeconds
-        ) {
-            return;
-        }
-
-        activeLapTimeElement.textContent =
-            formatStudyTime(duration);
-
-        lastActiveLapSeconds =
-            totalSeconds;
-    }
-
-    function updateTimer() {
-
-        const elapsed =
-            getElapsed();
-
-        elements.timer.textContent =
-            formatStopwatch(elapsed);
-
-        elements.timer.classList.toggle(
-            "long",
-            elapsed >= 3600000
-        );
-
-        updateActiveLapTime(elapsed);
-    }
-
-    function timerTick() {
-
-        animationFrame = null;
-
-        updateTimer();
-
-        if (
-            state.running &&
-            !document.hidden
-        ) {
-            animationFrame =
-                requestAnimationFrame(
-                    timerTick
-                );
-        }
-    }
-
-    function stopTimerLoop() {
-
-        if (animationFrame !== null) {
-
-            cancelAnimationFrame(
-                animationFrame
-            );
-
-            animationFrame = null;
-        }
-    }
-
-    function startTimerLoop() {
-
-        stopTimerLoop();
-
-        updateTimer();
-
-        if (
-            state.running &&
-            !document.hidden
-        ) {
-            animationFrame =
-                requestAnimationFrame(
-                    timerTick
-                );
-        }
-    }
-
-    /* =========================================================
-       START / STOP
-    ========================================================= */
-
-    function startStopwatch() {
-
-        if (isDialogOpen()) {
-            return;
-        }
-
-        if (state.running) {
-
-            state.accumulated =
-                getElapsed();
-
-            state.running = false;
-
-            state.currentRunStart =
-                null;
-
-            stopTimerLoop();
-
-        } else {
-
-            const now = Date.now();
-
-            prepareLapForResume(now);
-
-            state.running = true;
-
-            state.currentRunStart =
-                now;
-        }
-
-        saveState();
-
-        updateControls();
-
-        renderLaps();
-
-        startTimerLoop();
-    }
-
-    /* =========================================================
-       RESET
-    ========================================================= */
-
-    async function resetStopwatch() {
-
-        if (
-            state.running ||
-            isDialogOpen()
-        ) {
-            return;
-        }
-
-        if (
-            state.accumulated > 0 ||
-            state.laps.length > 0 ||
-            state.hasActiveLap
-        ) {
-
-            const confirmed =
-                await showConfirm(
-                    "リセットしますか？",
-                    "リセット"
-                );
-
-            if (
-                !confirmed ||
-                state.running
-            ) {
-                return;
-            }
-        }
-
-        stopTimerLoop();
-
-        closeEditModal();
-
-        state =
-            createInitialState();
-
-        saveState();
-
-        updateControls();
-
-        renderLaps();
-
-        updateTimer();
-    }
-
-    /* =========================================================
-       CONTROLS
-    ========================================================= */
-
-    function updateControls() {
-
-        const running =
-            state.running;
-
-        elements.secondaryButton.textContent =
-            running
-                ? "ラップ"
-                : "リセット";
-
-        elements.startStopButton.textContent =
-            running
-                ? "停止"
-                : "開始";
-
-        elements.startStopButton.classList.toggle(
-            "running",
-            running
-        );
-
-        elements.status.classList.toggle(
-            "running",
-            running
-        );
-
-        const hasRecords = (
-            state.hasActiveLap ||
-            state.laps.length > 0 ||
-            getElapsed() > 0
-        );
-
-        elements.statusText.textContent =
-            running
-                ? "FOCUS"
-                : hasRecords
-                    ? "PAUSED"
-                    : "READY";
-    }
-
-    /* =========================================================
-       RENDER LAPS
-    ========================================================= */
-
-    function createLapRow({
-        number,
-        startedAt,
-        duration,
-        active = false,
-        id = null
-    }) {
-
-        const row =
-            document.createElement("div");
-
-        row.className = "lap";
-
-        const day =
-            document.createElement("div");
-
-        day.className = "lap-day";
-
-        const numberElement =
-            document.createElement("span");
-
-        numberElement.className =
-            "lap-number";
-
-        numberElement.textContent =
-            "LAP " + number;
-
-        const dateElement =
-            document.createElement("span");
-
-        dateElement.textContent =
-            formatLapStart(startedAt);
-
-        const timeElement =
-            document.createElement("div");
-
-        timeElement.className =
-            "lap-time";
-
-        timeElement.textContent =
-            formatStudyTime(duration);
-
-        const targetId =
-            active
-                ? ACTIVE_LAP_ID
-                : id;
-
-        if (active) {
-
-            row.classList.add(
-                "lap-active"
-            );
-
-            activeLapTimeElement =
-                timeElement;
-
-            lastActiveLapSeconds =
-                Math.floor(
-                    duration / 1000
-                );
-
-        } else {
-
-            row.dataset.id = id;
-        }
-
-        row.title =
-            state.running
-                ? "停止すると編集できます。"
-                : "クリックして編集";
-
-        row.setAttribute(
-            "role",
-            "button"
-        );
-
-        row.setAttribute(
-            "aria-disabled",
-            String(state.running)
-        );
-
-        row.tabIndex =
-            state.running
-                ? -1
-                : 0;
-
-        row.addEventListener(
-            "click",
-            () => {
-                openEditModal(
-                    targetId
-                );
-            }
-        );
-
-        row.addEventListener(
-            "keydown",
-            event => {
-
+            function createLapId() {
                 if (
-                    event.key === "Enter" ||
-                    event.key === " "
+                    typeof crypto !== "undefined" &&
+                    typeof crypto.randomUUID === "function"
                 ) {
+                    return crypto.randomUUID();
+                }
 
-                    event.preventDefault();
+                return (
+                    Date.now().toString(36) +
+                    "-" +
+                    Math.random().toString(36).slice(2)
+                );
+            }
 
-                    openEditModal(
-                        targetId
+            function isDialogOpen() {
+                return (
+                    confirmResolver !== null ||
+                    elements.modalOverlay.classList.contains("show")
+                );
+            }
+
+            /* =========================================================
+               CUSTOM CONFIRM
+            ========================================================= */
+
+            function showConfirm(title, okText) {
+                if (confirmResolver !== null) {
+                    return Promise.resolve(false);
+                }
+
+                return new Promise(resolve => {
+                    confirmResolver = resolve;
+
+                    elements.confirmTitle.textContent = title;
+                    elements.confirmOK.textContent = okText;
+                    elements.confirmOverlay.classList.add("show");
+                });
+            }
+
+            function closeConfirm(result) {
+                elements.confirmOverlay.classList.remove("show");
+
+                if (confirmResolver !== null) {
+                    const resolve = confirmResolver;
+
+                    confirmResolver = null;
+                    resolve(result);
+                }
+            }
+
+            /* =========================================================
+               STORAGE FUNCTIONS
+            ========================================================= */
+
+            function saveState() {
+                try {
+                    localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify(state)
+                    );
+                } catch (error) {
+                    console.warn(
+                        "ストップウォッチの状態を保存できませんでした。",
+                        error
                     );
                 }
             }
-        );
 
-        day.append(
-            numberElement,
-            dateElement
-        );
+            function loadState() {
+                try {
+                    const saved = localStorage.getItem(STORAGE_KEY);
 
-        row.append(
-            day,
-            timeElement
-        );
+                    if (!saved) {
+                        return;
+                    }
 
-        return row;
-    }
-
-    function renderLaps() {
-
-        activeLapTimeElement = null;
-
-        lastActiveLapSeconds = null;
-
-        const totalCount = (
-            state.laps.length +
-            (
-                state.hasActiveLap
-                    ? 1
-                    : 0
-            )
-        );
-
-        elements.lapCount.textContent =
-            String(totalCount);
-
-        if (totalCount === 0) {
-
-            const empty =
-                document.createElement(
-                    "div"
-                );
-
-            empty.className =
-                "empty";
-
-            empty.textContent =
-                "開始すると、最新ラップがここに表示されます";
-
-            elements.laps.replaceChildren(
-                empty
-            );
-
-            return;
-        }
-
-        const fragment =
-            document.createDocumentFragment();
-
-        if (state.hasActiveLap) {
-
-            fragment.append(
-                createLapRow({
-
-                    number:
-                        state.laps.length + 1,
-
-                    startedAt:
-                        state.activeLapStartedAt,
-
-                    duration:
-                        getActiveLapDuration(),
-
-                    active: true
-                })
-            );
-        }
-
-        state.laps.forEach(
-            (lap, index) => {
-
-                fragment.append(
-                    createLapRow({
-
-                        number:
-                            state.laps.length -
-                            index,
-
-                        startedAt:
-                            lap.startedAt,
-
-                        duration:
-                            calculateLapDuration(
-                                index
-                            ),
-
-                        id:
-                            lap.id
-                    })
-                );
-            }
-        );
-
-        elements.laps.replaceChildren(
-            fragment
-        );
-    }
-
-    /* =========================================================
-       ★ 修正箇所②〜⑤
-       iPhone風リール
-       
-       ・1:1ドラッグ
-       ・複数サンプルから速度算出
-       ・自然なフリック
-       ・時間ベース慣性
-       ・境界処理
-       ・中央吸着
-    ========================================================= */
-
-    function createTimeReel(
-        element,
-        max,
-        value,
-        type
-    ) {
-
-        element.replaceChildren();
-
-        reelValues[type] =
-            Math.max(
-                0,
-                Math.min(
-                    max,
-                    Number(value) || 0
-                )
-            );
-
-        const reelState = {
-
-            dragging: false,
-
-            moved: false,
-
-            pointerId: null,
-
-            startY: 0,
-
-            startScrollTop: 0,
-
-            lastY: 0,
-
-            lastTime: 0,
-
-            velocity: 0,
-
-            samples: [],
-
-            momentumFrame: null,
-
-            snapFrame: null,
-
-            suppressClick: false,
-
-            scrollTimer: null
-        };
-
-        /* =====================================================
-           ITEM生成
-        ===================================================== */
-
-        for (
-            let number = 0;
-            number <= max;
-            number++
-        ) {
-
-            const item =
-                document.createElement("div");
-
-            item.className =
-                "time-reel-item";
-
-            item.dataset.value =
-                String(number);
-
-            item.textContent =
-                pad(number);
-
-            item.addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
+                    const parsed = JSON.parse(saved);
 
                     if (
-                        reelState.suppressClick
+                        !parsed ||
+                        typeof parsed !== "object" ||
+                        Array.isArray(parsed)
                     ) {
                         return;
                     }
 
-                    stopMomentum();
+                    const usedIds = new Set();
+                    const laps = [];
+
+                    if (Array.isArray(parsed.laps)) {
+                        for (const item of parsed.laps) {
+                            if (
+                                !item ||
+                                typeof item !== "object" ||
+                                Array.isArray(item)
+                            ) {
+                                continue;
+                            }
+
+                            const elapsed = Number(item.elapsed);
+
+                            if (
+                                !Number.isFinite(elapsed) ||
+                                elapsed < 0
+                            ) {
+                                continue;
+                            }
+
+                            let id = typeof item.id === "string"
+                                ? item.id
+                                : "";
+
+                            if (!id || usedIds.has(id)) {
+                                id = createLapId();
+                            }
+
+                            usedIds.add(id);
+
+                            laps.push({
+                                id,
+                                timestamp: normalizeTimestamp(item.timestamp),
+                                startedAt: normalizeTimestamp(item.startedAt),
+                                elapsed
+                            });
+                        }
+                    }
+
+                    laps.sort(
+                        (a, b) => b.elapsed - a.elapsed
+                    );
+
+                    const running = Boolean(parsed.running);
+
+                    const accumulated = toNonNegativeNumber(
+                        parsed.accumulated
+                    );
+
+                    const savedRunStart = Number(
+                        parsed.currentRunStart
+                    );
+
+                    const currentRunStart = (
+                        Number.isFinite(savedRunStart) &&
+                        savedRunStart > 0
+                    )
+                        ? savedRunStart
+                        : null;
+
+                    const hasActiveLap = (
+                        typeof parsed.hasActiveLap === "boolean"
+                    )
+                        ? parsed.hasActiveLap
+                        : (
+                            running ||
+                            accumulated > 0 ||
+                            laps.length > 0
+                        );
+
+                    state = {
+                        running,
+                        currentRunStart: running
+                            ? currentRunStart ?? Date.now()
+                            : null,
+                        accumulated,
+                        laps,
+                        hasActiveLap: running || hasActiveLap,
+                        activeLapStartedAt: normalizeTimestamp(
+                            parsed.activeLapStartedAt
+                        )
+                    };
+
+                    if (Array.isArray(parsed.laps)) {
+
+                        const originalById = new Map();
+
+                        for (const item of parsed.laps) {
+
+                            if (
+                                item &&
+                                typeof item === "object" &&
+                                typeof item.id === "string"
+                            ) {
+                                originalById.set(
+                                    item.id,
+                                    item
+                                );
+                            }
+                        }
+
+                        for (
+                            let index = 0;
+                            index < state.laps.length;
+                            index++
+                        ) {
+
+                            const lap = state.laps[index];
+
+                            const original =
+                                originalById.get(lap.id);
+
+                            const previous =
+                                state.laps[index + 1];
+
+                            if (
+                                original &&
+                                !Object.prototype.hasOwnProperty.call(
+                                    original,
+                                    "startedAt"
+                                ) &&
+                                previous
+                            ) {
+                                lap.startedAt =
+                                    previous.timestamp;
+                            }
+                        }
+                    }
+
+                    if (
+                        state.hasActiveLap &&
+                        !Object.prototype.hasOwnProperty.call(
+                            parsed,
+                            "activeLapStartedAt"
+                        ) &&
+                        state.laps.length > 0
+                    ) {
+                        state.activeLapStartedAt =
+                            state.laps[0].timestamp;
+                    }
+
+                    normalizeLaps();
+
+                    const latestElapsed =
+                        getLapElapsed(state.laps[0]);
+
+                    if (!state.hasActiveLap) {
+
+                        state.accumulated =
+                            latestElapsed;
+
+                        state.activeLapStartedAt =
+                            null;
+
+                    } else {
+
+                        const elapsed = getElapsed();
+
+                        if (elapsed < latestElapsed) {
+                            state.accumulated +=
+                                latestElapsed - elapsed;
+                        }
+                    }
+
+                } catch (error) {
+
+                    console.warn(
+                        "保存データを読み込めませんでした。",
+                        error
+                    );
+
+                    state = createInitialState();
+                }
+            }
+
+            /* =========================================================
+               ELAPSED
+            ========================================================= */
+
+            function getElapsed(now = Date.now()) {
+
+                let elapsed =
+                    toNonNegativeNumber(
+                        state.accumulated
+                    );
+
+                if (
+                    state.running &&
+                    state.currentRunStart !== null
+                ) {
+                    elapsed += Math.max(
+                        0,
+                        now - state.currentRunStart
+                    );
+                }
+
+                return Math.max(0, elapsed);
+            }
+
+            /* =========================================================
+               FORMAT
+            ========================================================= */
+
+            function pad(number, digits = 2) {
+                return String(number)
+                    .padStart(digits, "0");
+            }
+
+            function formatStopwatch(ms) {
+
+                ms = Math.max(
+                    0,
+                    Math.floor(ms)
+                );
+
+                const hours =
+                    Math.floor(ms / 3600000);
+
+                const minutes =
+                    Math.floor(
+                        (ms % 3600000) / 60000
+                    );
+
+                const seconds =
+                    Math.floor(
+                        (ms % 60000) / 1000
+                    );
+
+                const centiseconds =
+                    Math.floor(
+                        (ms % 1000) / 10
+                    );
+
+                if (hours === 0) {
+
+                    return (
+                        pad(minutes) +
+                        ":" +
+                        pad(seconds) +
+                        "." +
+                        pad(centiseconds)
+                    );
+                }
+
+                return (
+                    hours +
+                    ":" +
+                    pad(minutes) +
+                    ":" +
+                    pad(seconds) +
+                    "." +
+                    pad(centiseconds)
+                );
+            }
+
+            function formatStudyTime(ms) {
+
+                ms = Math.max(
+                    0,
+                    Math.floor(ms)
+                );
+
+                const totalSeconds =
+                    Math.floor(ms / 1000);
+
+                const hours =
+                    Math.floor(
+                        totalSeconds / 3600
+                    );
+
+                const minutes =
+                    Math.floor(
+                        (totalSeconds % 3600) / 60
+                    );
+
+                const seconds =
+                    totalSeconds % 60;
+
+                const result = [];
+
+                if (hours > 0) {
+                    result.push(hours + "時間");
+                }
+
+                if (minutes > 0) {
+                    result.push(minutes + "分");
+                }
+
+                if (
+                    seconds > 0 ||
+                    result.length === 0
+                ) {
+                    result.push(seconds + "秒");
+                }
+
+                return result.join("");
+            }
+
+            function formatLapStart(timestamp) {
+
+                if (!timestamp) {
+                    return "開始時刻不明";
+                }
+
+                const date = new Date(timestamp);
+
+                if (!Number.isFinite(date.getTime())) {
+                    return "開始時刻不明";
+                }
+
+                return (
+                    (date.getMonth() + 1) +
+                    "/" +
+                    date.getDate() +
+                    "\u00A0\u00A0\u00A0\u00A0" +
+                    pad(date.getHours()) +
+                    ":" +
+                    pad(date.getMinutes()) +
+                    "〜"
+                );
+            }
+
+            /* =========================================================
+               LAP
+            ========================================================= */
+
+            function getLapElapsed(lap) {
+                return lap
+                    ? toNonNegativeNumber(lap.elapsed)
+                    : 0;
+            }
+
+            function calculateLapDuration(index) {
+
+                const lap = state.laps[index];
+
+                if (!lap) {
+                    return 0;
+                }
+
+                const previous =
+                    state.laps[index + 1];
+
+                return Math.max(
+                    0,
+                    getLapElapsed(lap) -
+                    getLapElapsed(previous)
+                );
+            }
+
+            function getActiveLapDuration(
+                elapsed = getElapsed()
+            ) {
+
+                if (!state.hasActiveLap) {
+                    return 0;
+                }
+
+                return Math.max(
+                    0,
+                    elapsed -
+                    getLapElapsed(state.laps[0])
+                );
+            }
+
+            function getEditableLapDuration(id) {
+
+                if (id === ACTIVE_LAP_ID) {
+
+                    return state.hasActiveLap
+                        ? getActiveLapDuration()
+                        : null;
+                }
+
+                const index =
+                    state.laps.findIndex(
+                        lap => lap.id === id
+                    );
+
+                return index === -1
+                    ? null
+                    : calculateLapDuration(index);
+            }
+
+            /* =========================================================
+               PREPARE LAP FOR RESUME
+            ========================================================= */
+
+            function prepareLapForResume(now) {
+
+                if (state.hasActiveLap) {
+                    return;
+                }
+
+                if (state.laps.length > 0) {
+
+                    const latestLap =
+                        state.laps.shift();
+
+                    state.accumulated =
+                        getLapElapsed(latestLap);
+
+                    state.hasActiveLap = true;
+
+                    state.activeLapStartedAt =
+                        latestLap.startedAt;
+
+                    return;
+                }
+
+                state.accumulated = 0;
+
+                state.hasActiveLap = true;
+
+                state.activeLapStartedAt =
+                    new Date(now).toISOString();
+            }
+
+            /* =========================================================
+               ADD LAP
+            ========================================================= */
+
+            function addLap() {
+
+                if (
+                    !state.running ||
+                    isDialogOpen()
+                ) {
+                    return;
+                }
+
+                const now = Date.now();
+
+                const timestamp =
+                    new Date(now).toISOString();
+
+                const elapsed =
+                    getElapsed(now);
+
+                state.laps.unshift({
+
+                    id: createLapId(),
+
+                    timestamp,
+
+                    startedAt:
+                        state.activeLapStartedAt,
+
+                    elapsed
+
+                });
+
+                state.hasActiveLap = true;
+
+                state.activeLapStartedAt =
+                    timestamp;
+
+                saveState();
+
+                renderLaps();
+
+                updateTimer();
+            }
+
+            /* =========================================================
+               TIMER
+            ========================================================= */
+
+            function updateActiveLapTime(elapsed) {
+
+                if (!activeLapTimeElement) {
+                    return;
+                }
+
+                const duration =
+                    getActiveLapDuration(elapsed);
+
+                const totalSeconds =
+                    Math.floor(duration / 1000);
+
+                if (
+                    totalSeconds ===
+                    lastActiveLapSeconds
+                ) {
+                    return;
+                }
+
+                activeLapTimeElement.textContent =
+                    formatStudyTime(duration);
+
+                lastActiveLapSeconds =
+                    totalSeconds;
+            }
+
+            function updateTimer() {
+
+                const elapsed =
+                    getElapsed();
+
+                elements.timer.textContent =
+                    formatStopwatch(elapsed);
+
+                elements.timer.classList.toggle(
+                    "long",
+                    elapsed >= 3600000
+                );
+
+                updateActiveLapTime(elapsed);
+            }
+
+            function timerTick() {
+
+                animationFrame = null;
+
+                updateTimer();
+
+                if (
+                    state.running &&
+                    !document.hidden
+                ) {
+                    animationFrame =
+                        requestAnimationFrame(
+                            timerTick
+                        );
+                }
+            }
+
+            function stopTimerLoop() {
+
+                if (animationFrame !== null) {
+
+                    cancelAnimationFrame(
+                        animationFrame
+                    );
+
+                    animationFrame = null;
+                }
+            }
+
+            function startTimerLoop() {
+
+                stopTimerLoop();
+
+                updateTimer();
+
+                if (
+                    state.running &&
+                    !document.hidden
+                ) {
+                    animationFrame =
+                        requestAnimationFrame(
+                            timerTick
+                        );
+                }
+            }
+
+            /* =========================================================
+               START / STOP
+            ========================================================= */
+
+            function startStopwatch() {
+
+                if (isDialogOpen()) {
+                    return;
+                }
+
+                if (state.running) {
+
+                    state.accumulated =
+                        getElapsed();
+
+                    state.running = false;
+
+                    state.currentRunStart =
+                        null;
+
+                    stopTimerLoop();
+
+                } else {
+
+                    const now = Date.now();
+
+                    prepareLapForResume(now);
+
+                    state.running = true;
+
+                    state.currentRunStart =
+                        now;
+                }
+
+                saveState();
+
+                updateControls();
+
+                renderLaps();
+
+                startTimerLoop();
+            }
+
+            /* =========================================================
+               RESET
+            ========================================================= */
+
+            async function resetStopwatch() {
+
+                if (
+                    state.running ||
+                    isDialogOpen()
+                ) {
+                    return;
+                }
+
+                if (
+                    state.accumulated > 0 ||
+                    state.laps.length > 0 ||
+                    state.hasActiveLap
+                ) {
+
+                    const confirmed =
+                        await showConfirm(
+                            "リセットしますか？",
+                            "リセット"
+                        );
+
+                    if (
+                        !confirmed ||
+                        state.running
+                    ) {
+                        return;
+                    }
+                }
+
+                stopTimerLoop();
+
+                closeEditModal();
+
+                state =
+                    createInitialState();
+
+                saveState();
+
+                updateControls();
+
+                renderLaps();
+
+                updateTimer();
+            }
+
+            /* =========================================================
+               CONTROLS
+            ========================================================= */
+
+            function updateControls() {
+
+                const running =
+                    state.running;
+
+                elements.secondaryButton.textContent =
+                    running
+                        ? "ラップ"
+                        : "リセット";
+
+                elements.startStopButton.textContent =
+                    running
+                        ? "停止"
+                        : "開始";
+
+                elements.startStopButton.classList.toggle(
+                    "running",
+                    running
+                );
+
+                elements.status.classList.toggle(
+                    "running",
+                    running
+                );
+
+                const hasRecords = (
+                    state.hasActiveLap ||
+                    state.laps.length > 0 ||
+                    getElapsed() > 0
+                );
+
+                elements.statusText.textContent =
+                    running
+                        ? "FOCUS"
+                        : hasRecords
+                            ? "PAUSED"
+                            : "READY";
+            }
+
+            /* =========================================================
+               RENDER LAPS
+            ========================================================= */
+
+            function createLapRow({
+                number,
+                startedAt,
+                duration,
+                active = false,
+                id = null
+            }) {
+
+                const row =
+                    document.createElement("div");
+
+                row.className = "lap";
+
+                const day =
+                    document.createElement("div");
+
+                day.className = "lap-day";
+
+                const numberElement =
+                    document.createElement("span");
+
+                numberElement.className =
+                    "lap-number";
+
+                numberElement.textContent =
+                    "LAP " + number;
+
+                const dateElement =
+                    document.createElement("span");
+
+                dateElement.textContent =
+                    formatLapStart(startedAt);
+
+                const timeElement =
+                    document.createElement("div");
+
+                timeElement.className =
+                    "lap-time";
+
+                timeElement.textContent =
+                    formatStudyTime(duration);
+
+                const targetId =
+                    active
+                        ? ACTIVE_LAP_ID
+                        : id;
+
+                if (active) {
+
+                    row.classList.add(
+                        "lap-active"
+                    );
+
+                    activeLapTimeElement =
+                        timeElement;
+
+                    lastActiveLapSeconds =
+                        Math.floor(
+                            duration / 1000
+                        );
+
+                } else {
+
+                    row.dataset.id = id;
+                }
+
+                row.title =
+                    state.running
+                        ? "停止すると編集できます。"
+                        : "クリックして編集";
+
+                row.setAttribute(
+                    "role",
+                    "button"
+                );
+
+                row.setAttribute(
+                    "aria-disabled",
+                    String(state.running)
+                );
+
+                row.tabIndex =
+                    state.running
+                        ? -1
+                        : 0;
+
+                row.addEventListener(
+                    "click",
+                    () => {
+                        openEditModal(
+                            targetId
+                        );
+                    }
+                );
+
+                row.addEventListener(
+                    "keydown",
+                    event => {
+
+                        if (
+                            event.key === "Enter" ||
+                            event.key === " "
+                        ) {
+
+                            event.preventDefault();
+
+                            openEditModal(
+                                targetId
+                            );
+                        }
+                    }
+                );
+
+                day.append(
+                    numberElement,
+                    dateElement
+                );
+
+                row.append(
+                    day,
+                    timeElement
+                );
+
+                return row;
+            }
+
+            function renderLaps() {
+
+                activeLapTimeElement = null;
+
+                lastActiveLapSeconds = null;
+
+                const totalCount = (
+                    state.laps.length +
+                    (
+                        state.hasActiveLap
+                            ? 1
+                            : 0
+                    )
+                );
+
+                elements.lapCount.textContent =
+                    String(totalCount);
+
+                if (totalCount === 0) {
+
+                    const empty =
+                        document.createElement(
+                            "div"
+                        );
+
+                    empty.className =
+                        "empty";
+
+                    empty.textContent =
+                        "開始すると、最新ラップがここに表示されます";
+
+                    elements.laps.replaceChildren(
+                        empty
+                    );
+
+                    return;
+                }
+
+                const fragment =
+                    document.createDocumentFragment();
+
+                if (state.hasActiveLap) {
+
+                    fragment.append(
+                        createLapRow({
+
+                            number:
+                                state.laps.length + 1,
+
+                            startedAt:
+                                state.activeLapStartedAt,
+
+                            duration:
+                                getActiveLapDuration(),
+
+                            active: true
+                        })
+                    );
+                }
+
+                state.laps.forEach(
+                    (lap, index) => {
+
+                        fragment.append(
+                            createLapRow({
+
+                                number:
+                                    state.laps.length -
+                                    index,
+
+                                startedAt:
+                                    lap.startedAt,
+
+                                duration:
+                                    calculateLapDuration(
+                                        index
+                                    ),
+
+                                id:
+                                    lap.id
+                            })
+                        );
+                    }
+                );
+
+                elements.laps.replaceChildren(
+                    fragment
+                );
+            }
+
+            /* =========================================================
+               ★ 修正箇所②〜⑤
+               iPhone風リール
+               
+               ・1:1ドラッグ
+               ・複数サンプルから速度算出
+               ・自然なフリック
+               ・時間ベース慣性
+               ・境界処理
+               ・中央吸着
+            ========================================================= */
+
+            function createTimeReel(
+                element,
+                max,
+                value,
+                type
+            ) {
+
+                element.replaceChildren();
+
+                reelValues[type] =
+                    Math.max(
+                        0,
+                        Math.min(
+                            max,
+                            Number(value) || 0
+                        )
+                    );
+
+                const reelState = {
+
+                    dragging: false,
+
+                    moved: false,
+
+                    pointerId: null,
+
+                    startY: 0,
+
+                    startScrollTop: 0,
+
+                    lastY: 0,
+
+                    lastTime: 0,
+
+                    velocity: 0,
+
+                    samples: [],
+
+                    momentumFrame: null,
+
+                    snapFrame: null,
+
+                    suppressClick: false,
+
+                    scrollTimer: null
+                };
+
+                /* =====================================================
+                   ITEM生成
+                ===================================================== */
+
+                for (
+                    let number = 0;
+                    number <= max;
+                    number++
+                ) {
+
+                    const item =
+                        document.createElement("div");
+
+                    item.className =
+                        "time-reel-item";
+
+                    item.dataset.value =
+                        String(number);
+
+                    item.textContent =
+                        pad(number);
+
+                    item.addEventListener(
+                        "click",
+                        event => {
+
+                            event.stopPropagation();
+
+                            if (
+                                reelState.suppressClick
+                            ) {
+                                return;
+                            }
+
+                            stopMomentum();
+
+                            stopSnap();
+
+                            reelValues[type] =
+                                number;
+
+                            snapReelToValue(
+                                element,
+                                type,
+                                number
+                            );
+                        }
+                    );
+
+                    element.appendChild(item);
+                }
+
+                /* =====================================================
+                   HELPERS
+                ===================================================== */
+
+                function getMaxScroll() {
+
+                    return Math.max(
+                        0,
+                        element.scrollHeight -
+                        element.clientHeight
+                    );
+                }
+
+                function clampScroll(value) {
+
+                    return Math.max(
+                        0,
+                        Math.min(
+                            getMaxScroll(),
+                            value
+                        )
+                    );
+                }
+
+                function stopMomentum() {
+
+                    if (
+                        reelState.momentumFrame !== null
+                    ) {
+
+                        cancelAnimationFrame(
+                            reelState.momentumFrame
+                        );
+
+                        reelState.momentumFrame =
+                            null;
+                    }
+                }
+
+                function stopSnap() {
+
+                    if (
+                        reelState.snapFrame !== null
+                    ) {
+
+                        cancelAnimationFrame(
+                            reelState.snapFrame
+                        );
+
+                        reelState.snapFrame =
+                            null;
+                    }
+                }
+
+                function getNearestIndex() {
+
+                    const items =
+                        element.querySelectorAll(
+                            ".time-reel-item"
+                        );
+
+                    if (!items.length) {
+                        return 0;
+                    }
+
+                    const center =
+                        element.scrollTop +
+                        element.clientHeight / 2;
+
+                    let closestIndex = 0;
+
+                    let closestDistance =
+                        Infinity;
+
+                    items.forEach(
+                        (item, index) => {
+
+                            const itemCenter =
+                                item.offsetTop +
+                                item.offsetHeight / 2;
+
+                            const distance =
+                                Math.abs(
+                                    itemCenter - center
+                                );
+
+                            if (
+                                distance <
+                                closestDistance
+                            ) {
+
+                                closestDistance =
+                                    distance;
+
+                                closestIndex =
+                                    index;
+                            }
+                        }
+                    );
+
+                    return closestIndex;
+                }
+
+                function getSnapPosition(index) {
+
+                    const items =
+                        element.querySelectorAll(
+                            ".time-reel-item"
+                        );
+
+                    const item =
+                        items[index];
+
+                    if (!item) {
+                        return 0;
+                    }
+
+                    return clampScroll(
+                        item.offsetTop -
+                        (
+                            element.clientHeight -
+                            item.offsetHeight
+                        ) / 2
+                    );
+                }
+
+                function updateSelection() {
+
+                    updateReelSelection(
+                        element,
+                        type
+                    );
+                }
+
+                /* =====================================================
+                   SMOOTH SNAP
+                   
+                   CSSのsmooth scrollではなく、
+                   JSで短いease-outを作る。
+                   
+                   iPhoneのピッカーの「吸着」に近い。
+                ===================================================== */
+
+                function snapToNearest() {
 
                     stopSnap();
 
+                    const index =
+                        getNearestIndex();
+
+                    const target =
+                        getSnapPosition(index);
+
+                    const start =
+                        element.scrollTop;
+
+                    const distance =
+                        target - start;
+
                     reelValues[type] =
-                        number;
+                        index;
 
-                    snapReelToValue(
-                        element,
-                        type,
-                        number
-                    );
+                    updateSelection();
+
+                    if (
+                        Math.abs(distance) < 0.5
+                    ) {
+
+                        element.scrollTop =
+                            target;
+
+                        return;
+                    }
+
+                    const duration =
+                        Math.min(
+                            180,
+                            Math.max(
+                                90,
+                                Math.abs(distance) * 0.7
+                            )
+                        );
+
+                    const startTime =
+                        performance.now();
+
+                    function frame(now) {
+
+                        const progress =
+                            Math.min(
+                                1,
+                                (
+                                    now -
+                                    startTime
+                                ) / duration
+                            );
+
+                        /*
+                         * cubic ease-out
+                         */
+                        const eased =
+                            1 -
+                            Math.pow(
+                                1 - progress,
+                                3
+                            );
+
+                        element.scrollTop =
+                            start +
+                            distance * eased;
+
+                        updateSelection();
+
+                        if (progress < 1) {
+
+                            reelState.snapFrame =
+                                requestAnimationFrame(
+                                    frame
+                                );
+
+                        } else {
+
+                            reelState.snapFrame =
+                                null;
+
+                            element.scrollTop =
+                                target;
+
+                            updateSelection();
+                        }
+                    }
+
+                    reelState.snapFrame =
+                        requestAnimationFrame(frame);
                 }
-            );
 
-            element.appendChild(item);
-        }
-
-        /* =====================================================
-           HELPERS
-        ===================================================== */
-
-        function getMaxScroll() {
-
-            return Math.max(
-                0,
-                element.scrollHeight -
-                element.clientHeight
-            );
-        }
-
-        function clampScroll(value) {
-
-            return Math.max(
-                0,
-                Math.min(
-                    getMaxScroll(),
+                function snapReelToValue(
+                    targetElement,
+                    targetType,
                     value
-                )
-            );
-        }
+                ) {
 
-        function stopMomentum() {
+                    const item =
+                        targetElement.querySelector(
+                            `[data-value="${value}"]`
+                        );
 
-            if (
-                reelState.momentumFrame !== null
+                    if (!item) {
+                        return;
+                    }
+
+                    const target =
+                        item.offsetTop -
+                        (
+                            targetElement.clientHeight -
+                            item.offsetHeight
+                        ) / 2;
+
+                    const start =
+                        targetElement.scrollTop;
+
+                    const distance =
+                        target - start;
+
+                    reelValues[targetType] =
+                        Number(value);
+
+                    if (
+                        Math.abs(distance) < 0.5
+                    ) {
+
+                        targetElement.scrollTop =
+                            target;
+
+                        updateReelSelection(
+                            targetElement,
+                            targetType
+                        );
+
+                        return;
+                    }
+
+                    const duration =
+                        Math.min(
+                            180,
+                            Math.max(
+                                100,
+                                Math.abs(distance) * 0.7
+                            )
+                        );
+
+                    const startTime =
+                        performance.now();
+
+                    function frame(now) {
+
+                        const progress =
+                            Math.min(
+                                1,
+                                (
+                                    now -
+                                    startTime
+                                ) / duration
+                            );
+
+                        const eased =
+                            1 -
+                            Math.pow(
+                                1 - progress,
+                                3
+                            );
+
+                        targetElement.scrollTop =
+                            start +
+                            distance * eased;
+
+                        updateReelSelection(
+                            targetElement,
+                            targetType
+                        );
+
+                        if (progress < 1) {
+
+                            reelState.snapFrame =
+                                requestAnimationFrame(
+                                    frame
+                                );
+
+                        } else {
+
+                            reelState.snapFrame =
+                                null;
+
+                            targetElement.scrollTop =
+                                target;
+
+                            updateReelSelection(
+                                targetElement,
+                                targetType
+                            );
+                        }
+                    }
+
+                    stopSnap();
+
+                    reelState.snapFrame =
+                        requestAnimationFrame(frame);
+                }
+
+                /* =====================================================
+                   POINTER DOWN
+                ===================================================== */
+
+                element.addEventListener(
+                    "pointerdown",
+                    event => {
+
+                        if (
+                            event.pointerType === "mouse" &&
+                            event.button !== 0
+                        ) {
+                            return;
+                        }
+
+                        stopMomentum();
+
+                        stopSnap();
+
+                        reelState.dragging =
+                            true;
+
+                        reelState.moved =
+                            false;
+
+                        reelState.pointerId =
+                            event.pointerId;
+
+                        reelState.startY =
+                            event.clientY;
+
+                        reelState.startScrollTop =
+                            element.scrollTop;
+
+                        reelState.lastY =
+                            event.clientY;
+
+                        reelState.lastTime =
+                            performance.now();
+
+                        reelState.velocity =
+                            0;
+
+                        reelState.samples =
+                            [{
+                                y: event.clientY,
+                                time: performance.now()
+                            }];
+
+                        element.setPointerCapture?.(
+                            event.pointerId
+                        );
+
+                        event.preventDefault();
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                /* =====================================================
+                   POINTER MOVE
+                   
+                   ★ 1:1ドラッグ
+                   
+                   以前は1.8倍だった。
+                   ここを1:1にすることで、
+                   指と数字が一体になった感覚にする。
+                ===================================================== */
+
+                element.addEventListener(
+                    "pointermove",
+                    event => {
+
+                        if (
+                            !reelState.dragging ||
+                            reelState.pointerId !==
+                            event.pointerId
+                        ) {
+                            return;
+                        }
+
+                        const now =
+                            performance.now();
+
+                        const deltaY =
+                            event.clientY -
+                            reelState.startY;
+
+                        if (
+                            Math.abs(deltaY) > 4
+                        ) {
+
+                            reelState.moved =
+                                true;
+                        }
+
+                        /*
+                         * ★ 1:1
+                         */
+                        const targetScroll =
+                            reelState.startScrollTop -
+                            deltaY;
+
+                        element.scrollTop =
+                            clampScroll(
+                                targetScroll
+                            );
+
+                        /*
+                         * =================================================
+                           速度サンプルを保存
+                           
+                           直近約80msだけを見る。
+                           これで「指を離す直前」の速度を
+                           安定して取得できる。
+                         * =================================================
+                         */
+
+                        reelState.samples.push({
+                            y: event.clientY,
+                            time: now
+                        });
+
+                        const cutoff =
+                            now - 80;
+
+                        while (
+                            reelState.samples.length > 2 &&
+                            reelState.samples[0].time <
+                            cutoff
+                        ) {
+
+                            reelState.samples.shift();
+                        }
+
+                        if (
+                            reelState.samples.length >= 2
+                        ) {
+
+                            const first =
+                                reelState.samples[0];
+
+                            const last =
+                                reelState.samples[
+                                reelState.samples.length - 1
+                                ];
+
+                            const timeDelta =
+                                Math.max(
+                                    1,
+                                    last.time -
+                                    first.time
+                                );
+
+                            /*
+                             * scrollTopの速度(px/ms)
+                             */
+                            reelState.velocity =
+                                -(
+                                    last.y -
+                                    first.y
+                                ) / timeDelta;
+                        }
+
+                        reelState.lastY =
+                            event.clientY;
+
+                        reelState.lastTime =
+                            now;
+
+                        updateSelection();
+
+                        event.preventDefault();
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                /* =====================================================
+                   POINTER UP
+                ===================================================== */
+
+                element.addEventListener(
+                    "pointerup",
+                    event => {
+
+                        if (
+                            !reelState.dragging ||
+                            reelState.pointerId !==
+                            event.pointerId
+                        ) {
+                            return;
+                        }
+
+                        reelState.dragging =
+                            false;
+
+                        try {
+
+                            element.releasePointerCapture?.(
+                                event.pointerId
+                            );
+
+                        } catch (error) {
+                            /* ignore */
+                        }
+
+                        const velocity =
+                            reelState.velocity;
+
+                        const wasMoved =
+                            reelState.moved;
+
+                        reelState.pointerId =
+                            null;
+
+                        /*
+                         * ドラッグ後のclickを抑制。
+                         */
+                        reelState.suppressClick =
+                            wasMoved;
+
+                        if (wasMoved) {
+
+                            /*
+                             * フリック速度が十分なら慣性。
+                             */
+                            startMomentum(
+                                velocity
+                            );
+
+                        } else {
+
+                            /*
+                             * タップなら即座に中央へ。
+                             */
+                            snapToNearest();
+                        }
+
+                        setTimeout(
+                            () => {
+
+                                reelState.suppressClick =
+                                    false;
+
+                            },
+                            100
+                        );
+
+                        event.preventDefault();
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                /* =====================================================
+                   POINTER CANCEL
+                ===================================================== */
+
+                element.addEventListener(
+                    "pointercancel",
+                    event => {
+
+                        if (
+                            !reelState.dragging
+                        ) {
+                            return;
+                        }
+
+                        reelState.dragging =
+                            false;
+
+                        reelState.pointerId =
+                            null;
+
+                        snapToNearest();
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+                /* =====================================================
+                   WHEEL
+                ===================================================== */
+
+                element.addEventListener(
+                    "wheel",
+                    event => {
+
+                        event.preventDefault();
+
+                        stopMomentum();
+
+                        stopSnap();
+
+                        /*
+                         * マウスホイールは少しだけ増幅。
+                         */
+                        const WHEEL_SPEED =
+                            1.5;
+
+                        element.scrollTop =
+                            clampScroll(
+                                element.scrollTop +
+                                event.deltaY *
+                                WHEEL_SPEED
+                            );
+
+                        updateSelection();
+
+                        clearTimeout(
+                            reelState.scrollTimer
+                        );
+
+                        reelState.scrollTimer =
+                            setTimeout(
+                                () => {
+                                    snapToNearest();
+                                },
+                                60
+                            );
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                /* =====================================================
+                   ★ iPHONE風 慣性
+                   
+                   velocity:
+                     px / ms
+        
+                   指を離した瞬間の速度をそのまま引き継ぎ、
+                   時間経過に応じて指数的に減速する。
+                ===================================================== */
+
+                function startMomentum(
+                    initialVelocity
+                ) {
+
+                    stopMomentum();
+
+                    /*
+                     * 非常に遅い場合は慣性なし。
+                     */
+                    if (
+                        Math.abs(initialVelocity) <
+                        0.08
+                    ) {
+
+                        snapToNearest();
+
+                        return;
+                    }
+
+                    /*
+                     * iPhoneらしいフリック速度。
+                     *
+                     * 大きすぎると飛びすぎるので制限。
+                     */
+                    const MAX_VELOCITY =
+                        2.8;
+
+                    let velocity =
+                        Math.max(
+                            -MAX_VELOCITY,
+                            Math.min(
+                                MAX_VELOCITY,
+                                initialVelocity
+                            )
+                        );
+
+                    let lastTime =
+                        performance.now();
+
+                    /*
+                     * 1.0に近いほど長く滑る。
+                     *
+                     * 0.965前後でかなり自然。
+                     */
+                    const FRICTION =
+                        0.965;
+
+                    function frame(now) {
+
+                        const delta =
+                            Math.min(
+                                32,
+                                Math.max(
+                                    1,
+                                    now - lastTime
+                                )
+                            );
+
+                        lastTime =
+                            now;
+
+                        /*
+                         * 時間ベースの減衰。
+                         *
+                         * 60fpsだけでなく、
+                         * 120HzのiPhone ProMotionでも
+                         * 同じ感覚になる。
+                         */
+                        const friction =
+                            Math.pow(
+                                FRICTION,
+                                delta / 16.67
+                            );
+
+                        velocity *= friction;
+
+                        const nextScroll =
+                            element.scrollTop +
+                            velocity * delta;
+
+                        const maxScroll =
+                            getMaxScroll();
+
+                        /*
+                         * 境界に当たったら、
+                         * 速度を自然に消す。
+                         */
+                        if (
+                            nextScroll <= 0
+                        ) {
+
+                            element.scrollTop = 0;
+
+                            velocity *= 0.35;
+
+                        } else if (
+                            nextScroll >= maxScroll
+                        ) {
+
+                            element.scrollTop =
+                                maxScroll;
+
+                            velocity *= 0.35;
+
+                        } else {
+
+                            element.scrollTop =
+                                nextScroll;
+                        }
+
+                        updateSelection();
+
+                        /*
+                         * 十分遅くなったら終了。
+                         */
+                        if (
+                            Math.abs(velocity) >
+                            0.025
+                        ) {
+
+                            reelState.momentumFrame =
+                                requestAnimationFrame(
+                                    frame
+                                );
+
+                        } else {
+
+                            reelState.momentumFrame =
+                                null;
+
+                            /*
+                             * 慣性終了後に
+                             * 現在の数字へ自然に吸着。
+                             */
+                            snapToNearest();
+                        }
+                    }
+
+                    reelState.momentumFrame =
+                        requestAnimationFrame(
+                            frame
+                        );
+                }
+
+                /* =====================================================
+                   INITIAL POSITION
+                ===================================================== */
+
+                requestAnimationFrame(() => {
+
+                    const item =
+                        element.querySelector(
+                            `[data-value="${reelValues[type]}"]`
+                        );
+
+                    if (item) {
+
+                        element.scrollTop =
+                            item.offsetTop -
+                            (
+                                element.clientHeight -
+                                item.offsetHeight
+                            ) / 2;
+                    }
+
+                    updateSelection();
+                });
+            }
+
+            /* =========================================================
+               REEL SELECTION
+            ========================================================= */
+
+            function updateReelSelection(
+                element,
+                type
             ) {
 
-                cancelAnimationFrame(
-                    reelState.momentumFrame
-                );
+                const items =
+                    element.querySelectorAll(
+                        ".time-reel-item"
+                    );
 
-                reelState.momentumFrame =
-                    null;
-            }
-        }
+                if (!items.length) {
+                    return;
+                }
 
-        function stopSnap() {
+                const center =
+                    element.scrollTop +
+                    element.clientHeight / 2;
 
-            if (
-                reelState.snapFrame !== null
-            ) {
+                let closest = null;
 
-                cancelAnimationFrame(
-                    reelState.snapFrame
-                );
+                let closestDistance =
+                    Infinity;
 
-                reelState.snapFrame =
-                    null;
-            }
-        }
-
-        function getNearestIndex() {
-
-            const items =
-                element.querySelectorAll(
-                    ".time-reel-item"
-                );
-
-            if (!items.length) {
-                return 0;
-            }
-
-            const center =
-                element.scrollTop +
-                element.clientHeight / 2;
-
-            let closestIndex = 0;
-
-            let closestDistance =
-                Infinity;
-
-            items.forEach(
-                (item, index) => {
+                items.forEach(item => {
 
                     const itemCenter =
                         item.offsetTop +
@@ -2847,1567 +3512,757 @@
                         closestDistance =
                             distance;
 
-                        closestIndex =
-                            index;
+                        closest = item;
                     }
-                }
-            );
 
-            return closestIndex;
-        }
-
-        function getSnapPosition(index) {
-
-            const items =
-                element.querySelectorAll(
-                    ".time-reel-item"
-                );
-
-            const item =
-                items[index];
-
-            if (!item) {
-                return 0;
-            }
-
-            return clampScroll(
-                item.offsetTop -
-                (
-                    element.clientHeight -
-                    item.offsetHeight
-                ) / 2
-            );
-        }
-
-        function updateSelection() {
-
-            updateReelSelection(
-                element,
-                type
-            );
-        }
-
-        /* =====================================================
-           SMOOTH SNAP
-           
-           CSSのsmooth scrollではなく、
-           JSで短いease-outを作る。
-           
-           iPhoneのピッカーの「吸着」に近い。
-        ===================================================== */
-
-        function snapToNearest() {
-
-            stopSnap();
-
-            const index =
-                getNearestIndex();
-
-            const target =
-                getSnapPosition(index);
-
-            const start =
-                element.scrollTop;
-
-            const distance =
-                target - start;
-
-            reelValues[type] =
-                index;
-
-            updateSelection();
-
-            if (
-                Math.abs(distance) < 0.5
-            ) {
-
-                element.scrollTop =
-                    target;
-
-                return;
-            }
-
-            const duration =
-                Math.min(
-                    180,
-                    Math.max(
-                        90,
-                        Math.abs(distance) * 0.7
-                    )
-                );
-
-            const startTime =
-                performance.now();
-
-            function frame(now) {
-
-                const progress =
-                    Math.min(
-                        1,
-                        (
-                            now -
-                            startTime
-                        ) / duration
+                    item.classList.remove(
+                        "selected"
                     );
-
-                /*
-                 * cubic ease-out
-                 */
-                const eased =
-                    1 -
-                    Math.pow(
-                        1 - progress,
-                        3
-                    );
-
-                element.scrollTop =
-                    start +
-                    distance * eased;
-
-                updateSelection();
-
-                if (progress < 1) {
-
-                    reelState.snapFrame =
-                        requestAnimationFrame(
-                            frame
-                        );
-
-                } else {
-
-                    reelState.snapFrame =
-                        null;
-
-                    element.scrollTop =
-                        target;
-
-                    updateSelection();
-                }
-            }
-
-            reelState.snapFrame =
-                requestAnimationFrame(frame);
-        }
-
-        function snapReelToValue(
-            targetElement,
-            targetType,
-            value
-        ) {
-
-            const item =
-                targetElement.querySelector(
-                    `[data-value="${value}"]`
-                );
-
-            if (!item) {
-                return;
-            }
-
-            const target =
-                item.offsetTop -
-                (
-                    targetElement.clientHeight -
-                    item.offsetHeight
-                ) / 2;
-
-            const start =
-                targetElement.scrollTop;
-
-            const distance =
-                target - start;
-
-            reelValues[targetType] =
-                Number(value);
-
-            if (
-                Math.abs(distance) < 0.5
-            ) {
-
-                targetElement.scrollTop =
-                    target;
-
-                updateReelSelection(
-                    targetElement,
-                    targetType
-                );
-
-                return;
-            }
-
-            const duration =
-                Math.min(
-                    180,
-                    Math.max(
-                        100,
-                        Math.abs(distance) * 0.7
-                    )
-                );
-
-            const startTime =
-                performance.now();
-
-            function frame(now) {
-
-                const progress =
-                    Math.min(
-                        1,
-                        (
-                            now -
-                            startTime
-                        ) / duration
-                    );
-
-                const eased =
-                    1 -
-                    Math.pow(
-                        1 - progress,
-                        3
-                    );
-
-                targetElement.scrollTop =
-                    start +
-                    distance * eased;
-
-                updateReelSelection(
-                    targetElement,
-                    targetType
-                );
-
-                if (progress < 1) {
-
-                    reelState.snapFrame =
-                        requestAnimationFrame(
-                            frame
-                        );
-
-                } else {
-
-                    reelState.snapFrame =
-                        null;
-
-                    targetElement.scrollTop =
-                        target;
-
-                    updateReelSelection(
-                        targetElement,
-                        targetType
-                    );
-                }
-            }
-
-            stopSnap();
-
-            reelState.snapFrame =
-                requestAnimationFrame(frame);
-        }
-
-        /* =====================================================
-           POINTER DOWN
-        ===================================================== */
-
-        element.addEventListener(
-            "pointerdown",
-            event => {
-
-                if (
-                    event.pointerType === "mouse" &&
-                    event.button !== 0
-                ) {
-                    return;
-                }
-
-                stopMomentum();
-
-                stopSnap();
-
-                reelState.dragging =
-                    true;
-
-                reelState.moved =
-                    false;
-
-                reelState.pointerId =
-                    event.pointerId;
-
-                reelState.startY =
-                    event.clientY;
-
-                reelState.startScrollTop =
-                    element.scrollTop;
-
-                reelState.lastY =
-                    event.clientY;
-
-                reelState.lastTime =
-                    performance.now();
-
-                reelState.velocity =
-                    0;
-
-                reelState.samples =
-                    [{
-                        y: event.clientY,
-                        time: performance.now()
-                    }];
-
-                element.setPointerCapture?.(
-                    event.pointerId
-                );
-
-                event.preventDefault();
-            },
-            {
-                passive: false
-            }
-        );
-
-        /* =====================================================
-           POINTER MOVE
-           
-           ★ 1:1ドラッグ
-           
-           以前は1.8倍だった。
-           ここを1:1にすることで、
-           指と数字が一体になった感覚にする。
-        ===================================================== */
-
-        element.addEventListener(
-            "pointermove",
-            event => {
-
-                if (
-                    !reelState.dragging ||
-                    reelState.pointerId !==
-                        event.pointerId
-                ) {
-                    return;
-                }
-
-                const now =
-                    performance.now();
-
-                const deltaY =
-                    event.clientY -
-                    reelState.startY;
-
-                if (
-                    Math.abs(deltaY) > 4
-                ) {
-
-                    reelState.moved =
-                        true;
-                }
-
-                /*
-                 * ★ 1:1
-                 */
-                const targetScroll =
-                    reelState.startScrollTop -
-                    deltaY;
-
-                element.scrollTop =
-                    clampScroll(
-                        targetScroll
-                    );
-
-                /*
-                 * =================================================
-                   速度サンプルを保存
-                   
-                   直近約80msだけを見る。
-                   これで「指を離す直前」の速度を
-                   安定して取得できる。
-                 * =================================================
-                 */
-
-                reelState.samples.push({
-                    y: event.clientY,
-                    time: now
                 });
 
-                const cutoff =
-                    now - 80;
-
-                while (
-                    reelState.samples.length > 2 &&
-                    reelState.samples[0].time <
-                        cutoff
-                ) {
-
-                    reelState.samples.shift();
+                if (!closest) {
+                    return;
                 }
 
-                if (
-                    reelState.samples.length >= 2
-                ) {
+                closest.classList.add(
+                    "selected"
+                );
 
-                    const first =
-                        reelState.samples[0];
-
-                    const last =
-                        reelState.samples[
-                            reelState.samples.length - 1
-                        ];
-
-                    const timeDelta =
-                        Math.max(
-                            1,
-                            last.time -
-                            first.time
-                        );
-
-                    /*
-                     * scrollTopの速度(px/ms)
-                     */
-                    reelState.velocity =
-                        -(
-                            last.y -
-                            first.y
-                        ) / timeDelta;
-                }
-
-                reelState.lastY =
-                    event.clientY;
-
-                reelState.lastTime =
-                    now;
-
-                updateSelection();
-
-                event.preventDefault();
-            },
-            {
-                passive: false
+                reelValues[type] =
+                    Number(
+                        closest.dataset.value
+                    );
             }
-        );
 
-        /* =====================================================
-           POINTER UP
-        ===================================================== */
+            /* =========================================================
+               POPULATE TIME PICKER
+            ========================================================= */
 
-        element.addEventListener(
-            "pointerup",
-            event => {
+            function populateTimePicker(
+                requiredHours = 99,
+                selectedHours = 0,
+                selectedMinutes = 0,
+                selectedSeconds = 0
+            ) {
+
+                const maxHours =
+                    Math.max(
+                        99,
+                        requiredHours
+                    );
+
+                createTimeReel(
+                    elements.editHours,
+                    maxHours,
+                    selectedHours,
+                    "hours"
+                );
+
+                createTimeReel(
+                    elements.editMinutes,
+                    59,
+                    selectedMinutes,
+                    "minutes"
+                );
+
+                createTimeReel(
+                    elements.editSeconds,
+                    59,
+                    selectedSeconds,
+                    "seconds"
+                );
+            }
+
+            function getTimeReelValue(type) {
+
+                return Math.max(
+                    0,
+                    Number(
+                        reelValues[type]
+                    ) || 0
+                );
+            }
+
+            /* =========================================================
+               OPEN EDIT MODAL
+            ========================================================= */
+
+            function openEditModal(id) {
 
                 if (
-                    !reelState.dragging ||
-                    reelState.pointerId !==
-                        event.pointerId
+                    state.running ||
+                    isDialogOpen()
                 ) {
                     return;
                 }
 
-                reelState.dragging =
-                    false;
+                const duration =
+                    getEditableLapDuration(id);
 
-                try {
-
-                    element.releasePointerCapture?.(
-                        event.pointerId
-                    );
-
-                } catch (error) {
-                    /* ignore */
-                }
-
-                const velocity =
-                    reelState.velocity;
-
-                const wasMoved =
-                    reelState.moved;
-
-                reelState.pointerId =
-                    null;
-
-                /*
-                 * ドラッグ後のclickを抑制。
-                 */
-                reelState.suppressClick =
-                    wasMoved;
-
-                if (wasMoved) {
-
-                    /*
-                     * フリック速度が十分なら慣性。
-                     */
-                    startMomentum(
-                        velocity
-                    );
-
-                } else {
-
-                    /*
-                     * タップなら即座に中央へ。
-                     */
-                    snapToNearest();
-                }
-
-                setTimeout(
-                    () => {
-
-                        reelState.suppressClick =
-                            false;
-
-                    },
-                    100
-                );
-
-                event.preventDefault();
-            },
-            {
-                passive: false
-            }
-        );
-
-        /* =====================================================
-           POINTER CANCEL
-        ===================================================== */
-
-        element.addEventListener(
-            "pointercancel",
-            event => {
-
-                if (
-                    !reelState.dragging
-                ) {
+                if (duration === null) {
                     return;
                 }
 
-                reelState.dragging =
-                    false;
+                editingLapId = id;
 
-                reelState.pointerId =
-                    null;
-
-                snapToNearest();
-            },
-            {
-                passive: true
-            }
-        );
-
-        /* =====================================================
-           WHEEL
-        ===================================================== */
-
-        element.addEventListener(
-            "wheel",
-            event => {
-
-                event.preventDefault();
-
-                stopMomentum();
-
-                stopSnap();
-
-                /*
-                 * マウスホイールは少しだけ増幅。
-                 */
-                const WHEEL_SPEED =
-                    1.5;
-
-                element.scrollTop =
-                    clampScroll(
-                        element.scrollTop +
-                        event.deltaY *
-                        WHEEL_SPEED
+                const totalSeconds =
+                    Math.floor(
+                        duration / 1000
                     );
 
-                updateSelection();
+                const hours =
+                    Math.floor(
+                        totalSeconds / 3600
+                    );
 
-                clearTimeout(
-                    reelState.scrollTimer
-                );
-
-                reelState.scrollTimer =
-                    setTimeout(
-                        () => {
-                            snapToNearest();
-                        },
+                const minutes =
+                    Math.floor(
+                        (totalSeconds % 3600) /
                         60
                     );
-            },
-            {
-                passive: false
-            }
-        );
 
-        /* =====================================================
-           ★ iPHONE風 慣性
-           
-           velocity:
-             px / ms
+                const seconds =
+                    totalSeconds % 60;
 
-           指を離した瞬間の速度をそのまま引き継ぎ、
-           時間経過に応じて指数的に減速する。
-        ===================================================== */
-
-        function startMomentum(
-            initialVelocity
-        ) {
-
-            stopMomentum();
-
-            /*
-             * 非常に遅い場合は慣性なし。
-             */
-            if (
-                Math.abs(initialVelocity) <
-                0.08
-            ) {
-
-                snapToNearest();
-
-                return;
-            }
-
-            /*
-             * iPhoneらしいフリック速度。
-             *
-             * 大きすぎると飛びすぎるので制限。
-             */
-            const MAX_VELOCITY =
-                2.8;
-
-            let velocity =
-                Math.max(
-                    -MAX_VELOCITY,
-                    Math.min(
-                        MAX_VELOCITY,
-                        initialVelocity
-                    )
+                populateTimePicker(
+                    hours,
+                    hours,
+                    minutes,
+                    seconds
                 );
 
-            let lastTime =
-                performance.now();
+                elements.modalOverlay.classList.add(
+                    "show"
+                );
+            }
 
-            /*
-             * 1.0に近いほど長く滑る。
-             *
-             * 0.965前後でかなり自然。
-             */
-            const FRICTION =
-                0.965;
+            function closeEditModal() {
 
-            function frame(now) {
+                editingLapId = null;
 
-                const delta =
-                    Math.min(
-                        32,
-                        Math.max(
-                            1,
-                            now - lastTime
-                        )
-                    );
+                elements.modalOverlay.classList.remove(
+                    "show"
+                );
+            }
 
-                lastTime =
-                    now;
+            /* =========================================================
+               SAVE EDIT
+            ========================================================= */
 
-                /*
-                 * 時間ベースの減衰。
-                 *
-                 * 60fpsだけでなく、
-                 * 120HzのiPhone ProMotionでも
-                 * 同じ感覚になる。
-                 */
-                const friction =
-                    Math.pow(
-                        FRICTION,
-                        delta / 16.67
-                    );
+            function saveEdit() {
 
-                velocity *= friction;
-
-                const nextScroll =
-                    element.scrollTop +
-                    velocity * delta;
-
-                const maxScroll =
-                    getMaxScroll();
-
-                /*
-                 * 境界に当たったら、
-                 * 速度を自然に消す。
-                 */
                 if (
-                    nextScroll <= 0
+                    editingLapId === null ||
+                    state.running ||
+                    confirmResolver !== null
+                ) {
+                    return;
+                }
+
+                const oldDuration =
+                    getEditableLapDuration(
+                        editingLapId
+                    );
+
+                if (oldDuration === null) {
+
+                    closeEditModal();
+
+                    return;
+                }
+
+                const hours =
+                    getTimeReelValue("hours");
+
+                const minutes =
+                    getTimeReelValue("minutes");
+
+                const seconds =
+                    getTimeReelValue("seconds");
+
+                if (
+                    !Number.isInteger(hours) ||
+                    !Number.isInteger(minutes) ||
+                    !Number.isInteger(seconds) ||
+                    hours < 0 ||
+                    minutes < 0 ||
+                    minutes > 59 ||
+                    seconds < 0 ||
+                    seconds > 59
+                ) {
+                    return;
+                }
+
+                const newDuration = (
+                    (
+                        hours * 60 +
+                        minutes
+                    ) * 60 +
+                    seconds
+                ) * 1000;
+
+                const displayedOldDuration = (
+                    Math.floor(
+                        oldDuration / 1000
+                    ) * 1000
+                );
+
+                if (
+                    newDuration ===
+                    displayedOldDuration
                 ) {
 
-                    element.scrollTop = 0;
+                    closeEditModal();
 
-                    velocity *= 0.35;
+                    return;
+                }
 
-                } else if (
-                    nextScroll >= maxScroll
+                if (
+                    editingLapId === ACTIVE_LAP_ID
                 ) {
 
-                    element.scrollTop =
-                        maxScroll;
-
-                    velocity *= 0.35;
+                    state.accumulated = (
+                        getLapElapsed(
+                            state.laps[0]
+                        ) +
+                        newDuration
+                    );
 
                 } else {
 
-                    element.scrollTop =
-                        nextScroll;
-                }
-
-                updateSelection();
-
-                /*
-                 * 十分遅くなったら終了。
-                 */
-                if (
-                    Math.abs(velocity) >
-                    0.025
-                ) {
-
-                    reelState.momentumFrame =
-                        requestAnimationFrame(
-                            frame
+                    const index =
+                        state.laps.findIndex(
+                            lap =>
+                                lap.id ===
+                                editingLapId
                         );
 
-                } else {
+                    if (index === -1) {
 
-                    reelState.momentumFrame =
-                        null;
+                        closeEditModal();
 
-                    /*
-                     * 慣性終了後に
-                     * 現在の数字へ自然に吸着。
-                     */
-                    snapToNearest();
+                        return;
+                    }
+
+                    const difference =
+                        newDuration -
+                        oldDuration;
+
+                    for (
+                        let current = 0;
+                        current <= index;
+                        current++
+                    ) {
+
+                        state.laps[current].elapsed =
+                            Math.max(
+                                0,
+                                getLapElapsed(
+                                    state.laps[current]
+                                ) +
+                                difference
+                            );
+                    }
+
+                    state.accumulated =
+                        Math.max(
+                            0,
+                            state.accumulated +
+                            difference
+                        );
+                }
+
+                normalizeLaps();
+
+                saveState();
+
+                renderLaps();
+
+                updateTimer();
+
+                updateControls();
+
+                closeEditModal();
+            }
+
+            /* =========================================================
+               NORMALIZE
+            ========================================================= */
+
+            function normalizeLaps() {
+
+                for (
+                    let index =
+                        state.laps.length - 2;
+
+                    index >= 0;
+
+                    index--
+                ) {
+
+                    state.laps[index].elapsed =
+                        Math.max(
+                            getLapElapsed(
+                                state.laps[index]
+                            ),
+                            getLapElapsed(
+                                state.laps[index + 1]
+                            )
+                        );
                 }
             }
 
-            reelState.momentumFrame =
-                requestAnimationFrame(
-                    frame
-                );
-        }
-
-        /* =====================================================
-           INITIAL POSITION
-        ===================================================== */
-
-        requestAnimationFrame(() => {
-
-            const item =
-                element.querySelector(
-                    `[data-value="${reelValues[type]}"]`
-                );
-
-            if (item) {
-
-                element.scrollTop =
-                    item.offsetTop -
-                    (
-                        element.clientHeight -
-                        item.offsetHeight
-                    ) / 2;
-            }
-
-            updateSelection();
-        });
-    }
-
-    /* =========================================================
-       REEL SELECTION
-    ========================================================= */
-
-    function updateReelSelection(
-        element,
-        type
-    ) {
-
-        const items =
-            element.querySelectorAll(
-                ".time-reel-item"
-            );
-
-        if (!items.length) {
-            return;
-        }
-
-        const center =
-            element.scrollTop +
-            element.clientHeight / 2;
-
-        let closest = null;
-
-        let closestDistance =
-            Infinity;
-
-        items.forEach(item => {
-
-            const itemCenter =
-                item.offsetTop +
-                item.offsetHeight / 2;
-
-            const distance =
-                Math.abs(
-                    itemCenter - center
-                );
-
-            if (
-                distance <
-                closestDistance
-            ) {
-
-                closestDistance =
-                    distance;
-
-                closest = item;
-            }
-
-            item.classList.remove(
-                "selected"
-            );
-        });
-
-        if (!closest) {
-            return;
-        }
-
-        closest.classList.add(
-            "selected"
-        );
-
-        reelValues[type] =
-            Number(
-                closest.dataset.value
-            );
-    }
-
-    /* =========================================================
-       POPULATE TIME PICKER
-    ========================================================= */
-
-    function populateTimePicker(
-        requiredHours = 99,
-        selectedHours = 0,
-        selectedMinutes = 0,
-        selectedSeconds = 0
-    ) {
-
-        const maxHours =
-            Math.max(
-                99,
-                requiredHours
-            );
-
-        createTimeReel(
-            elements.editHours,
-            maxHours,
-            selectedHours,
-            "hours"
-        );
-
-        createTimeReel(
-            elements.editMinutes,
-            59,
-            selectedMinutes,
-            "minutes"
-        );
-
-        createTimeReel(
-            elements.editSeconds,
-            59,
-            selectedSeconds,
-            "seconds"
-        );
-    }
-
-    function getTimeReelValue(type) {
-
-        return Math.max(
-            0,
-            Number(
-                reelValues[type]
-            ) || 0
-        );
-    }
-
-    /* =========================================================
-       OPEN EDIT MODAL
-    ========================================================= */
-
-    function openEditModal(id) {
-
-        if (
-            state.running ||
-            isDialogOpen()
-        ) {
-            return;
-        }
-
-        const duration =
-            getEditableLapDuration(id);
-
-        if (duration === null) {
-            return;
-        }
-
-        editingLapId = id;
-
-        const totalSeconds =
-            Math.floor(
-                duration / 1000
-            );
-
-        const hours =
-            Math.floor(
-                totalSeconds / 3600
-            );
-
-        const minutes =
-            Math.floor(
-                (totalSeconds % 3600) /
-                60
-            );
-
-        const seconds =
-            totalSeconds % 60;
-
-        populateTimePicker(
-            hours,
-            hours,
-            minutes,
-            seconds
-        );
-
-        elements.modalOverlay.classList.add(
-            "show"
-        );
-    }
-
-    function closeEditModal() {
-
-        editingLapId = null;
-
-        elements.modalOverlay.classList.remove(
-            "show"
-        );
-    }
-
-    /* =========================================================
-       SAVE EDIT
-    ========================================================= */
-
-    function saveEdit() {
-
-        if (
-            editingLapId === null ||
-            state.running ||
-            confirmResolver !== null
-        ) {
-            return;
-        }
-
-        const oldDuration =
-            getEditableLapDuration(
-                editingLapId
-            );
-
-        if (oldDuration === null) {
-
-            closeEditModal();
-
-            return;
-        }
-
-        const hours =
-            getTimeReelValue("hours");
-
-        const minutes =
-            getTimeReelValue("minutes");
-
-        const seconds =
-            getTimeReelValue("seconds");
-
-        if (
-            !Number.isInteger(hours) ||
-            !Number.isInteger(minutes) ||
-            !Number.isInteger(seconds) ||
-            hours < 0 ||
-            minutes < 0 ||
-            minutes > 59 ||
-            seconds < 0 ||
-            seconds > 59
-        ) {
-            return;
-        }
-
-        const newDuration = (
-            (
-                hours * 60 +
-                minutes
-            ) * 60 +
-            seconds
-        ) * 1000;
-
-        const displayedOldDuration = (
-            Math.floor(
-                oldDuration / 1000
-            ) * 1000
-        );
-
-        if (
-            newDuration ===
-            displayedOldDuration
-        ) {
-
-            closeEditModal();
-
-            return;
-        }
-
-        if (
-            editingLapId === ACTIVE_LAP_ID
-        ) {
-
-            state.accumulated = (
-                getLapElapsed(
-                    state.laps[0]
-                ) +
-                newDuration
-            );
-
-        } else {
-
-            const index =
-                state.laps.findIndex(
-                    lap =>
-                        lap.id ===
-                        editingLapId
-                );
-
-            if (index === -1) {
-
-                closeEditModal();
-
-                return;
-            }
-
-            const difference =
-                newDuration -
-                oldDuration;
-
-            for (
-                let current = 0;
-                current <= index;
-                current++
-            ) {
-
-                state.laps[current].elapsed =
-                    Math.max(
-                        0,
-                        getLapElapsed(
-                            state.laps[current]
-                        ) +
-                        difference
-                    );
-            }
-
-            state.accumulated =
-                Math.max(
-                    0,
-                    state.accumulated +
-                    difference
-                );
-        }
-
-        normalizeLaps();
-
-        saveState();
-
-        renderLaps();
-
-        updateTimer();
-
-        updateControls();
-
-        closeEditModal();
-    }
-
-    /* =========================================================
-       NORMALIZE
-    ========================================================= */
-
-    function normalizeLaps() {
-
-        for (
-            let index =
-                state.laps.length - 2;
-
-            index >= 0;
-
-            index--
-        ) {
-
-            state.laps[index].elapsed =
-                Math.max(
-                    getLapElapsed(
-                        state.laps[index]
-                    ),
-                    getLapElapsed(
-                        state.laps[index + 1]
-                    )
-                );
-        }
-    }
-
-    /* =========================================================
-       DELETE
-    ========================================================= */
-
-    async function deleteLap() {
-
-        if (
-            editingLapId === null ||
-            state.running ||
-            confirmResolver !== null
-        ) {
-            return;
-        }
-
-        const targetId =
-            editingLapId;
-
-        if (
-            getEditableLapDuration(
-                targetId
-            ) === null
-        ) {
-
-            closeEditModal();
-
-            return;
-        }
-
-        const confirmed =
-            await showConfirm(
-                "ラップを削除しますか？",
-                "削除"
-            );
-
-        if (
-            !confirmed ||
-            state.running ||
-            editingLapId !== targetId
-        ) {
-            return;
-        }
-
-        if (
-            targetId === ACTIVE_LAP_ID
-        ) {
-
-            if (!state.hasActiveLap) {
-
-                closeEditModal();
-
-                return;
-            }
-
-            state.accumulated =
-                getLapElapsed(
-                    state.laps[0]
-                );
-
-            state.hasActiveLap = false;
-
-            state.activeLapStartedAt =
-                null;
-
-            state.currentRunStart =
-                null;
-
-        } else {
-
-            const index =
-                state.laps.findIndex(
-                    lap =>
-                        lap.id === targetId
-                );
-
-            if (index === -1) {
-
-                closeEditModal();
-
-                return;
-            }
-
-            const deletedDuration =
-                calculateLapDuration(
-                    index
-                );
-
-            for (
-                let current = 0;
-                current < index;
-                current++
-            ) {
-
-                state.laps[current].elapsed =
-                    Math.max(
-                        0,
-                        getLapElapsed(
-                            state.laps[current]
-                        ) -
-                        deletedDuration
-                    );
-            }
-
-            state.laps.splice(
-                index,
-                1
-            );
-
-            state.accumulated =
-                Math.max(
-                    0,
-                    state.accumulated -
-                    deletedDuration
-                );
-
-            if (!state.hasActiveLap) {
-
-                state.accumulated =
-                    getLapElapsed(
-                        state.laps[0]
-                    );
-            }
-        }
-
-        normalizeLaps();
-
-        saveState();
-
-        renderLaps();
-
-        updateTimer();
-
-        updateControls();
-
-        closeEditModal();
-    }
-
-    /* =========================================================
-       EVENTS
-    ========================================================= */
-
-    function bindEvents() {
-
-        elements.startStopButton.addEventListener(
-            "click",
-            startStopwatch
-        );
-
-        elements.secondaryButton.addEventListener(
-            "click",
-            () => {
-
-                if (state.running) {
-                    addLap();
-                } else {
-                    resetStopwatch();
-                }
-            }
-        );
-
-        elements.cancelEdit.addEventListener(
-            "click",
-            () => {
+            /* =========================================================
+               DELETE
+            ========================================================= */
+
+            async function deleteLap() {
 
                 if (
-                    confirmResolver === null
+                    editingLapId === null ||
+                    state.running ||
+                    confirmResolver !== null
                 ) {
+                    return;
+                }
+
+                const targetId =
+                    editingLapId;
+
+                if (
+                    getEditableLapDuration(
+                        targetId
+                    ) === null
+                ) {
+
                     closeEditModal();
+
+                    return;
                 }
-            }
-        );
 
-        elements.saveEdit.addEventListener(
-            "click",
-            saveEdit
-        );
-
-        elements.deleteLap.addEventListener(
-            "click",
-            deleteLap
-        );
-
-        elements.modalOverlay.addEventListener(
-            "click",
-            event => {
+                const confirmed =
+                    await showConfirm(
+                        "ラップを削除しますか？",
+                        "削除"
+                    );
 
                 if (
-                    event.target ===
-                        elements.modalOverlay &&
-                    confirmResolver === null
-                ) {
-                    closeEditModal();
-                }
-            }
-        );
-
-        /* =====================================================
-           CONFIRM EVENTS
-        ===================================================== */
-
-        elements.confirmCancel.addEventListener(
-            "click",
-            () => {
-                closeConfirm(false);
-            }
-        );
-
-        elements.confirmOK.addEventListener(
-            "click",
-            () => {
-                closeConfirm(true);
-            }
-        );
-
-        elements.confirmOverlay.addEventListener(
-            "click",
-            event => {
-
-                if (
-                    event.target ===
-                    elements.confirmOverlay
-                ) {
-                    closeConfirm(false);
-                }
-            }
-        );
-
-        document.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key !== "Escape"
+                    !confirmed ||
+                    state.running ||
+                    editingLapId !== targetId
                 ) {
                     return;
                 }
 
                 if (
-                    confirmResolver !== null
+                    targetId === ACTIVE_LAP_ID
                 ) {
 
-                    closeConfirm(false);
+                    if (!state.hasActiveLap) {
 
-                } else if (
-                    editingLapId !== null
-                ) {
+                        closeEditModal();
 
-                    closeEditModal();
-                }
-            }
-        );
+                        return;
+                    }
 
-        /* =====================================================
-           BACKGROUND / RESTORE
-        ===================================================== */
+                    state.accumulated =
+                        getLapElapsed(
+                            state.laps[0]
+                        );
 
-        document.addEventListener(
-            "visibilitychange",
-            () => {
+                    state.hasActiveLap = false;
 
-                if (document.hidden) {
+                    state.activeLapStartedAt =
+                        null;
 
-                    stopTimerLoop();
-
-                    saveState();
+                    state.currentRunStart =
+                        null;
 
                 } else {
 
-                    startTimerLoop();
+                    const index =
+                        state.laps.findIndex(
+                            lap =>
+                                lap.id === targetId
+                        );
+
+                    if (index === -1) {
+
+                        closeEditModal();
+
+                        return;
+                    }
+
+                    const deletedDuration =
+                        calculateLapDuration(
+                            index
+                        );
+
+                    for (
+                        let current = 0;
+                        current < index;
+                        current++
+                    ) {
+
+                        state.laps[current].elapsed =
+                            Math.max(
+                                0,
+                                getLapElapsed(
+                                    state.laps[current]
+                                ) -
+                                deletedDuration
+                            );
+                    }
+
+                    state.laps.splice(
+                        index,
+                        1
+                    );
+
+                    state.accumulated =
+                        Math.max(
+                            0,
+                            state.accumulated -
+                            deletedDuration
+                        );
+
+                    if (!state.hasActiveLap) {
+
+                        state.accumulated =
+                            getLapElapsed(
+                                state.laps[0]
+                            );
+                    }
                 }
-            }
-        );
 
-        window.addEventListener(
-            "pagehide",
-            () => {
-
-                stopTimerLoop();
+                normalizeLaps();
 
                 saveState();
-            }
-        );
 
-        window.addEventListener(
-            "pageshow",
-            () => {
+                renderLaps();
+
+                updateTimer();
+
+                updateControls();
+
+                closeEditModal();
+            }
+
+            /* =========================================================
+               EVENTS
+            ========================================================= */
+
+            function bindEvents() {
+
+                elements.startStopButton.addEventListener(
+                    "click",
+                    startStopwatch
+                );
+
+                elements.secondaryButton.addEventListener(
+                    "click",
+                    () => {
+
+                        if (state.running) {
+                            addLap();
+                        } else {
+                            resetStopwatch();
+                        }
+                    }
+                );
+
+                elements.cancelEdit.addEventListener(
+                    "click",
+                    () => {
+
+                        if (
+                            confirmResolver === null
+                        ) {
+                            closeEditModal();
+                        }
+                    }
+                );
+
+                elements.saveEdit.addEventListener(
+                    "click",
+                    saveEdit
+                );
+
+                elements.deleteLap.addEventListener(
+                    "click",
+                    deleteLap
+                );
+
+                elements.modalOverlay.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            elements.modalOverlay &&
+                            confirmResolver === null
+                        ) {
+                            closeEditModal();
+                        }
+                    }
+                );
+
+                /* =====================================================
+                   CONFIRM EVENTS
+                ===================================================== */
+
+                elements.confirmCancel.addEventListener(
+                    "click",
+                    () => {
+                        closeConfirm(false);
+                    }
+                );
+
+                elements.confirmOK.addEventListener(
+                    "click",
+                    () => {
+                        closeConfirm(true);
+                    }
+                );
+
+                elements.confirmOverlay.addEventListener(
+                    "click",
+                    event => {
+
+                        if (
+                            event.target ===
+                            elements.confirmOverlay
+                        ) {
+                            closeConfirm(false);
+                        }
+                    }
+                );
+
+                document.addEventListener(
+                    "keydown",
+                    event => {
+
+                        if (
+                            event.key !== "Escape"
+                        ) {
+                            return;
+                        }
+
+                        if (
+                            confirmResolver !== null
+                        ) {
+
+                            closeConfirm(false);
+
+                        } else if (
+                            editingLapId !== null
+                        ) {
+
+                            closeEditModal();
+                        }
+                    }
+                );
+
+                /* =====================================================
+                   BACKGROUND / RESTORE
+                ===================================================== */
+
+                document.addEventListener(
+                    "visibilitychange",
+                    () => {
+
+                        if (document.hidden) {
+
+                            stopTimerLoop();
+
+                            saveState();
+
+                        } else {
+
+                            startTimerLoop();
+                        }
+                    }
+                );
+
+                window.addEventListener(
+                    "pagehide",
+                    () => {
+
+                        stopTimerLoop();
+
+                        saveState();
+                    }
+                );
+
+                window.addEventListener(
+                    "pageshow",
+                    () => {
+
+                        startTimerLoop();
+                    }
+                );
+
+                /* =====================================================
+                   ZOOM PREVENTION
+                ===================================================== */
+
+                document.addEventListener(
+                    "gesturestart",
+                    event => {
+                        event.preventDefault();
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                document.addEventListener(
+                    "gesturechange",
+                    event => {
+                        event.preventDefault();
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                document.addEventListener(
+                    "gestureend",
+                    event => {
+                        event.preventDefault();
+                    },
+                    {
+                        passive: false
+                    }
+                );
+
+                /* =====================================================
+                   DOUBLE TAP ZOOM PREVENTION
+                ===================================================== */
+
+                let lastTouchEnd = 0;
+
+                document.addEventListener(
+                    "touchend",
+                    event => {
+
+                        const now =
+                            Date.now();
+
+                        const target =
+                            event.target;
+
+                        const interactive =
+                            target instanceof Element
+                                ? target.closest(
+                                    'button, input, select, textarea, a, [role="button"]'
+                                )
+                                : null;
+
+                        if (
+                            !interactive &&
+                            now - lastTouchEnd <= 300
+                        ) {
+
+                            event.preventDefault();
+                        }
+
+                        lastTouchEnd = now;
+
+                    },
+                    {
+                        passive: false
+                    }
+                );
+            }
+
+            /* =========================================================
+               INITIALIZE
+            ========================================================= */
+
+            function initialize() {
+
+                const requiredIds = [
+
+                    "timer",
+                    "laps",
+                    "lapCount",
+
+                    "secondaryButton",
+                    "startStopButton",
+
+                    "status",
+                    "statusText",
+
+                    "editHours",
+                    "editMinutes",
+                    "editSeconds",
+
+                    "modalOverlay",
+
+                    "cancelEdit",
+                    "saveEdit",
+                    "deleteLap",
+
+                    "confirmTitle",
+                    "confirmOK",
+                    "confirmOverlay",
+                    "confirmCancel"
+                ];
+
+                for (
+                    const id of requiredIds
+                ) {
+
+                    const element =
+                        document.getElementById(id);
+
+                    if (!element) {
+
+                        console.error(
+                            "必要なHTML要素が見つかりません: " +
+                            id
+                        );
+
+                        return;
+                    }
+
+                    elements[id] =
+                        element;
+                }
+
+                loadState();
+
+                updateControls();
+
+                renderLaps();
+
+                bindEvents();
 
                 startTimerLoop();
             }
-        );
 
-        /* =====================================================
-           ZOOM PREVENTION
-        ===================================================== */
+            if (
+                document.readyState ===
+                "loading"
+            ) {
 
-        document.addEventListener(
-            "gesturestart",
-            event => {
-                event.preventDefault();
-            },
-            {
-                passive: false
-            }
-        );
-
-        document.addEventListener(
-            "gesturechange",
-            event => {
-                event.preventDefault();
-            },
-            {
-                passive: false
-            }
-        );
-
-        document.addEventListener(
-            "gestureend",
-            event => {
-                event.preventDefault();
-            },
-            {
-                passive: false
-            }
-        );
-
-        /* =====================================================
-           DOUBLE TAP ZOOM PREVENTION
-        ===================================================== */
-
-        let lastTouchEnd = 0;
-
-        document.addEventListener(
-            "touchend",
-            event => {
-
-                const now =
-                    Date.now();
-
-                const target =
-                    event.target;
-
-                const interactive =
-                    target instanceof Element
-                        ? target.closest(
-                            'button, input, select, textarea, a, [role="button"]'
-                        )
-                        : null;
-
-                if (
-                    !interactive &&
-                    now - lastTouchEnd <= 300
-                ) {
-
-                    event.preventDefault();
-                }
-
-                lastTouchEnd = now;
-
-            },
-            {
-                passive: false
-            }
-        );
-    }
-
-    /* =========================================================
-       INITIALIZE
-    ========================================================= */
-
-    function initialize() {
-
-        const requiredIds = [
-
-            "timer",
-            "laps",
-            "lapCount",
-
-            "secondaryButton",
-            "startStopButton",
-
-            "status",
-            "statusText",
-
-            "editHours",
-            "editMinutes",
-            "editSeconds",
-
-            "modalOverlay",
-
-            "cancelEdit",
-            "saveEdit",
-            "deleteLap",
-
-            "confirmTitle",
-            "confirmOK",
-            "confirmOverlay",
-            "confirmCancel"
-        ];
-
-        for (
-            const id of requiredIds
-        ) {
-
-            const element =
-                document.getElementById(id);
-
-            if (!element) {
-
-                console.error(
-                    "必要なHTML要素が見つかりません: " +
-                    id
+                document.addEventListener(
+                    "DOMContentLoaded",
+                    initialize,
+                    {
+                        once: true
+                    }
                 );
 
-                return;
+            } else {
+
+                initialize();
             }
 
-            elements[id] =
-                element;
-        }
-
-        loadState();
-
-        updateControls();
-
-        renderLaps();
-
-        bindEvents();
-
-        startTimerLoop();
-    }
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initialize,
-            {
-                once: true
-            }
-        );
-
-    } else {
-
-        initialize();
-    }
-
-})();
-</script>
+        })();
+    </script>
 
 </body>
+
 </html>
