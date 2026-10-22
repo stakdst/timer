@@ -38,7 +38,6 @@
             min-height: 100%;
             min-height: 100lvh;
             background: #080808;
-            background: #ff0000;
             color: #f5f5f7;
             font-family:
                 -apple-system,
@@ -1242,32 +1241,47 @@
         }
         .chart-wrap {
             position:relative;
-            flex:1;
-            min-height:190px;
+            /* グラフ領域の高さを固定し、画面表示領域の変化で伸縮しないようにする */
+            flex:0 0 300px;
+            height:300px;
+            min-height:300px;
+            max-height:300px;
             overflow:hidden;
             border-top:1px solid #242424;
             touch-action:pan-y;
             user-select:none;
             -webkit-user-select:none;
         }
-        #studyChart { width:100%; height:100%; min-height:190px; }
-        #studyChart svg { display:block; width:100%; height:100%; min-height:190px; overflow:visible; }
+        #studyChart { width:100%; height:100%; min-height:0; }
+        #studyChart svg { display:block; width:100%; height:100%; min-height:0; overflow:visible; }
         .chart-hint { color:#555; font-size:11px; text-align:center; padding:10px 0 0; }
         .chart-grid { stroke:#292929; stroke-width:1; }
         .chart-label { fill:#777; font-size:10px; }
-        .chart-line { fill:none; stroke:#f5f5f7; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
-        .chart-area { fill:rgba(245,245,247,.08); }
-        .chart-point { fill:#f5f5f7; }
+        .chart-line { fill:none; stroke:#2583ff; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; }
+        .chart-area { fill:rgba(37,131,255,.12); }
+        .chart-point { fill:#2583ff; }
         .chart-value { fill:#ddd; font-size:10px; text-anchor:middle; }
         @media (min-width:600px) {
             .modal-overlay { align-items: center; padding: 20px; }
             .modal { border-bottom: 1px solid var(--glass-line); border-radius: 24px; padding-bottom: 25px; transform: translateY(20px); }
             .study-section { grid-column:2; grid-row:2; width:100%; height:100%; min-height:0; }
-            .chart-wrap, #studyChart, #studyChart svg { min-height:260px; }
+            .chart-wrap {
+                flex:0 0 340px;
+                height:340px;
+                min-height:340px;
+                max-height:340px;
+            }
+            #studyChart, #studyChart svg { height:100%; min-height:0; }
         }
         @media (orientation:landscape) and (max-width:599px) {
             .study-section { grid-column:2; grid-row:2; width:100%; height:100%; min-height:0; }
-            .chart-wrap, #studyChart, #studyChart svg { min-height:150px; }
+            .chart-wrap {
+                flex:0 0 210px;
+                height:210px;
+                min-height:210px;
+                max-height:210px;
+            }
+            #studyChart, #studyChart svg { height:100%; min-height:0; }
             .chart-hint { font-size:9px; padding-top:4px; }
         }
 \n    </style>
@@ -1353,7 +1367,7 @@
       let editingDay = null;
       let sessionTotals = null, lastChartAt = 0, chartDirty = true, chartW = 360, chartH = 260;
       let anim = null, drag = null, suppressClick = false, renderQueued = false, rangeText = "", wheelTimer = null;
-      const CH_L = 36, CH_R = 12;
+      const CH_L = 36, CH_R = 28; // 右端の日付ラベルが見切れないよう余白を確保
       const overlay = $("modalOverlay"), modalTitle = $("modalTitle");
       const reels = {};
       const DAY = 86400000;
@@ -1446,7 +1460,8 @@
       function renderChart(now=Date.now()) {
         if (chartDirty) {
           chartW=Math.max(300,chartWrap.clientWidth||360);
-          chartH=Math.max(190,chartWrap.clientHeight||260);
+          // 高さはCSSで固定したchart-wrapの実寸を使う（データや画面UIの変化で自動拡大しない）。
+          chartH=chartWrap.clientHeight||300;
           chartDirty=false;
         }
         const totals=dailyTotals(now), today=studyDayStart(now);
@@ -1460,7 +1475,7 @@
         const ds=[];
         for(let d=Math.floor(viewPos)-7; d<=Math.min(0,Math.ceil(viewPos)+1); d++) ds.push(d);
         const keys=ds.map(dayKey), vals=keys.map(k=>(totals.get(k)||0)/3600000);
-        let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="日ごとの勉強時間。縦軸は0から17時間"><defs><clipPath id="chartClip"><rect x="${left-8}" y="0" width="${pw+16}" height="${H}"/></clipPath></defs>`;
+        let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="日ごとの勉強時間。縦軸は0から17時間"><defs><clipPath id="chartClip"><rect x="${left-8}" y="0" width="${pw+40}" height="${H}"/></clipPath></defs>`;
         for(let h=0;h<=16;h+=2){
           svg+=`<line class="chart-grid" x1="${left}" y1="${y(h)}" x2="${W-right}" y2="${y(h)}"/>`;
           svg+=`<text class="chart-label" x="${left-9}" y="${y(h)+3}" text-anchor="end">${h}h</text>`;
@@ -1473,7 +1488,7 @@
         svg+=`<polyline class="chart-line" points="${pts}"/>`;
         ds.forEach((d,i)=>{
           const v=vals[i], cx=x(d), cy=y(v), dt=new Date(keys[i]);
-          svg+=`<circle class="chart-point" data-day="${keys[i]}" tabindex="0" role="button" aria-label="${dateLabel(keys[i],true)}の勉強時間を編集。現在 ${hoursLabel(v*3600000)}" cx="${cx}" cy="${cy}" r="6" style="cursor:pointer;stroke:#f5f5f7;stroke-width:2;pointer-events:all"/>`;
+          svg+=`<circle class="chart-point" data-day="${keys[i]}" tabindex="0" role="button" aria-label="${dateLabel(keys[i],true)}の勉強時間を編集。現在 ${hoursLabel(v*3600000)}" cx="${cx}" cy="${cy}" r="4" style="cursor:pointer;stroke:#2583ff;stroke-width:1.5;pointer-events:all"/>`;
           if(v>0) svg+=`<text class="chart-value" x="${cx}" y="${Math.max(11,cy-9)}">${hoursLabel(v*3600000)}</text>`;
           svg+=`<text class="chart-label" x="${cx}" y="${H-9}" text-anchor="middle">${dt.getMonth()+1}/${dt.getDate()}</text>`;
         });
