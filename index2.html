@@ -1325,13 +1325,16 @@
             <section class="study-section">
                 <div class="section-header">
                     <div class="section-title chart-total" id="chartTotal">合計 0分</div>
-                    <div class="chart-mode" id="chartModeLabel">日</div>
                     <div class="lap-count" id="chartRange"></div>
                 </div>
-                <div class="chart-wrap" id="chartWrap" aria-label="勉強時間の折れ線グラフ。左右スワイプで日・週・月を切り替え">
+                <div class="mode-switch" role="group" aria-label="グラフの表示単位">
+                    <button class="mode-button active" id="modeDay" data-mode="day">日</button>
+                    <button class="mode-button" id="modeWeek" data-mode="week">週</button>
+                    <button class="mode-button" id="modeMonth" data-mode="month">月</button>
+                </div>
+                <div class="chart-wrap" id="chartWrap" aria-label="勉強時間の折れ線グラフ">
                     <div id="studyChart"></div>
                 </div>
-                <div class="chart-hint">左右スワイプで 日 / 週 / 月 を切り替え</div>
 
             </section>
         </main>
@@ -1397,7 +1400,9 @@
       .menu-button { background:transparent; color:#999; font-size:22px; line-height:1; padding:2px 0 2px 4px; }
       .menu-button:active { opacity:.6; }
       .section-title.chart-total { color:#f0f0f2; font-size:14px; letter-spacing:.5px; font-variant-numeric:tabular-nums; }
-      .chart-mode { color:#888; font-size:12px; letter-spacing:2px; flex-shrink:0; }
+      .mode-switch { display:flex; gap:4px; justify-content:center; padding:0 0 10px; flex-shrink:0; }
+      .mode-button { padding:6px 20px; border-radius:999px; background:#1c1c1e; color:#888; font-size:12px; letter-spacing:1px; }
+      .mode-button.active { background:#e8e8ea; color:#111; font-weight:600; }
       .menu-list { display:grid; gap:10px; }
       .menu-list .modal-button { width:100%; }
       @media (max-width:420px) { .time-picker { gap:5px; } .time-reel { width:58px; } .time-unit { width:16px; font-size:11px; } }
@@ -1576,29 +1581,28 @@
         const d = new Date(start);
         return chartMode === "month" ? `${d.getFullYear()}/${d.getMonth() + 1}` : `${d.getMonth() + 1}/${d.getDate()}`;
       }
-      function syncModeLabel() {
-        const el = $("chartModeLabel");
-        if (el) el.textContent = chartMode === "week" ? "週" : chartMode === "month" ? "月" : "日";
+      function syncModeButtons() {
+        for (const [id, mode] of [["modeDay", "day"], ["modeWeek", "week"], ["modeMonth", "month"]]) {
+          const el = $(id);
+          if (el) el.classList.toggle("active", chartMode === mode);
+        }
       }
       function setChartMode(mode) {
         if (mode === chartMode) return;
         chartMode = mode;
         viewPos = 0; rangeText = ""; totalText = "";
-        syncModeLabel(); save(); renderChart();
+        syncModeButtons(); save(); renderChart();
       }
-      // 左右スワイプで単位をループ切替する（左: 日→週→月→日 / 右: 逆順）。
-      const CHART_MODES = ["day", "week", "month"];
-      function cycleChartMode(dir) {
-        const next = CHART_MODES[(CHART_MODES.indexOf(chartMode) + dir + CHART_MODES.length) % CHART_MODES.length];
-        setChartMode(next);
-      }
+      $("modeDay").addEventListener("click", () => setChartMode("day"));
+      $("modeWeek").addEventListener("click", () => setChartMode("week"));
+      $("modeMonth").addEventListener("click", () => setChartMode("month"));
       // 週／月の点をタップしたら、その期間の最終日を右端にした日表示へ移動する。
       function jumpToDay(bucketStartTs) {
         const lastDay = bucketNext(bucketStartTs) - DAY;
         const offset = Math.min(0, Math.round((lastDay - studyDayStart(Date.now())) / DAY));
         chartMode = "day";
         viewPos = offset; rangeText = ""; totalText = "";
-        syncModeLabel(); save(); renderChart();
+        syncModeButtons(); save(); renderChart();
       }
       // viewPos（小数）に応じて、1単位分の余白を含めて描画する。左右はclipPathで切り取る。
       function renderChart(now=Date.now()) {
@@ -1892,7 +1896,7 @@
         if (drag || (e.pointerType === "mouse" && e.button !== 0)) return;
         stopAnim();
         suppressClick = false;
-        drag = {id:e.pointerId, x0:e.clientX, startX:e.clientX, startT:e.timeStamp, pos0:viewPos, lastX:e.clientX, lastT:e.timeStamp, vel:0, moved:false};
+        drag = {id:e.pointerId, x0:e.clientX, pos0:viewPos, lastX:e.clientX, lastT:e.timeStamp, vel:0, moved:false};
       });
       chartWrap.addEventListener("pointermove", e => {
         if (!drag || e.pointerId !== drag.id) return;
@@ -1923,14 +1927,6 @@
           if (Math.abs(viewPos - Math.round(viewPos)) > 0.001) animateTo(Math.round(viewPos));
           return;
         }
-        // スワイプ判定: 長いスライド(130px以上)、または速いフリック(55px以上かつ0.35px/ms以上)で単位を切り替える。
-        // それ未満のドラッグは従来どおり期間のスクロールとして扱う。
-        const endX = typeof e.clientX === "number" ? e.clientX : d.lastX;
-        const dx = endX - d.startX, adx = Math.abs(dx), dur = Math.max(1, e.timeStamp - d.startT);
-        if (Number.isFinite(dx) && (adx >= 130 || (adx >= 55 && adx / dur >= 0.35))) {
-          cycleChartMode(dx < 0 ? 1 : -1);
-          return;
-        }
         const v = (e.timeStamp - d.lastT) > 80 ? 0 : d.vel;   // 止めてから離したら慣性なし
         const delta = Math.max(-14, Math.min(14, -v * 120 / stepPx()));
         animateTo(Math.min(0, Math.round(viewPos + delta)));
@@ -1951,7 +1947,7 @@
       document.addEventListener("visibilitychange",()=>{if(document.hidden){if(raf!==null)cancelAnimationFrame(raf);raf=null;save();}else if(running){requestWakeLock();tick();}else updateTimer();});
       window.addEventListener("pagehide",save);
       window.addEventListener("resize",()=>{chartDirty=true;renderChart();});
-      load(); syncModeLabel(); updateTimer();
+      load(); syncModeButtons(); updateTimer();
     })();
     </script>
 </body>
