@@ -1311,7 +1311,7 @@
             </section>
             <!-- ==== CONTROLS ==== -->
             <section class="controls">
-                <button class="circle-button" id="secondaryButton" aria-label="今日の記録をリセット">
+                <button class="circle-button" id="secondaryButton" aria-label="表示タイマーをリセット（今日の勉強時間は消えません）">
                     リセット
                 </button>
                 <button class="circle-button primary" id="startStopButton">
@@ -1364,6 +1364,8 @@
             <div class="time-unit">時間</div>
             <div class="time-reel" id="editMinutes" aria-label="分"></div>
             <div class="time-unit">分</div>
+            <div class="time-reel" id="editSeconds" aria-label="秒"></div>
+            <div class="time-unit">秒</div>
           </div>
         </div>
         <div class="modal-buttons">
@@ -1389,6 +1391,7 @@
       .data-button { padding:7px 12px; border-radius:999px; background:#1c1c1e; color:#aaa; font-size:11px; letter-spacing:.5px; }
       .data-button:active { opacity:.65; }
       .circle-button:disabled { opacity:.35; }
+      @media (max-width:420px) { .time-picker { gap:5px; } .time-reel { width:58px; } .time-unit { width:16px; font-size:11px; } }
       @media (max-width:599px) and (orientation:portrait) { .chart-wrap { flex:0 0 228px; height:228px; min-height:228px; max-height:228px; } .stats { padding-top:9px; } .data-bar { padding-top:9px; } }
     </style>
     <script>
@@ -1399,7 +1402,7 @@
       const timerEl = $("timer"), startBtn = $("startStopButton");
       const status = $("status"), statusText = $("statusText");
       const chartWrap = $("chartWrap"), chartEl = $("studyChart"), rangeEl = $("chartRange");
-      let running = false, runStartedAt = null, accumulated = 0, accumulatedDay = null, sessions = [], dailyAdjustments = {};
+      let running = false, runStartedAt = null, accumulated = 0, accumulatedDay = null, displayOffset = 0, sessions = [], dailyAdjustments = {};
       // viewPos: 0 = 今日が右端 / 負 = 過去（小数も取る＝指に追従して連続的に動く）
       let viewPos = 0, raf = null, lastStudyDay = null;
       let editingDay = null;
@@ -1422,15 +1425,16 @@
           runStartedAt = running && Number.isFinite(Number(data.runStartedAt)) ? Number(data.runStartedAt) : null;
           accumulated = Math.max(0, Number(data.accumulated) || 0);
           accumulatedDay = Number.isFinite(Number(data.accumulatedDay)) ? Number(data.accumulatedDay) : null;
+          displayOffset = Math.max(0, Number(data.displayOffset) || 0);
           if (running && runStartedAt === null) running = false;
           if (accumulatedDay === null) {
             const lastEnd = sessions.length ? Math.max(...sessions.map(x => x.end)) : null;
             accumulatedDay = lastEnd !== null ? studyDayStart(lastEnd) : studyDayStart(Date.now());
           }
           // 停止したまま04:00を跨いで再び開いた場合、昨日の表示を持ち越さない。
-          if (!running && accumulatedDay !== studyDayStart(Date.now())) { accumulated = 0; accumulatedDay = studyDayStart(Date.now()); }
+          if (!running && accumulatedDay !== studyDayStart(Date.now())) { accumulated = 0; accumulatedDay = studyDayStart(Date.now()); displayOffset = 0; }
           compactOldSessions();
-        } catch (_) { sessions = []; dailyAdjustments = {}; running = false; runStartedAt = null; accumulated = 0; accumulatedDay = null; }
+        } catch (_) { sessions = []; dailyAdjustments = {}; running = false; runStartedAt = null; accumulated = 0; accumulatedDay = null; displayOffset = 0; }
       }
       // 180日より古いセッションは日ごとの合計へ畳んでから捨て、保存データの肥大を防ぐ。合計は変わらない。
       function compactOldSessions() {
@@ -1444,10 +1448,12 @@
         sessionTotals = null;
       }
       function save() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({sessions, dailyAdjustments, running, runStartedAt, accumulated, accumulatedDay})); }
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify({sessions, dailyAdjustments, running, runStartedAt, accumulated, accumulatedDay, displayOffset})); }
         catch (e) { console.warn("勉強時間を保存できませんでした。", e); }
       }
       function elapsed(now=Date.now()) { return accumulated + (running && runStartedAt !== null ? Math.max(0, now-runStartedAt) : 0); }
+      // 表示専用の経過時間。displayOffset は科目切り替えリセット用で、その日の勉強時間（elapsed / グラフ）には影響しない。
+      function displayElapsed(now=Date.now()) { return Math.max(0, elapsed(now) - displayOffset); }
       function pushSession(start, end) { sessions.push({start, end}); sessionTotals = null; }
       // 4:00をまたいだら、そこまでの実行区間を保存して表示タイマーだけを0にする。
       // running は true のまま維持するため、計測は止まらない。
@@ -1460,6 +1466,7 @@
           accumulated = 0;
           runStartedAt = boundary;
           accumulatedDay = boundary;
+          displayOffset = 0;
           boundary = studyDayStart(runStartedAt) + DAY;
           changed = true;
         }
@@ -1587,7 +1594,7 @@
           reel.querySelectorAll(".time-reel-item").forEach((item,i)=>item.classList.toggle("selected",i===v));
         },{passive:true});
       }
-      setupReel("editHours", 23); setupReel("editMinutes", 59);
+      setupReel("editHours", 23); setupReel("editMinutes", 59); setupReel("editSeconds", 59);
       function setReelValue(id, value) {
         const reel=reels[id];
         reel.scrollTop=Math.max(0,Math.min(Number(reel.lastElementChild.dataset.value),Math.round(value)))*50;
@@ -1599,6 +1606,7 @@
         modalTitle.textContent=`${dateLabel(dayStart,true)}の勉強時間`;
         setReelValue("editHours",Math.floor(current/3600000));
         setReelValue("editMinutes",Math.floor(current%3600000/60000));
+        setReelValue("editSeconds",Math.floor(current%60000/1000));
         overlay.classList.add("show"); overlay.setAttribute("aria-hidden","false");
       }
       function closeEditor() { overlay.classList.remove("show"); overlay.setAttribute("aria-hidden","true"); editingDay=null; }
@@ -1609,9 +1617,11 @@
         if(editingDay===null)return;
         const dayStart=editingDay, totals=dailyTotals(Date.now());
         const current=Math.max(0,totals.get(dayStart)||0);
-        const hours=Math.round(reels.editHours.scrollTop/50), minutes=Math.round(reels.editMinutes.scrollTop/50);
-        const desired=(hours*60+minutes)*60000, delta=desired-current;
+        const hours=Math.round(reels.editHours.scrollTop/50), minutes=Math.round(reels.editMinutes.scrollTop/50), seconds=Math.round(reels.editSeconds.scrollTop/50);
+        // 秒未満（センチ秒）は編集対象ではないので、そのまま保持する。
+        const desired=((hours*60+minutes)*60+seconds)*1000+Math.floor(current%1000), delta=desired-current;
         if(dayStart===studyDayStart(Date.now()) && delta!==0) {
+          displayOffset = 0;
           if(running) {
             if(delta>=0) {
               accumulated+=delta;
@@ -1649,11 +1659,11 @@
         if (lastStudyDay !== null && currentStudyDay !== lastStudyDay) {
           // タイマー停止中でも、午前4:00の日付切り替わりで最新日を右端に表示し、表示タイマーも新しい日にする。
           viewPos = 0; force = true;
-          if (!running) { accumulated = 0; accumulatedDay = currentStudyDay; save(); }
+          if (!running) { accumulated = 0; accumulatedDay = currentStudyDay; displayOffset = 0; save(); }
         }
         lastStudyDay = currentStudyDay;
         if (handleDayBoundaries(now)) { save(); force = true; }
-        const ms=elapsed(now);
+        const ms=displayElapsed(now);
         timerEl.textContent=fmt(ms);
         timerEl.classList.toggle("long",ms>=3600000);
         startBtn.textContent=running?"停止":"開始";
@@ -1670,7 +1680,7 @@
       function start() {
         if(running) return;
         // 停止中に日（04:00区切り）が変わっていたら、前日の表示を引き継がない。
-        if (accumulatedDay !== studyDayStart(Date.now())) { accumulated = 0; accumulatedDay = studyDayStart(Date.now()); }
+        if (accumulatedDay !== studyDayStart(Date.now())) { accumulated = 0; accumulatedDay = studyDayStart(Date.now()); displayOffset = 0; }
         running=true;
         runStartedAt=Date.now();
         save();
@@ -1716,26 +1726,13 @@
       $("confirmOverlay").addEventListener("click", e => { if (e.target === $("confirmOverlay")) closeConfirm(); });
       $("confirmOk").addEventListener("click", () => { const a = confirmAction; closeConfirm(); if (a) a(); });
 
-      // ==== 今日のリセット ====
-      function resetToday() {
-        const now = Date.now(), dayStart = studyDayStart(now), dayEnd = dayStart + DAY;
-        sessions = sessions.flatMap(x => {
-          if (x.end <= dayStart || x.start >= dayEnd) return [x];
-          const kept = [];
-          if (x.start < dayStart) kept.push({start: x.start, end: dayStart});
-          if (x.end > dayEnd) kept.push({start: dayEnd, end: x.end});
-          return kept;
-        });
-        delete dailyAdjustments[String(dayStart)];
-        sessionTotals = null;
-        accumulated = 0; accumulatedDay = dayStart;
-        if (running) runStartedAt = now;
-        save(); updateTimer(true);
-      }
+      // ==== 表示タイマーのリセット（科目切り替え用）====
+      // 今日の勉強時間・グラフ・統計には一切触れず、表示だけを00:00.00に戻す。
+      // 計測中に押しても計測は続く（その日の合計には入り続ける）。確認ダイアログも出さない。
       $("secondaryButton").addEventListener("click", () => {
-        const todayTotal = dailyTotals(Date.now()).get(studyDayStart(Date.now())) || 0;
-        if (todayTotal <= 0 && elapsed() <= 0) return;
-        showConfirm("今日をリセット", `今日の記録 ${hoursLabel(todayTotal)} を消して、タイマーを00:00.00に戻します。過去の日の記録は消えません。`, "リセット", resetToday);
+        if (displayElapsed() <= 0) return;
+        displayOffset = elapsed(Date.now());
+        save(); updateTimer(true);
       });
 
       // ==== バックアップ / CSV / 読み込み ====
@@ -1777,6 +1774,7 @@
             accumulated = accumulatedDay === studyDayStart(Date.now()) ? Math.max(0, Number(d.accumulated) || 0) : 0;
             if (accumulatedDay !== studyDayStart(Date.now())) accumulatedDay = studyDayStart(Date.now());
             viewPos = 0;
+            displayOffset = 0;
             save(); updateTimer(true);
           });
         } catch (_) { showConfirm("読み込めませんでした", "バックアップ用JSONファイルを選んでください。", "OK", null); }
